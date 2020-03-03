@@ -1,0 +1,19 @@
+{
+  "_comment": "'logging: false' prevents the logging of mysql queries to the terminal.",
+  "development": {
+    "username": "root",
+    "password": "root",
+    "database": "inventory-management",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "logging": false
+  },
+  "production": {
+    "username": "development",
+    "password": "1c@n@d@0",
+    "database": "inventory-management",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "logging": false
+  }
+}
