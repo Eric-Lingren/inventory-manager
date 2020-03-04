@@ -3,6 +3,7 @@ import axios from 'axios'
 import validator from 'validator'
 import decode from 'jwt-decode';
 import sanitizeData from '../HelperFunctions/SanitizeData'
+const baseURL = '/auth'
 
 const AuthContext = React.createContext()
 
@@ -17,7 +18,6 @@ class AuthProvider extends Component {
             registerEmailInput : '',
             registerPasswordInput: '',
             registerPasswordConfirmInput: '',
-            registerFirstNameInput: '',
             token: localStorage.getItem("inventoryManagement") || '',
             user: {},
             loginAttemptFailed: false,
@@ -36,7 +36,7 @@ class AuthProvider extends Component {
     }
 
     getUserFromToken = () => {
-        let token = localStorage.getItem("iodToken")
+        let token = localStorage.getItem("inventoryManagement")
         if(token) {
             let decodedJwt = decode(token)
             this.setState({ user: decodedJwt.user })
@@ -45,7 +45,8 @@ class AuthProvider extends Component {
     }
 
     // Authenticates and logs in a user
-    authHandleLoginSubmit = (history) => {
+    authHandleLoginSubmit = (e) => {
+        e.preventDefault()
         let userInfo = {
             email: this.state.loginEmailInput,
             password: this.state.loginPasswordInput
@@ -55,38 +56,36 @@ class AuthProvider extends Component {
             console.log(res.data);
             if(res.status === 201){
                 //  Successful login
-                const { user, iodToken } = res.data
-                localStorage.setItem("inventoryManagement", iodToken)
+                const { user, inventoryToken } = res.data
+                localStorage.setItem("inventoryManagement", inventoryToken)
                 this.setState({
                     loginAttemptFailed: false, 
-                    token: iodToken,
+                    token: inventoryToken,
                     user: user,
                     loginPasswordInput: '',
-                    accountHasNotBeenActivated: false
+                    accountHasNotBeenActivated: false,
+                    loginRegisterErrorMessage: ''
                 }
                 // , () => history.push('/dashboard')
                 )
             } else {
                 // Bad email/password combination
-                return this.setState({loginAttemptFailed: true, accountHasNotBeenActivated: false, loginRegisterErrorMessage: 'Email or password are incorrect'})
+                return this.setState({loginAttemptFailed: true, loginRegisterErrorMessage: 'Email or password are incorrect'})
             }
         })
         .catch (err => {
+            console.log(err.response.data.msg);
             // Server error, or their account has been suspended
-            return this.setState({loginAttemptFailed: true, accountHasNotBeenActivated: false, loginRegisterErrorMessage: err.response.data.msg})
+            return this.setState({loginAttemptFailed: true, loginRegisterErrorMessage: err.response.data.msg})
         })
     }
 
 
     //  Submits a new user to our Users database table
-    handleUserRegistration = (locationObject) => {
+    handleUserRegistration = (e) => {
+        e.preventDefault()
         let password = this.state.registerPasswordInput
         let passwordConfirm = this.state.registerPasswordConfirmInput
-        let referringUrlBasePath = locationObject.pathname
-        let referringUrlQuery = locationObject.search
-        this.setState({
-            displayLoadingIcon: true
-        })
 
         //  Need to confirm password is long enough
         let isPasswordLength = validator.isLength(password, { min: 6, max: 30 })
@@ -99,59 +98,30 @@ class AuthProvider extends Component {
         if(!doPasswordsMatch){
             this.setState({loginRegisterErrorMessage: 'Passwords do not match'})
         }   
-
-        //  Need to identify which community user gets auto-enable access rights to
-        let usersCommunity;
-        if(referringUrlBasePath.includes('coaching')){
-            usersCommunity = 'coaching'
-        }
-        if(referringUrlBasePath.includes('breakthroughs')){
-            usersCommunity = 'breakthroughs'
-        }
-
-        //  If there is a company Id in the registration URL, get the Id to attach it to the user
-        let companyId;
-        if(referringUrlQuery && referringUrlQuery.includes('company')){
-            let companyIdStartIndex = referringUrlQuery.lastIndexOf('company=')+8
-            let slicedCompanyIdString = referringUrlQuery.slice(companyIdStartIndex)
-            companyId = slicedCompanyIdString
-        }
-
-        //  If there is a company Id in the registration URL, get the Id to attach it to the user
-        let isCoachingClientAdmin;
-        if(referringUrlQuery && referringUrlQuery.includes('coachingClientAdmin')){
-            isCoachingClientAdmin = true
-        }
         
         //  If all data is good, create the new user object in the DB
         if(doPasswordsMatch && isPasswordLength ){
             const newUser = {
                 email: this.state.registerEmailInput,
                 password: this.state.registerPasswordInput,
-                firstName: this.state.registerFirstNameInput,
-                lastName: this.state.registerLastNameInput,
-                community: usersCommunity 
+                name: this.state.registerNameInput
             }
-            
-            //  If there was a company ID, append it to the new user object
-            if(companyId){ newUser['companyId'] = companyId }
-            if(isCoachingClientAdmin){ newUser['isCoachingClientAdmin'] = isCoachingClientAdmin }
 
-            axios.post('/v1/auth/register', newUser).then(res => {
+            axios.post(`${baseURL}/register`, newUser).then(res => {
                 if(res.status === 201){
                     this.setState({
                         loginAttemptFailed: false, 
                         isRegistered: true,
                         registerPasswordInput: '',
                         registerPasswordConfirmInput: '',
-                        displayLoadingIcon: false
+                        loginRegisterErrorMessage: 'Success.  Please Login In'
                     })
                 } else {
-                    return this.setState({loginAttemptFailed: true, loginRegisterErrorMessage: 'This email address is already registered. Click the link below to login.', displayLoadingIcon: false})
+                    return this.setState({loginAttemptFailed: true, loginRegisterErrorMessage: 'This email address is already registered. Click the link below to login.'})
                 }
             })
             .catch (err => {
-                return this.setState({loginAttemptFailed: true, loginRegisterErrorMessage: 'Something broke. Please try again', displayLoadingIcon: false})
+                return this.setState({loginAttemptFailed: true, loginRegisterErrorMessage: 'Something broke. Please try again'})
             })
         }
     }

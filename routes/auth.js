@@ -91,46 +91,42 @@ authRouter.post("/register", async (req, res) => {
   if (validatedData.isValid){
     let email = sanitizeData(req.body.email)
     let password = sanitizeData(req.body.password)
-    let firstName = sanitizeData(req.body.firstName)
-    let lastName = sanitizeData(req.body.lastName)
+    let name = sanitizeData(req.body.name)
     
-
     //  Submit the cleaned users email to SQL for query to check for duplicates
-    db.Users.findOne({
-      where: {
-        email: email,
-      }
-    })
+    db.Users.findOne({ where: {  email: email } })
     .then(user => {
       if (user) {
+        console.log('found user');
         //  User already exists
         return res.status(200).send(user);
       } else {
+        console.log('no user');
         // No user exists
         bcrypt.hash(password, 10, (err, hash) => {
           if (err) throw err;
           // Creates a default user with no access rights becasue they arent a campaign member in Salesforce or went through a nondirect registration url
           let newUser = {
             email : email,
-            firstName : firstName,
-            lastName : lastName,
+            name : name,
             password : hash,
           }
-          
           
           //Save the newly created user in the db
           db.Users.create(newUser)
             .then(user => {
-              const payload = {
-                user_id: user.dataValues.user_id
-              }
+              const payload = { user_id: user.dataValues.user_id }
               jwt.sign( payload, keys.secretOrKey,{ expiresIn: 3600 * 24 }, (err, token) => {
-                if (err){
-                  return res.status(500).send(err)
-                }
+                if (err) return res.status(500).send(err)
                 delete user.dataValues['password']
-                });
-            }).catch( err => {
+                return res.status(201).send({ 
+                  user: user, 
+                  success: true,
+                  token: token
+                })
+              })
+            })
+            .catch( err => {
               return res.status(500).send({ msg: "Something broke while creating user." });
             })
         })
@@ -147,6 +143,7 @@ authRouter.post("/register", async (req, res) => {
 
 // @route POST — user login
 authRouter.post("/login", (req, res) => {
+  console.log('hit login route');
   // Check to see if the user inputs are valid/not empty
   let validatedData = validateLoginInput(req.body)
   //  Sanitize user input to prevent XSS & SQL Injection
@@ -154,11 +151,7 @@ authRouter.post("/login", (req, res) => {
     let email = sanitizeData(req.body.email)
     let password = sanitizeData(req.body.password)
   //  Submit the cleaned data for SQL query
-  db.Users.findOne({
-    where: {
-      email : email
-    }
-  })
+  db.Users.findOne({ where: { email : email } })
   .then(user => {
     if (isEmpty(user) ) {
       return res.status(500).send({ msg: "Incorrect email or password" });

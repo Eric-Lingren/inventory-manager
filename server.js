@@ -33,7 +33,6 @@ app.use(cors({
     }
 ))
 
-
 //  FOR DEVELOPMENT USES
     //  Morgan middleware - Enables better development testing for api calls
 if(nodeEnvironment === 'development') app.use(morgan('dev'))

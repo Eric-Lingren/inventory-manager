@@ -8,12 +8,7 @@ module.exports = (sequelize, Sequelize) => {
       defaultValue: Sequelize.UUIDV4,
       allowNull: false
     },
-    firstName: {
-      type: Sequelize.STRING,
-      required: true,
-      allowNull: false
-    },
-    lastName: {
+    name: {
       type: Sequelize.STRING,
       required: true,
       allowNull: false

@@ -1,12 +1,12 @@
 import React from 'react';
 import { withAuth } from '../context/AuthProvider'
 
-const Login = ({ handleAuthChange, loginEmailInput, loginPasswordInput }) => {
+const Login = ({ handleAuthChange, loginEmailInput, loginPasswordInput, authHandleLoginSubmit, loginRegisterErrorMessage }) => {
 
     return (
         <div>
             <h2> Login: </h2>
-            <form>
+            <form onSubmit={authHandleLoginSubmit}>
                 <label> Email </label>
                 <input
                     type='email'
@@ -24,6 +24,7 @@ const Login = ({ handleAuthChange, loginEmailInput, loginPasswordInput }) => {
                 />
                 <button> Login </button>
             </form>
+            { loginRegisterErrorMessage && <p> { loginRegisterErrorMessage } </p>}
         </div>
     );
 }
