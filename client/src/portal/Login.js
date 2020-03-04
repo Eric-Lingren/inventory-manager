@@ -1,12 +1,18 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { withAuth } from '../context/AuthProvider'
 
-const Login = ({ handleAuthChange, loginEmailInput, loginPasswordInput, authHandleLoginSubmit, loginRegisterErrorMessage }) => {
+const Login = ({ history, handleAuthChange, loginEmailInput, loginPasswordInput, authHandleLoginSubmit, loginRegisterErrorMessage }) => {
+
+    const submitLogin = (e) => {
+        e.preventDefault()
+        authHandleLoginSubmit(history)
+    }
 
     return (
         <div>
             <h2> Login: </h2>
-            <form onSubmit={authHandleLoginSubmit}>
+            <form onSubmit={submitLogin}>
                 <label> Email </label>
                 <input
                     type='email'
@@ -24,7 +30,8 @@ const Login = ({ handleAuthChange, loginEmailInput, loginPasswordInput, authHand
                 />
                 <button> Login </button>
             </form>
-            { loginRegisterErrorMessage && <p> { loginRegisterErrorMessage } </p>}
+            { loginRegisterErrorMessage && <p> { loginRegisterErrorMessage } </p> }
+            <Link to='/register'> No Account?  Register Here </Link>
         </div>
     );
 }

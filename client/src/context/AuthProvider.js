@@ -44,16 +44,15 @@ class AuthProvider extends Component {
         }
     }
 
+
     // Authenticates and logs in a user
-    authHandleLoginSubmit = (e) => {
-        e.preventDefault()
+    authHandleLoginSubmit = (history) => {
         let userInfo = {
             email: this.state.loginEmailInput,
             password: this.state.loginPasswordInput
         }
         
         axios.post('/auth/login', userInfo).then(res => {
-            console.log(res.data);
             if(res.status === 201){
                 //  Successful login
                 const { user, inventoryToken } = res.data
@@ -66,7 +65,7 @@ class AuthProvider extends Component {
                     accountHasNotBeenActivated: false,
                     loginRegisterErrorMessage: ''
                 }
-                // , () => history.push('/dashboard')
+                , () => history.push('/dashboard')
                 )
             } else {
                 // Bad email/password combination
@@ -74,7 +73,6 @@ class AuthProvider extends Component {
             }
         })
         .catch (err => {
-            console.log(err.response.data.msg);
             // Server error, or their account has been suspended
             return this.setState({loginAttemptFailed: true, loginRegisterErrorMessage: err.response.data.msg})
         })
@@ -141,6 +139,7 @@ class AuthProvider extends Component {
 
 
     render(){
+        
         return (
             <AuthContext.Provider 
                 value={{

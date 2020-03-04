@@ -3,11 +3,12 @@ import { withAuth } from '../context/AuthProvider'
 import Login from './Login'
 import Register from './Register'
 
-const Portal = ({ isShowingRegister, togglePortalForms }) => {
+const Portal = ({ history, isShowingRegister, togglePortalForms }) => {
+
   return (
     <div>
     {
-      !isShowingRegister ? <Login /> : <Register />
+      !isShowingRegister ? <Login history={history} /> : <Register />
     }
     <p onClick={togglePortalForms}> 
       {!isShowingRegister ?

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { withAuth } from '../context/AuthProvider'
 
 const Register = ({ handleAuthChange, registerNameInput, registerEmailInput, registerPasswordInput, registerPasswordConfirmInput, handleUserRegistration, loginRegisterErrorMessage }) => {
@@ -42,6 +43,7 @@ const Register = ({ handleAuthChange, registerNameInput, registerEmailInput, reg
                 <button> Register </button>
             </form>
             { loginRegisterErrorMessage && <p> {loginRegisterErrorMessage} </p> }
+            <Link to='/login'> Have an Account?  Login Here </Link>
         </div>
     );
 }
