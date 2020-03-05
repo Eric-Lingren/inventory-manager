@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { withAuth } from './context/AuthProvider'
+import { withAuth } from '../context/AuthProvider'
 
 
 const Header = ({ getUserFromToken, user, logOut }) => {
-    console.log(user);
+
     useEffect(() => {
         getUserFromToken()
     }, [getUserFromToken])
+
 
     return (
         <div >
@@ -18,8 +19,12 @@ const Header = ({ getUserFromToken, user, logOut }) => {
                 </>
                 :
                 <>
+                    <Link to='/dashboard'> Dashboard </Link>
+                    <Link to='/add-inventory'> Add Inventory </Link>
+                    <Link to='/view-inventory'> View Inventory </Link>
                     <span> Welcome {user.name}</span>
                     <button onClick={logOut}> Logout </button>
+                    { user.isAdmin && <Link to='/admin-portal'> Admin Portal </Link> }
                 </>
             }
             

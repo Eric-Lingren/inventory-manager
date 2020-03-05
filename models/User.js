@@ -23,6 +23,10 @@ module.exports = (sequelize, Sequelize) => {
       required: true,
       allowNull: false
     },
+    isAdmin: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+    }
   });
   return User;
 };

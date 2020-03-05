@@ -97,11 +97,9 @@ authRouter.post("/register", async (req, res) => {
     db.Users.findOne({ where: {  email: email } })
     .then(user => {
       if (user) {
-        console.log('found user');
         //  User already exists
         return res.status(200).send(user);
       } else {
-        console.log('no user');
         // No user exists
         bcrypt.hash(password, 10, (err, hash) => {
           if (err) throw err;
@@ -143,7 +141,6 @@ authRouter.post("/register", async (req, res) => {
 
 // @route POST — user login
 authRouter.post("/login", (req, res) => {
-  console.log('hit login route');
   // Check to see if the user inputs are valid/not empty
   let validatedData = validateLoginInput(req.body)
   //  Sanitize user input to prevent XSS & SQL Injection
