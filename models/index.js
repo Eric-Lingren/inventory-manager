@@ -29,5 +29,7 @@ db.Sequelize = Sequelize
 db.Users = require('./User.js')(sequelize, Sequelize) 
 db.Categories = require('./Category.js')(sequelize, Sequelize) 
 db.Subcategories = require('./Subcategory.js')(sequelize, Sequelize) 
+db.Items = require('./Item.js')(sequelize, Sequelize) 
+db.UserItems = require('./UserItem.js')(sequelize, Sequelize) 
 
 module.exports = db

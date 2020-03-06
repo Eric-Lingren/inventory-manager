@@ -12,7 +12,6 @@ const CategoriesList = ({ handleGetCategories, inventoryCategories, updatedAdmin
     }, [ handleGetCategories, updatedAdmin ])
 
 
-    // console.log(inventoryCategories);
     const mappedCategories = inventoryCategories.map( ( card, i ) => {
         return (
             <CategoryCard 

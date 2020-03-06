@@ -90,49 +90,132 @@ inventoryRouter.get("/subcategories", checkForToken, (req, res, next) => {
             .catch( err => {
                 return res.status(500).send({ msg: "Something broke while getting subcategories." })
             })
+        } else {
+            db.Subcategories.findAll({
+                where :  req.query , 
+                // include: [{
+                //     model: db.Users,
+                //     as: 'userData',
+                //     attributes:['firstName', 'lastName', 'email', 'id', 'hasFacilitator']
+                // }],
+                order:[ ['name', 'ASC'] ]
+            })
+            .then(categories => {
+                res.status(200).send(categories)
+            })
+            .catch( err => {
+                next(err)
+                res.status(500).send(err)
+            })
         }
-        // else {
-        //     let parsedQuery = changeStringToFalsy(req.query)
-
-        //     db.Facilitators.findAll({
-        //         where :  parsedQuery , 
-        //         include: [{
-        //             model: db.Users,
-        //             as: 'userData',
-        //             attributes:['firstName', 'lastName', 'email', 'id', 'hasFacilitator']
-        //         }],
-        //         order:[ ['FirstName', 'ASC'] ]
-        //     })
-        //     .then(facilitators => {
-        //         res.status(200).send(facilitators)
-        //     })
-        //     .catch( err => {
-        //         console.log('Route Hit Error');
-        //         next(err)
-        //         res.status(500).send(err)
-        //     })
-        // }
     })
 })
 
 
-// // @route   POST – Adds a new category
-// inventoryRouter.post("/category", checkForToken, (req, res) => {
-//     console.log('hit');
-//     jwt.verify(req.token, keys.secretOrKey, (err, authorizedUser) => {
-//         if(err){
-//             res.sendStatus(403);
-//         } else {
-//             if(!isEmpty(req.body)){
-//                 let newCategory = sanitizeData(req.body)
-//                 console.log(newCategory);
-//                 db.Categories.create(newCategory)
-//                 .then(category => res.status(201).send(category) )
-//                 .catch( err => res.status(500).send({ msg: err}) )
-//             }
-//         }
-//     })
-// })
+
+// @route   GET – gets list of all items
+inventoryRouter.get("/items", checkForToken, (req, res, next) => {
+    console.log('hit items route');
+    jwt.verify(req.token, keys.secretOrKey, (err) => {
+        if(err) res.sendStatus(403)
+        if(isEmpty(req.query)){
+            db.Items.findAll({
+                // include: [{
+                //     model: db.Users,
+                //     as: 'userData',
+                //     attributes:['firstName', 'lastName', 'email', 'id', 'hasFacilitator']
+                // }],
+            })
+            .then(items => {
+                if (isEmpty(items)) {
+                    return res.status(400).send({ msg: "There are no items." })
+                } else {
+                    return res.status(200).send(items)
+                }
+            })
+            .catch( err => {
+                return res.status(500).send({ msg: "Something broke while getting items." })
+            })
+        } else {
+            db.Items.findAll({
+                where :  req.query , 
+                // include: [{
+                //     model: db.Users,
+                //     as: 'userData',
+                //     attributes:['firstName', 'lastName', 'email', 'id', 'hasFacilitator']
+                // }],
+                order:[ ['name', 'ASC'] ]
+            })
+            .then(items => {
+                res.status(200).send(items)
+            })
+            .catch( err => {
+                next(err)
+                res.status(500).send(err)
+            })
+        }
+    })
+})
+
+
+
+// @route   POST – Adds a new item
+inventoryRouter.post("/items", checkForToken, (req, res) => {
+    jwt.verify(req.token, keys.secretOrKey, (err, authorizedUser) => {
+        if(err){
+            res.sendStatus(403);
+        } else {
+            if(!isEmpty(req.body)){
+                let newItem = sanitizeData(req.body)
+                db.Items.create(newItem)
+                .then(item => res.status(201).send(item) )
+                .catch( err => res.status(500).send({ msg: err}) )
+            }
+        }
+    })
+})
+
+// @route   POST – Adds a new item
+inventoryRouter.post("/items/user-items", checkForToken, (req, res) => {
+    jwt.verify(req.token, keys.secretOrKey, (err, authorizedUser) => {
+        if(err){
+            res.sendStatus(403);
+        } else {
+            if(!isEmpty(req.body)){
+                let newItem = sanitizeData(req.body)
+                db.UserItems.create(newItem)
+                .then(item => res.status(201).send(item) )
+                .catch( err => res.status(500).send({ msg: err}) )
+            }
+        }
+    })
+})
+
+
+// @route   GET – gets list of all a users items
+inventoryRouter.get("/items/user-items", checkForToken, (req, res, next) => {
+    jwt.verify(req.token, keys.secretOrKey, (err) => {
+        if(err) res.sendStatus(403)
+        if(!isEmpty(req.query)){
+            db.Items.findAll({
+                where :  req.query , 
+                // include: [{
+                //     model: db.Users,
+                //     as: 'userData',
+                //     attributes:['firstName', 'lastName', 'email', 'id', 'hasFacilitator']
+                // }],
+                order:[ ['name', 'ASC'] ]
+            })
+            .then(items => {
+                res.status(200).send(items)
+            })
+            .catch( err => {
+                next(err)
+                res.status(500).send(err)
+            })
+        }
+    })
+})
 
 
 // // @route   DELETE – Removes one specific facilitator

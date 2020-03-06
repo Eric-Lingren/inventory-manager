@@ -8,8 +8,8 @@ import Register from './portal/Register'
 import AdminPortalHome from './portal/adminPortal/AdminPortalHome'
 import ProtectedRoute from './shared/ProtectedRoute'
 import Dashboard from './Dashboard'
-import AddInventoryHome from './addInventory/AddInventoryHome'
-import ViewInventoryHome from './viewInventory/ViewInventoryHome'
+// import AddInventoryHome from './addInventory/AddInventoryHome'
+import ManageInventoryHome from './manageInventory/ManageInventoryHome'
 
 const App = () => {
 
@@ -22,8 +22,8 @@ const App = () => {
         <Route path='/login' component={Login} />
         <Route path='/register' component={Register} />
         <ProtectedRoute path='/dashboard' component={Dashboard} redirectTo={"/login"} />
-        <ProtectedRoute path='/add-inventory' component={AddInventoryHome} redirectTo={"/login"} />
-        <ProtectedRoute path='/view-inventory' component={ViewInventoryHome} redirectTo={"/login"} />
+        {/* <ProtectedRoute path='/add-inventory' component={AddInventoryHome} redirectTo={"/login"} /> */}
+        <ProtectedRoute path='/manage-inventory' component={ManageInventoryHome} redirectTo={"/login"} />
         <ProtectedRoute path='/admin-portal' component={AdminPortalHome} redirectTo={"/"} />
       </Switch>
 

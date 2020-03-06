@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import axios from 'axios'
 // import validator from 'validator'
 import sanitizeData from '../HelperFunctions/SanitizeData'
+import decode from 'jwt-decode';
+
 
 const baseURL = 'api/inventory'
 const authAxios = axios.create()
@@ -19,13 +21,22 @@ class InventoryProvider extends Component {
         super()
         this.state = {
             inventoryCategories: [],
-            inventorySubcategories: []
+            inventorySubcategories: [],
+            inventoryItems: [],
+            userInventoryItems: [],
+            selectedCategoryId: '',
+            selectedSubcategoryId: '',
+            selectedItemId: '',
+            itemName: '',
+            itemAddedSuccessfully: null,
+            expirationDate: '',
+            itemAddedToUserList: null,
         }
     }
 
     //  State data handler for form input
     handleInventoryChange = (e) => {
-        const {name, value} = e.target
+        const {name, value } = e.target
         this.setState({ [name]: sanitizeData(value) })
     }
 
@@ -39,18 +50,84 @@ class InventoryProvider extends Component {
     }
 
 
-    handleGetSubcategories = () => {
-        authAxios.get(`${baseURL}/subcategories`)
+    handleGetSubcategories = (selectedCategoryId) => {
+        let url = `${baseURL}/subcategories`
+        if(selectedCategoryId) url = `${baseURL}/subcategories?categoryId=${selectedCategoryId}`
+        authAxios.get(`${url}`)
         .then(res => {
             this.setState({ inventorySubcategories: res.data})
         })
         .catch(err => err)
     }
 
+    handleGetItems = ( selectedSubcategoryId) => {
+        let url = `${baseURL}/items`
+        if(selectedSubcategoryId) url = `${baseURL}/items?subcategoryId=${selectedSubcategoryId}`
+        authAxios.get(`${url}`)
+        .then(res => {
+            this.setState({ inventoryItems: res.data})
+        })
+        .catch(err => err)
+    }
+
+
+    handleSaveNewItem = (e) => {
+        e.preventDefault()
+        let decodedJwt;
+        let token = localStorage.getItem("inventoryManagement")
+        if(token) decodedJwt = decode(token)
+
+        const newItem = {   categoryId: this.state.selectedCategoryId, 
+                            subcategoryId: this.state.selectedSubcategoryId, 
+                            name: this.state.itemName,
+                            userId: decodedJwt.user.id
+                        }
+
+        authAxios.post(`${baseURL}/items`, newItem)
+        .then(res => {
+            this.setState({ itemAddedSuccessfully: true })
+        })
+        .catch(err => {
+            this.setState({ itemAddedSuccessfully: false })
+        })
+    }
+
+    addToPersonalInventory = (e) => {
+        e.preventDefault()
+
+        let decodedJwt;
+        let token = localStorage.getItem("inventoryManagement")
+        if(token) decodedJwt = decode(token)
+
+        const myItem = {
+            selectedCategoryId: this.state.selectedCategoryId,
+            selectedSubcategoryId: this.state.selectedSubcategoryId,
+            selectedItemId: this.state.selectedItemId,
+            userId: decodedJwt.user.id,
+            expirationDate: this.state.expirationDate
+        }
+
+        authAxios.post(`${baseURL}/items/user-items`, myItem)
+        .then(res => {
+            this.setState({ itemAddedToUserList: true })
+        })
+        .catch(err => {
+            this.setState({ itemAddedToUserList: false })
+        })
+    }
+
+    getUserInventory = (userId) => {
+        console.log(userId);
+        authAxios.get(`${baseURL}/items/user-items?userId=${userId}`)
+        .then(res => {
+            this.setState({ userInventoryItems: res.data })
+        })
+        .catch(err => {
+        })
+    }
 
 
     render(){
-        
         return (
             <InventoryContext.Provider 
                 value={{
@@ -58,7 +135,10 @@ class InventoryProvider extends Component {
                     handleInventoryChange: this.handleInventoryChange,
                     handleGetCategories: this.handleGetCategories,
                     handleGetSubcategories: this.handleGetSubcategories,
-                    
+                    handleGetItems: this.handleGetItems,
+                    handleSaveNewItem: this.handleSaveNewItem,
+                    addToPersonalInventory: this.addToPersonalInventory,
+                    getUserInventory: this.getUserInventory,
                 }}>
                 { this.props.children }
             </InventoryContext.Provider>
