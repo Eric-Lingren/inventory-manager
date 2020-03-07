@@ -21,6 +21,15 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       required: true,
       allowNull: false
+    },
+    quantity: {
+      type: Sequelize.INTEGER
+    },
+    size: {
+      type: Sequelize.INTEGER
+    },
+    volumeType: {
+      type: Sequelize.STRING
     }
   });
   return Item;

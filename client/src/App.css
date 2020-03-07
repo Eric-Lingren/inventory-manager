@@ -1,4 +1,28 @@
+body {
+  background-color: gray;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
 .App {
   text-align: center;
 }
-
+.button-delete{
+  background-color: #ef493e;
+  color: #fff;
+  font-size: 20px;
+  border: none;
+  margin: 4px;
+}
+.button-minus{
+  background-color: #4DBDEB;
+  color: #fff;
+  font-size: 20px;
+  border: none;
+  margin: 4px;
+}
+.button-plus{
+  background-color: #36C467;
+  color: #fff;
+  font-size: 20px;
+  border: none;
+  margin: 4px;
+}

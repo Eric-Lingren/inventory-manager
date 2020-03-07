@@ -18,11 +18,15 @@ const UserInventoryHome = ({ getUserFromToken, user, getUserInventory, userInven
     
 
     const mappedUserItems = userInventoryItems.map( ( item, i ) => {
+        console.log(item)
         return (
             <UserInventoryCard 
                 name={item.name}
                 key={i}
                 id={item.id}
+                size={item.size}
+                volumeType={item.volumeType}
+                quantity={item.quantity}
             />
         )
     })

@@ -115,16 +115,15 @@ inventoryRouter.get("/subcategories", checkForToken, (req, res, next) => {
 
 // @route   GET – gets list of all items
 inventoryRouter.get("/items", checkForToken, (req, res, next) => {
-    console.log('hit items route');
     jwt.verify(req.token, keys.secretOrKey, (err) => {
         if(err) res.sendStatus(403)
         if(isEmpty(req.query)){
             db.Items.findAll({
-                // include: [{
-                //     model: db.Users,
-                //     as: 'userData',
-                //     attributes:['firstName', 'lastName', 'email', 'id', 'hasFacilitator']
-                // }],
+            //     include: [{
+            //         model: db.Categories,
+            //         as: 'category',
+            //         attributes:['name']
+            //     }],
             })
             .then(items => {
                 if (isEmpty(items)) {
@@ -194,16 +193,43 @@ inventoryRouter.post("/items/user-items", checkForToken, (req, res) => {
 
 // @route   GET – gets list of all a users items
 inventoryRouter.get("/items/user-items", checkForToken, (req, res, next) => {
+    console.log('hit get user items route')
     jwt.verify(req.token, keys.secretOrKey, (err) => {
         if(err) res.sendStatus(403)
         if(!isEmpty(req.query)){
             db.Items.findAll({
                 where :  req.query , 
-                // include: [{
-                //     model: db.Users,
-                //     as: 'userData',
-                //     attributes:['firstName', 'lastName', 'email', 'id', 'hasFacilitator']
-                // }],
+                    // include: [
+                    //     {
+                    //         model: db.Subcategories,
+                    //         as: 'subcategory',
+                    //         attributes:['name'],
+                            // include: [{ model: db.Categories, as: 'categories', attributes:['name'] }]
+                        // }
+                        // model: db.Categories,
+                        // as: 'category',
+                        // attributes:['name']
+                        // include: [{ model: db.Subcategories, as: 'subcategory', attributes:['name'] }, 
+                        // {model: User }
+                    // ],
+                    // ],
+                    // include: [
+                    //     {
+                    //         model: db.Categories,
+                    //         as: 'category',
+                    //         attributes:['name'],
+                    //         // include: [{ model: db.Categories, as: 'categories', attributes:['name'] }]
+                    //     }
+                        // model: db.Categories,
+                        // as: 'category',
+                        // attributes:['name']
+                        // include: [{ model: db.Subcategories, as: 'subcategory', attributes:['name'] }, 
+                        // {model: User }
+                    // ],
+                    // ],
+                    // include: [{
+                        
+                    // }],
                 order:[ ['name', 'ASC'] ]
             })
             .then(items => {

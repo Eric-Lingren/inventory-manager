@@ -117,7 +117,6 @@ class InventoryProvider extends Component {
     }
 
     getUserInventory = (userId) => {
-        console.log(userId);
         authAxios.get(`${baseURL}/items/user-items?userId=${userId}`)
         .then(res => {
             this.setState({ userInventoryItems: res.data })
