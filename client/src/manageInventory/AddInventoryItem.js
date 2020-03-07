@@ -1,4 +1,5 @@
 import React from 'react';
+import './manageInventory.css'
 import { withInventory } from '../context/InventoryProvider'
 import CategoriesOptionSelect from '../global/CategoriesOptionSelect'
 import SubcategoryOptionSelect from '../global/SubcategoriesOptionSelect'
@@ -9,8 +10,9 @@ const AddInventoryItem = ({ addToPersonalInventory, handleInventoryChange, expir
     const today = new Date()
     
     return (
-        <div >
-            <h3> Add Item To My Inventory </h3>
+        <div className='add-inventory-container'>
+        <div className='add-inventory-wrapper'>
+            <h3 className='add-inventory-header'> Add Item To My Inventory </h3>
             <form onSubmit={addToPersonalInventory}>
                 <CategoriesOptionSelect />
                 <SubcategoryOptionSelect />
@@ -72,6 +74,7 @@ const AddInventoryItem = ({ addToPersonalInventory, handleInventoryChange, expir
             </form>
             { itemAddedToUserList && <span> Added </span> }
             { itemAddedToUserList === false && <span> Try Again </span> }
+        </div>
         </div>
     );
 }
