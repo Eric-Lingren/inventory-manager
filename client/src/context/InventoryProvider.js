@@ -31,6 +31,9 @@ class InventoryProvider extends Component {
             itemAddedSuccessfully: null,
             expirationDate: '',
             itemAddedToUserList: null,
+            quantity: 1,
+            size: '',
+            volumeType: ''
         }
     }
 
@@ -99,12 +102,17 @@ class InventoryProvider extends Component {
         let token = localStorage.getItem("inventoryManagement")
         if(token) decodedJwt = decode(token)
 
+        let expires;
+        this.state.expirationDate.length ? expires = this.state.expirationDate : expires = null
+
         const myItem = {
-            selectedCategoryId: this.state.selectedCategoryId,
-            selectedSubcategoryId: this.state.selectedSubcategoryId,
-            selectedItemId: this.state.selectedItemId,
+            subcategoryId: this.state.selectedSubcategoryId,
+            itemId: this.state.selectedItemId,
             userId: decodedJwt.user.id,
-            expirationDate: this.state.expirationDate
+            expirationDate: expires,
+            quantity: this.state.quantity,
+            size: this.state.size,
+            volumeType: this.state.volumeType
         }
 
         authAxios.post(`${baseURL}/items/user-items`, myItem)

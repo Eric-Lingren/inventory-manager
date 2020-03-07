@@ -8,9 +8,6 @@ module.exports = (sequelize, Sequelize) => {
       defaultValue: Sequelize.UUIDV4,
       allowNull: false
     },
-    categoryId: {
-      type: Sequelize.UUID,
-    },
     subcategoryId: {
       type: Sequelize.UUID,
     },
@@ -23,6 +20,15 @@ module.exports = (sequelize, Sequelize) => {
     expirationDate: {
       type: Sequelize.DATE,
     },
+    quantity: {
+      type: Sequelize.INTEGER
+    },
+    size: {
+      type: Sequelize.INTEGER
+    },
+    volumeType: {
+      type: Sequelize.STRING
+    }
   });
   return UserItem;
 };

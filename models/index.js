@@ -13,10 +13,6 @@ const sequelize = new Sequelize(
       host: config.host,
       dialect: "mysql",
       logging: false
-    },{
-      dialectOptions: {
-        multipleStatements: true
-      }
     }
   )
 
@@ -33,75 +29,12 @@ db.Items = require('./Item.js')(sequelize, Sequelize)
 db.UserItems = require('./UserItem.js')(sequelize, Sequelize) 
 
 // Relations
-// db.Items.belongsTo(db.Categories , { 
-//   foreignKey: "categoryId",
-//   targetKey: "id",
-//   as: "category",
-//   onDelete: "cascade" 
-// })
-// db.Categories.hasMany(db.Subcategories , { 
-//   foreignKey: "id", 
-//   foreignKey: "categoryId", 
-//   as: "subcategory",
-//   onDelete: "cascade" 
-// })
-// db.Subcategories.belongsTo(db.Categories , { 
-//   foreignKey: "id",
-//   foerignKey: "categoryId",
-//   as: "category",
-//   onDelete: "cascade" 
-// })
+db.UserItems.belongsTo(db.Items, { foreignKey: "itemId", targetKey: "id" } );
+db.Items.hasMany(db.UserItems, { foreignKey: "itemId", targetKey: "id" } );
+db.Items.belongsTo(db.Subcategories, { foreignKey: "subcategoryId", targetKey: "id" } );
+db.Subcategories.hasMany(db.Items, { foreignKey: "id", foreignKey: "subcategoryId" } );
+db.Subcategories.belongsTo(db.Categories, { foreignKey: "categoryId", foerignKey: "id" } );
+// db.Categories.hasMany(db.Subcategories, { foreignKey: "id", foreignKey: "subcategoryId" } );
 
-
-
-// db.Categories.hasMany(db.Items , { 
-//   foreignKey: "id", 
-//   foreignKey: "categoryId", 
-//   as: "items",
-//   onDelete: "cascade" 
-// })
-// db.Items.belongsTo(db.Categories , { 
-//   foreignKey: "id",
-//   foerignKey: "categoryId",
-//   as: "category",
-//   onDelete: "cascade" 
-// })
-
-// db.Subcategories.hasMany(db.Items , { 
-//   foreignKey: "id", 
-//   foreignKey: "subcategoryId", 
-//   as: "items",
-//   onDelete: "cascade" 
-// })
-// db.Items.belongsTo(db.Subcategories , { 
-//   foreignKey: "subcategoryId",
-//   targetKey: "id",
-//   as: "subcategory",
-//   onDelete: "cascade" 
-// })
-
-
-// db.comments.belongsTo(db.posts);
-// db.posts.hasMany(db.comments);
-// db.posts.belongsTo(db.users);
-// db.users.hasMany(db.posts);
-
-
-// db.Items.belongsTo(db.Subcategories, { foreignKey: "subcategoryId", targetKey: "id" } );
-// db.Subcategories.hasMany(db.Items, { foreignKey: "id", foreignKey: "subcategoryId" } );
-// db.Subcategories.belongsTo(db.Categories, { foreignKey: "id", foerignKey: "categoryId" } );
-// db.Categories.hasMany(db.Subcategories);
-// db.CampaignMembers.belongsTo(db.Users , { 
-//   foreignKey: "campaignMemberEmail",
-//   targetKey: "email",
-//   as: "userData",
-//   onDelete: "cascade" 
-// })
-// db.Users.hasMany(db.CampaignMembers , { 
-//   foreignKey: "id", 
-//   foreignKey: "userId", 
-//   as: "usersCampaignMembers",
-//   onDelete: "cascade" 
-// })
 
 module.exports = db

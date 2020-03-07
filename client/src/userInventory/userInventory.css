@@ -1,6 +1,15 @@
+.user-inventory-list-table-heading{
+    display: grid;
+    grid-template-columns: .3fr .3fr 1fr .5fr .25fr .25fr .3fr  ;
+    border-bottom: 2px solid black;
+    margin-bottom: 10px;
+}
+.inventory-header{
+    margin: 5px;
+}
 .user-inventory-item-card{
     display: grid;
-    grid-template-columns: .5fr 1.5fr .5fr .25fr .1fr .1fr .1fr ;
+    grid-template-columns: .3fr .3fr 1fr .5fr .25fr .25fr .1fr .1fr .1fr ;
     box-shadow: -5px 5px 16px #00000018;
     background-color: #F2F2F2;
     margin: 5px;

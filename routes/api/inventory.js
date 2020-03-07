@@ -73,13 +73,7 @@ inventoryRouter.get("/subcategories", checkForToken, (req, res, next) => {
     jwt.verify(req.token, keys.secretOrKey, (err) => {
         if(err) res.sendStatus(403)
         if(isEmpty(req.query)){
-            db.Subcategories.findAll({
-                // include: [{
-                //     model: db.Users,
-                //     as: 'userData',
-                //     attributes:['firstName', 'lastName', 'email', 'id', 'hasFacilitator']
-                // }],
-            })
+            db.Subcategories.findAll()
             .then(subcategories => {
                 if (isEmpty(subcategories)) {
                     return res.status(400).send({ msg: "There are no subcategories." })
@@ -184,7 +178,7 @@ inventoryRouter.post("/items/user-items", checkForToken, (req, res) => {
                 let newItem = sanitizeData(req.body)
                 db.UserItems.create(newItem)
                 .then(item => res.status(201).send(item) )
-                .catch( err => res.status(500).send({ msg: err}) )
+                .catch( err => err )
             }
         }
     })
@@ -193,44 +187,25 @@ inventoryRouter.post("/items/user-items", checkForToken, (req, res) => {
 
 // @route   GET – gets list of all a users items
 inventoryRouter.get("/items/user-items", checkForToken, (req, res, next) => {
-    console.log('hit get user items route')
     jwt.verify(req.token, keys.secretOrKey, (err) => {
         if(err) res.sendStatus(403)
         if(!isEmpty(req.query)){
-            db.Items.findAll({
+            db.UserItems.findAll({
                 where :  req.query , 
-                    // include: [
-                    //     {
-                    //         model: db.Subcategories,
-                    //         as: 'subcategory',
-                    //         attributes:['name'],
-                            // include: [{ model: db.Categories, as: 'categories', attributes:['name'] }]
-                        // }
-                        // model: db.Categories,
-                        // as: 'category',
-                        // attributes:['name']
-                        // include: [{ model: db.Subcategories, as: 'subcategory', attributes:['name'] }, 
-                        // {model: User }
-                    // ],
-                    // ],
-                    // include: [
-                    //     {
-                    //         model: db.Categories,
-                    //         as: 'category',
-                    //         attributes:['name'],
-                    //         // include: [{ model: db.Categories, as: 'categories', attributes:['name'] }]
-                    //     }
-                        // model: db.Categories,
-                        // as: 'category',
-                        // attributes:['name']
-                        // include: [{ model: db.Subcategories, as: 'subcategory', attributes:['name'] }, 
-                        // {model: User }
-                    // ],
-                    // ],
-                    // include: [{
-                        
-                    // }],
-                order:[ ['name', 'ASC'] ]
+                    include: [{
+                        model: db.Items,
+                        attributes:['name'],
+                        include: [ {
+                            model: db.Subcategories,
+                            attributes:['name'],
+                            include: [ {
+                                model: db.Categories,
+                                attributes:['name']
+                            }],
+                        }],
+
+                    }],
+                // order:[ ['name', 'ASC'] ]
             })
             .then(items => {
                 res.status(200).send(items)

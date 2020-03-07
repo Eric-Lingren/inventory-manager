@@ -1,16 +1,22 @@
 import React from 'react';
 import './userInventory.css'
 import '../App.css'
+import moment from 'moment'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 
-const UserInventoryCard = ({ id, name, quantity, size, volumeType, handleDeleteSubcategory }) => {
+const UserInventoryCard = ({ id, category, subcategory, name, quantity, size, volumeType, expiration, handleDeleteSubcategory }) => {
+
+    let expires = moment(expiration).format('MMMM Do YYYY')
+    expires === 'Invalid date' ? expires = 'None Selected' : expires = expires
 
     
     return (
         <div className='user-inventory-item-card'>
-            <p> Category </p>
+            <p> {category} </p>
+            <p> {subcategory} </p>
             <p> {name} </p>
+            <p> {expires} </p>
             <p> {size} {volumeType} </p>
             <p> {quantity} </p>
             <button className='button-delete'

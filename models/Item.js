@@ -8,9 +8,6 @@ module.exports = (sequelize, Sequelize) => {
       defaultValue: Sequelize.UUIDV4,
       allowNull: false
     },
-    categoryId: {
-      type: Sequelize.UUID,
-    },
     subcategoryId: {
       type: Sequelize.UUID,
     },
@@ -21,15 +18,6 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       required: true,
       allowNull: false
-    },
-    quantity: {
-      type: Sequelize.INTEGER
-    },
-    size: {
-      type: Sequelize.INTEGER
-    },
-    volumeType: {
-      type: Sequelize.STRING
     }
   });
   return Item;
