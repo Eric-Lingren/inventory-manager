@@ -4,11 +4,12 @@ import '../App.css'
 import moment from 'moment'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { withInventory } from '../context/InventoryProvider'
 
-const UserInventoryCard = ({ id, category, subcategory, name, quantity, size, volumeType, expiration, handleDeleteSubcategory }) => {
+const UserInventoryCard = ({ id, category, subcategory, name, itemQuantity, itemSize, itemVolumeType, itemExpiration, handleDeleteUserInventoryItem, markItemUsed, item, markItemAdded }) => {
 
-    let expires = moment(expiration).format('MMMM Do YYYY')
-    expires === 'Invalid date' ? expires = 'None Selected' : expires = expires
+    let expires;
+    expires === 'Invalid date' ? expires = 'None Selected' : expires = moment(itemExpiration).format('MMMM Do YYYY')
 
     
     return (
@@ -17,17 +18,15 @@ const UserInventoryCard = ({ id, category, subcategory, name, quantity, size, vo
             <p> {subcategory} </p>
             <p> {name} </p>
             <p> {expires} </p>
-            <p> {size} {volumeType} </p>
-            <p> {quantity} </p>
-            <button className='button-delete'
-            // onClick={ () => handleDeleteSubcategory(id) }
-            > 
+            <p> {itemSize} {itemVolumeType} </p>
+            <p> {itemQuantity} </p>
+            <button className='button-delete' onClick={ () => handleDeleteUserInventoryItem(id) } > 
                 <FontAwesomeIcon icon={faTrash} />
              </button>
-            <button className='button-minus'> 
+            <button className='button-minus' onClick={ () => markItemUsed(id, item) }> 
                  <FontAwesomeIcon icon={faMinus} />
             </button>
-            <button className='button-plus'> 
+            <button className='button-plus' onClick={ () => markItemAdded(id, item) }> 
             <FontAwesomeIcon icon={faPlus} />
             </button>
             
@@ -35,4 +34,4 @@ const UserInventoryCard = ({ id, category, subcategory, name, quantity, size, vo
     );
 }
 
-export default UserInventoryCard
+export default withInventory(UserInventoryCard)

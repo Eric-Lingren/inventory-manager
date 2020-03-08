@@ -26,10 +26,11 @@ const UserInventoryHome = ({ getUserFromToken, user, getUserInventory, userInven
                 name={item.Item.name}
                 category={item.Item.Subcategory.Category.name}
                 subcategory={item.Item.Subcategory.name}
-                expiration={item.expirationDate}
-                size={item.size}
-                volumeType={item.volumeType}
-                quantity={item.quantity}
+                itemExpiration={item.expirationDate}
+                itemSize={item.size}
+                itemVolumeType={item.volumeType}
+                itemQuantity={item.quantity}
+                item={item}
             />
         )
     })

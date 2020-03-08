@@ -27,8 +27,14 @@ db.Categories = require('./Category.js')(sequelize, Sequelize)
 db.Subcategories = require('./Subcategory.js')(sequelize, Sequelize) 
 db.Items = require('./Item.js')(sequelize, Sequelize) 
 db.UserItems = require('./UserItem.js')(sequelize, Sequelize) 
+db.ItemsFinished = require('./ItemsFinished.js')(sequelize, Sequelize) 
+db.ItemsAdded = require('./ItemsAdded.js')(sequelize, Sequelize) 
 
 // Relations
+db.ItemsFinished.belongsTo(db.Items, { foreignKey: "itemId", targetKey: "id" } );
+db.Items.hasMany(db.ItemsFinished, { foreignKey: "itemId", targetKey: "id" } );
+db.ItemsAdded.belongsTo(db.Items, { foreignKey: "itemId", targetKey: "id" } );
+db.Items.hasMany(db.ItemsAdded, { foreignKey: "itemId", targetKey: "id" } );
 db.UserItems.belongsTo(db.Items, { foreignKey: "itemId", targetKey: "id" } );
 db.Items.hasMany(db.UserItems, { foreignKey: "itemId", targetKey: "id" } );
 db.Items.belongsTo(db.Subcategories, { foreignKey: "subcategoryId", targetKey: "id" } );

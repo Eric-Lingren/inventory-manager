@@ -139,7 +139,6 @@ class AuthProvider extends Component {
 
 
     render(){
-        
         return (
             <AuthContext.Provider 
                 value={{

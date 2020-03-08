@@ -3,6 +3,7 @@ import axios from 'axios'
 // import validator from 'validator'
 import sanitizeData from '../HelperFunctions/SanitizeData'
 import decode from 'jwt-decode';
+import { CP1251_BULGARIAN_CI } from 'mysql2/lib/constants/charsets';
 
 
 const baseURL = 'api/inventory'
@@ -118,19 +119,93 @@ class InventoryProvider extends Component {
         authAxios.post(`${baseURL}/items/user-items`, myItem)
         .then(res => {
             this.setState({ itemAddedToUserList: true })
+            this.getUserInventory()
         })
         .catch(err => {
             this.setState({ itemAddedToUserList: false })
         })
     }
 
-    getUserInventory = (userId) => {
+    getUserInventory = () => {
+        let token = localStorage.getItem("inventoryManagement")
+        let decodedJwt = decode(token)
+        let userId = decodedJwt.user.id
+ 
         authAxios.get(`${baseURL}/items/user-items?userId=${userId}`)
         .then(res => {
             this.setState({ userInventoryItems: res.data })
         })
         .catch(err => {
         })
+    }
+
+
+    handleDeleteUserInventoryItem = (id) => {
+        authAxios.delete(`${baseURL}/items/user-items/${id}`)
+        .then(res => {
+            this.getUserInventory()
+        })
+        .catch(err => err)
+    }
+
+
+    markItemUsed = (id, item) => {
+        let updates = { quantity : item.quantity -= 1 }
+        
+        let usedItem ={
+              subcategoryId: item.subcategoryId,
+              itemId: item.itemId,
+              userId: item.userId,
+              size: item.size,
+              volumeType: item.volumeType,
+        }
+        
+        if(item.quantity >= 1) {
+            authAxios.put(`${baseURL}/items/user-items/${id}`, updates)
+            .then(res => {
+                this.getUserInventory()
+                this.addItemToUserFinished(usedItem)
+            })
+            .catch(err => err)
+        } else {
+            this.handleDeleteUserInventoryItem(id)
+            this.addItemToUserFinished(usedItem)
+        } 
+    }
+
+    addItemToUserFinished = (usedItem) => {
+        authAxios.post(`${baseURL}/items/user-items-finished`, usedItem)
+        .then(res => {
+        })
+        .catch(err => err)
+    }
+
+
+    markItemAdded = (id, item) => {
+        let updates = { quantity : item.quantity += 1 }
+        
+        let addedItem ={
+              subcategoryId: item.subcategoryId,
+              itemId: item.itemId,
+              userId: item.userId,
+              size: item.size,
+              volumeType: item.volumeType,
+        }
+        
+        authAxios.put(`${baseURL}/items/user-items/${id}`, updates)
+        .then(res => {
+            this.getUserInventory()
+            this.addItemToUserAdded(addedItem)
+        })
+        .catch(err => err)
+    }
+
+
+    addItemToUserAdded = (addedItem) => {
+        authAxios.post(`${baseURL}/items/user-items-added`, addedItem)
+        .then(res => {
+        })
+        .catch(err => err)
     }
 
 
@@ -146,6 +221,9 @@ class InventoryProvider extends Component {
                     handleSaveNewItem: this.handleSaveNewItem,
                     addToPersonalInventory: this.addToPersonalInventory,
                     getUserInventory: this.getUserInventory,
+                    handleDeleteUserInventoryItem: this.handleDeleteUserInventoryItem,
+                    markItemUsed: this.markItemUsed,
+                    markItemAdded: this.markItemAdded,
                 }}>
                 { this.props.children }
             </InventoryContext.Provider>

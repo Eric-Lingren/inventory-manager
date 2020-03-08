@@ -168,6 +168,9 @@ inventoryRouter.post("/items", checkForToken, (req, res) => {
     })
 })
 
+
+
+
 // @route   POST – Adds a new item
 inventoryRouter.post("/items/user-items", checkForToken, (req, res) => {
     jwt.verify(req.token, keys.secretOrKey, (err, authorizedUser) => {
@@ -197,13 +200,12 @@ inventoryRouter.get("/items/user-items", checkForToken, (req, res, next) => {
                         attributes:['name'],
                         include: [ {
                             model: db.Subcategories,
-                            attributes:['name'],
+                            attributes:['name' ],
                             include: [ {
                                 model: db.Categories,
-                                attributes:['name']
+                                attributes:['name', 'id' ]
                             }],
                         }],
-
                     }],
                 // order:[ ['name', 'ASC'] ]
             })
@@ -219,46 +221,180 @@ inventoryRouter.get("/items/user-items", checkForToken, (req, res, next) => {
 })
 
 
-// // @route   DELETE – Removes one specific facilitator
-// adminRouter.delete("/:id", checkForToken, (req, res) => {
-//     jwt.verify(req.token, keys.secretOrKey, (err) => {
-//         if(err){
-//             // ERROR: Could not connect to the protected route
-//             res.sendStatus(403)
-//         } else {
-//             db.Facilitators.destroy({where: { id: req.params.id }})
-//             .then(removedFacilitator => {
-//                 if (removedFacilitator === 0) {
-//                     return res.status(400).send({ msg: "Facilitator was unable to be deleted." })
-//                 } else {
-//                     return res.status(200).send({msg: "Facilitator has been successfully deleted." })
-//                 }
-//             })
-//             .catch( err => res.status(500).send({ msg: "Something broke while deleting that Facilitator report." }) )
-//         }
-//     })
-// })
+// @route   GET – gets one users items
+inventoryRouter.get("/items/user-items/:id", checkForToken, (req, res, next) => {
+    jwt.verify(req.token, keys.secretOrKey, (err) => {
+        if(err) res.sendStatus(403)
+        
+            db.UserItems.findOne({
+                where :  req.query , 
+                    include: [{
+                        model: db.Items,
+                        attributes:['name', 'itemId'],
+                        include: [ {
+                            model: db.Subcategories,
+                            attributes:['name', 'subcategoryId'],
+                            include: [ {
+                                model: db.Categories,
+                                attributes:['name', 'id']
+                            }],
+                        }],
+                    }],
+                // order:[ ['name', 'ASC'] ]
+            })
+            .then(items => {
+                res.status(200).send(items)
+            })
+            .catch( err => {
+                next(err)
+                res.status(500).send(err)
+            })
+    })
+})
 
-// // @route PUT – updates one facilitator
-// adminRouter.put("/:id", checkForToken, (req, res) => {
-//     jwt.verify(req.token, keys.secretOrKey, (err) => {
-//         if(err){
-//             // ERROR: Could not connect to the protected route
-//             res.sendStatus(403)
-//         } else {
-//             db.Facilitators.update(req.body, {
-//                 where: { id: req.params.id }
-//             })
-//             .then(updatedFacilitator => {
-//                 if(updatedFacilitator[0] === 0){
-//                     return res.status(500).send({msg: "Facilitator was unable to be updated." })
-//                 }
-//                 return res.status(200).send({msg: "Facilitator has been successfully updated." })
-//             })
-//             .catch( err => res.status(500).send({ msg: "Something broke while updating the bug report." }) )
-//         }
-//     })
-// })
+// @route   DELETE – Removes one specific user inventory item
+inventoryRouter.delete("/items/user-items/:id", checkForToken, (req, res) => {
+    jwt.verify(req.token, keys.secretOrKey, (err) => {
+        if(err){ 
+            res.sendStatus(403)
+        } else {
+            db.UserItems.destroy({where: { id: req.params.id }})
+            .then(removedUserItem => {
+                if (removedUserItem === 0) {
+                    return res.status(400).send({ msg: "User Item was unable to be deleted." })
+                } else {
+                    return res.status(200).send({msg: "User Item has been successfully deleted." })
+                }
+            })
+            .catch( err => err )
+        }
+    })
+})
+
+
+// @route PUT – updates one users item
+inventoryRouter.put("/items/user-items/:id", checkForToken, (req, res) => {
+    jwt.verify(req.token, keys.secretOrKey, (err) => {
+        if(err){
+            res.sendStatus(403)
+        } else {
+            db.UserItems.update(req.body, {
+                where: { id: req.params.id }
+            })
+            .then(updatedUserItem => {
+                if(updatedUserItem[0] === 0){
+                    return res.status(500).send({msg: "User item was unable to be updated." })
+                }
+                return res.status(200).send({msg: "User item has been successfully updated." })
+            })
+            .catch( err => res.status(500).send({ msg: "Something broke while updating the user item." }) )
+        }
+    })
+})
+
+
+// @route   POST – Adds a new finished item
+inventoryRouter.post("/items/user-items-finished", checkForToken, (req, res) => {
+    jwt.verify(req.token, keys.secretOrKey, (err, authorizedUser) => {
+        if(err){
+            res.sendStatus(403);
+        } else {
+            if(!isEmpty(req.body)){
+                let newItem = sanitizeData(req.body)
+                db.ItemsFinished.create(newItem)
+                .then(item => res.status(201).send(item) )
+                .catch( err => err )
+            }
+        }
+    })
+})
+
+
+
+// @route   GET – gets list of all a users finished items
+inventoryRouter.get("/items/user-items-finished", checkForToken, (req, res, next) => {
+    jwt.verify(req.token, keys.secretOrKey, (err) => {
+        if(err) res.sendStatus(403)
+        if(!isEmpty(req.query)){
+            db.ItemsFinished.findAll({
+                where :  req.query , 
+                    include: [{
+                        model: db.Items,
+                        attributes:['name'],
+                        include: [ {
+                            model: db.Subcategories,
+                            attributes:['name' ],
+                            include: [ {
+                                model: db.Categories,
+                                attributes:['name', 'id' ]
+                            }],
+                        }],
+                    }],
+                // order:[ ['name', 'ASC'] ]
+            })
+            .then(items => {
+                res.status(200).send(items)
+            })
+            .catch( err => {
+                next(err)
+                res.status(500).send(err)
+            })
+        }
+    })
+})
+
+
+
+// @route   POST – Adds a new added item
+inventoryRouter.post("/items/user-items-added", checkForToken, (req, res) => {
+    jwt.verify(req.token, keys.secretOrKey, (err, authorizedUser) => {
+        if(err){
+            res.sendStatus(403);
+        } else {
+            if(!isEmpty(req.body)){
+                let newItem = sanitizeData(req.body)
+                db.ItemsAdded.create(newItem)
+                .then(item => res.status(201).send(item) )
+                .catch( err => err )
+            }
+        }
+    })
+})
+
+
+
+// @route   GET – gets list of all a users added items
+inventoryRouter.get("/items/user-items-added", checkForToken, (req, res, next) => {
+    jwt.verify(req.token, keys.secretOrKey, (err) => {
+        if(err) res.sendStatus(403)
+        if(!isEmpty(req.query)){
+            db.ItemsAdded.findAll({
+                where :  req.query , 
+                    include: [{
+                        model: db.Items,
+                        attributes:['name'],
+                        include: [ {
+                            model: db.Subcategories,
+                            attributes:['name' ],
+                            include: [ {
+                                model: db.Categories,
+                                attributes:['name', 'id' ]
+                            }],
+                        }],
+                    }],
+                // order:[ ['name', 'ASC'] ]
+            })
+            .then(items => {
+                res.status(200).send(items)
+            })
+            .catch( err => {
+                next(err)
+                res.status(500).send(err)
+            })
+        }
+    })
+})
+
 
 
 module.exports = inventoryRouter
