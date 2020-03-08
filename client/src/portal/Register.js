@@ -1,49 +1,58 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { withAuth } from '../context/AuthProvider'
 
 const Register = ({ handleAuthChange, registerNameInput, registerEmailInput, registerPasswordInput, registerPasswordConfirmInput, handleUserRegistration, loginRegisterErrorMessage }) => {
     return (
-        <div>
+        <div className='poral-wrap'>
             <h2> Register: </h2>
-            <form onSubmit={handleUserRegistration}>
-            <label> Name </label>
+            <form onSubmit={handleUserRegistration} className='form-wrap'>
+            <div className='portal-input-wrap'>
+                <label className='portal-input-label'> Name </label>
                 <input
                     type='text'
+                    className='text-input'
                     name='registerNameInput'
                     required={true}
                     value={registerNameInput}
                     onChange={handleAuthChange}
                 />
-                <label> Email </label>
+            </div>
+            <div className='portal-input-wrap'>
+                <label className='portal-input-label'> Email </label>
                 <input
                     type='email'
+                    className='text-input'
                     name='registerEmailInput'
                     required={true}
                     value={registerEmailInput}
                     onChange={handleAuthChange}
                 />
-
-                <label> Password </label>
+            </div>
+            <div className='portal-input-wrap'>
+                <label className='portal-input-label'> Password </label>
                 <input
                     type='password'
+                    className='text-input'
                     name='registerPasswordInput'
                     required={true}
                     value={registerPasswordInput}
                     onChange={handleAuthChange}
                 />
-                <label> Confirm Password </label>
+            </div>
+            <div className='portal-input-wrap'>
+                <label className='portal-input-label'> Confirm Password </label>
                 <input
                     type='password'
+                    className='text-input'
                     name='registerPasswordConfirmInput'
                     required={true}
                     value={registerPasswordConfirmInput}
                     onChange={handleAuthChange}
                 />
-                <button> Register </button>
+            </div>
+                <button className='default-button portal-button'> Register </button>
             </form>
             { loginRegisterErrorMessage && <p> {loginRegisterErrorMessage} </p> }
-            <Link to='/login'> Have an Account?  Login Here </Link>
         </div>
     );
 }

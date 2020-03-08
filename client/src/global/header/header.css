@@ -1,0 +1,35 @@
+.header-wrapper{
+    margin:0;
+    background-color: #000;
+}
+.header-login-links-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 15px;
+}
+.header-links-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px;
+}
+.header-left-container{
+    display: flex;
+    align-items: center;
+}
+.header-right-container{
+    /* justify-content: flex-end; */
+}
+.user-name{
+    color: #fff;
+    margin: 0 20px 0 10px;
+    letter-spacing: 1px;
+    font-size: 12px;
+}
+.selected-link{
+    border-bottom: 2px solid white;
+}
+.logout-button{
+    border: 1px solid white;
+}

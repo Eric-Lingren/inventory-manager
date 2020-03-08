@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
+import '../App.css'
 import { withInventory } from '../context/InventoryProvider'
 import CategoriesOptionSelect from '../global/CategoriesOptionSelect'
 import SubcategoryOptionSelect from '../global/SubcategoriesOptionSelect'
@@ -23,7 +23,7 @@ const CreateInventoryItem = ({ handleInventoryChange, itemName, handleSaveNewIte
                     value={itemName}
                     onChange={handleInventoryChange}
                 />
-                <button> Add Item To My Options </button>
+                <button className='default-button'> Add To Options </button>
             </form>
             {itemAddedSuccessfully === true && <span> Success </span> }
             {itemAddedSuccessfully === false && <span> Try Again </span> }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import Home from './global/Home'
-import Header from './global/Header'
+import Header from './global//header/Header'
 import Login from './portal/Login'
 import Register from './portal/Register'
 import AdminPortalHome from './portal/adminPortal/AdminPortalHome'

@@ -1,5 +1,6 @@
 import React from 'react';
 import './manageInventory.css'
+import '../App.css'
 import { withInventory } from '../context/InventoryProvider'
 import CategoriesOptionSelect from '../global/CategoriesOptionSelect'
 import SubcategoryOptionSelect from '../global/SubcategoriesOptionSelect'
@@ -70,7 +71,7 @@ const AddInventoryItem = ({ addToPersonalInventory, handleInventoryChange, expir
                     <option value="pt" defaultValue> Pints </option>
                 </select>
 
-                <button> Add to my Inventory </button>
+                <button className='default-button'> Add To Inventory </button>
             </form>
             { itemAddedToUserList && <span> Added </span> }
             { itemAddedToUserList === false && <span> Try Again </span> }

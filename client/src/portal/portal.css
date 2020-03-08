@@ -1,0 +1,27 @@
+.poral-wrap{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.form-wrap{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+.portal-input-wrap{
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+}
+.portal-input-label{
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.portal-button{
+    width: 70%;
+    margin-top: 20px;
+}

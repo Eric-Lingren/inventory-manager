@@ -1,9 +1,22 @@
 body {
   background-color: gray;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  margin: 0;
 }
 .App {
   text-align: center;
+}
+.default-button{
+  color: #FFF;
+  margin: 0 10px 0 10px;
+  letter-spacing: 1px;
+  font-size: 16px;
+  border-radius: 2px;
+  border-color: #000;
+  background-color: #008CBA;
+  padding: 5px 15px 5px 15px;
+  cursor: pointer;
+  
 }
 .button-delete{
   background-color: #ef493e;
@@ -26,3 +39,33 @@ body {
   border: none;
   margin: 4px;
 }
+.link{
+  color: #fff;
+  margin: 0 15px 0 15px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  text-decoration: none;
+  padding-bottom: 3px;
+}
+
+
+.text-input {
+  -webkit-appearance: none;
+  /* width: 100%; */
+  border: 0;
+  font-family: inherit;
+  padding: 5px;
+  height: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  /* background: none; */
+  border-radius: 0;
+  color: #223254;
+  /* transition: all .15s ease;  */
+}
+
+/* @keyframes elasticInput
+33%
+  d: path("M0,12 L226,12 C220,12 220.666667,12 228,12 C239,12 245,1 253,1 C261,1 268,12 278,12 C284.666667,12 285.333333,12 280,12")
+66%
+  d: path("M0,12 L226,12 C220,12 220.666667,12 228,12 C239,12 245,17 253,17 C261,17 268,12 278,12 C284.666667,12 285.333333,12 280,12") */

@@ -11,7 +11,6 @@ class AuthProvider extends Component {
     constructor(){
         super()
         this.state = {
-            isShowingRegister : false,
             loginEmailInput: '',
             loginPasswordInput: '',
             registerNameInput: '',
