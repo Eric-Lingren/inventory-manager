@@ -10,7 +10,61 @@
 .user-inventory-item-card{
     display: grid;
     grid-template-columns: .3fr .3fr 1fr .5fr .25fr .25fr .1fr .1fr .1fr ;
-    box-shadow: -5px 5px 16px #00000018;
+    box-shadow: -5px 10px 21px #00000018;
     background-color: #F2F2F2;
     margin: 5px;
+    height: 40px;
+}
+.inventory-header{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    margin: 5px;
+}
+.inventory-h2{
+    margin: 0;
+}
+.lists-dropdown-container{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    position: relative;
+}
+.lists-dropdown{
+    width: 220px;
+    width: 16.5%;
+    height: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    margin-left: 38.5%;
+    /* margin-top: -25px; */
+}
+.lists-item{
+    background-color: #E4E4E4;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+    cursor: pointer;
+    /* border: 1px solid black; */
+    padding: 2px 2px 2px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.lists-item:hover{
+    background-color: #F1F1F1;
+}
+.new-list-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    margin: 5px;
+}
+.new-list-label{
+    font-size: 20px;
 }

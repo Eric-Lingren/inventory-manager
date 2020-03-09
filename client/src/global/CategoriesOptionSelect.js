@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import '../App.css'
 import { withInventory } from '../context/InventoryProvider'
 
 
@@ -20,7 +21,7 @@ const CategoriesOptionSelect = ({ handleGetCategories, inventoryCategories, hand
 
     
     return (
-        <select name='selectedCategoryId' onChange={handleInventoryChange} required={true} >
+        <select name='selectedCategoryId' className='option-select' onChange={handleInventoryChange} required={true} >
                 <option value="" defaultValue> - Select Category - </option>
                 {categoryOptions}
         </select>

@@ -22,7 +22,7 @@ const UserInventoryCard = ({ id, category, subcategory, name, itemQuantity, item
             <p> {itemQuantity} </p>
             <button className='button-delete' onClick={ () => handleDeleteUserInventoryItem(id) } > 
                 <FontAwesomeIcon icon={faTrash} />
-             </button>
+            </button>
             <button className='button-minus' onClick={ () => markItemUsed(id, item) }> 
                  <FontAwesomeIcon icon={faMinus} />
             </button>

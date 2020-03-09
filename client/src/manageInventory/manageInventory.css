@@ -1,15 +1,48 @@
+.input-container-wrapper{
+    display: flex;
+    justify-content: space-between;
+}
 .add-inventory-container{
     display: flex;
     justify-content: center;
     align-content: center;
 }
-.add-inventory-wrapper{
-    background-color: #D9D9D9;
+.create-inventory-wrapper{
     padding: 5px 10px 10px 10px;
     margin: 15px;
-    width: 70vw;
-    box-shadow: -5px 5px 16px #00000018;
+    width: 35vw;
+    box-shadow: -5px 15px 25px #00000018;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.add-inventory-wrapper{
+    padding: 5px 10px 10px 10px;
+    margin: 15px;
+    width: 50vw;
+    box-shadow: -5px 15px 25px #00000018;
 }
 .add-inventory-header{
     margin: 0 0 5px 0;
+}
+.create-inventory-header{
+    margin: 0 0 15px 0;
+}
+.add-inventory-row-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+.add-inventory-input-wrapper{
+    margin: 0 10px 0 10px;
+}
+.create-inventory-input-wrapper{
+    margin: 0 10px 0 10px;
+}
+.number-input{
+    width: 50px;
+}
+.add-name{
+    width: 150px;
 }

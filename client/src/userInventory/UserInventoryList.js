@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import './userInventory.css'
-// import { Link } from 'react-router-dom';
 import { withInventory } from '../context/InventoryProvider'
 import { withAuth } from '../context/AuthProvider'
 import UserInventoryCard from './UserInventoryCard'
@@ -37,7 +36,6 @@ const UserInventoryHome = ({ getUserFromToken, user, getUserInventory, userInven
 
     return (
         <div >
-            <h2> My Inventory: </h2>
             <div className='user-inventory-list-table-heading'>
                 <h4 className='inventory-header' > Category </h4>
                 <h4 className='inventory-header'> Subcategory </h4>

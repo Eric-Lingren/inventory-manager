@@ -76,6 +76,7 @@ app.use('/auth', require("./routes/auth.js"))
 app.use("/api", expressJwt({secret: keys.secretOrKey}))
 app.use('/api/admin', require("./routes/api/admin"))
 app.use('/api/inventory', require("./routes/api/inventory"))
+app.use('/api/list', require("./routes/api/list"))
 
 //  SENDING BUILD FILE
     //  Server sends a compiled build file to users on web browsers

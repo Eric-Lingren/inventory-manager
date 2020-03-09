@@ -1,4 +1,5 @@
 import React from 'react';
+import './manageInventory.css'
 // import { Link } from 'react-router-dom';
 import CreateInventoryItem from './CreateInventoryItem'
 import AddInventoryItem from './AddInventoryItem'
@@ -10,9 +11,11 @@ const ManageInventoryHome = () => {
     
     return (
         <div >
-            <h2> Manage Inventory Home </h2>
-            <CreateInventoryItem />
-            <AddInventoryItem />
+            <div className='input-container-wrapper'>
+                <CreateInventoryItem />
+                <AddInventoryItem />
+            </div>
+           
             <UserInventoryHome />
             
         </div>

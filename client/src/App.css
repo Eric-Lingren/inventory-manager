@@ -21,23 +21,47 @@ body {
 .button-delete{
   background-color: #ef493e;
   color: #fff;
-  font-size: 20px;
+  font-size: 15px;
   border: none;
   margin: 4px;
+  height: 30px;
+  width: 30px;
 }
 .button-minus{
   background-color: #4DBDEB;
   color: #fff;
-  font-size: 20px;
+  font-size: 15px;
   border: none;
   margin: 4px;
+  height: 30px;
+  width: 30px;
 }
 .button-plus{
   background-color: #36C467;
   color: #fff;
-  font-size: 20px;
+  font-size: 15px;
   border: none;
   margin: 4px;
+  height: 30px;
+  width: 30px;
+}
+.button-caret-down{
+  color: #0424D9;
+  font-size: 25px;
+  border: none;
+  margin: 3px 0 0 15px;
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+}
+.button-create-list{
+  color: #5E4890;
+  font-size: 35px;
+  border: none;
+  margin: 3px 0 0 15px;
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
 }
 .link{
   color: #fff;
@@ -47,25 +71,28 @@ body {
   text-decoration: none;
   padding-bottom: 3px;
 }
-
+p{
+  margin: 10px;
+}
 
 .text-input {
   -webkit-appearance: none;
-  /* width: 100%; */
   border: 0;
   font-family: inherit;
   padding: 5px;
   height: 20px;
   font-size: 14px;
   font-weight: 500;
-  /* background: none; */
   border-radius: 0;
   color: #223254;
-  /* transition: all .15s ease;  */
 }
 
-/* @keyframes elasticInput
-33%
-  d: path("M0,12 L226,12 C220,12 220.666667,12 228,12 C239,12 245,1 253,1 C261,1 268,12 278,12 C284.666667,12 285.333333,12 280,12")
-66%
-  d: path("M0,12 L226,12 C220,12 220.666667,12 228,12 C239,12 245,17 253,17 C261,17 268,12 278,12 C284.666667,12 285.333333,12 280,12") */
+.option-select{
+  height: 30px;
+  border-radius: 0;
+  width: 180px;
+}
+option{
+  padding: 20px;
+  font-size: 40px;
+}

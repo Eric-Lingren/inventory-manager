@@ -13,17 +13,64 @@ const AddInventoryItem = ({ addToPersonalInventory, handleInventoryChange, expir
     return (
         <div className='add-inventory-container'>
         <div className='add-inventory-wrapper'>
-            <h3 className='add-inventory-header'> Add Item To My Inventory </h3>
+            <h3 className='add-inventory-header'> Add To Inventory </h3>
             <form onSubmit={addToPersonalInventory}>
-                <CategoriesOptionSelect />
-                <SubcategoryOptionSelect />
-                <ItemsOptionsSelects />
+                <div className='add-inventory-row-wrapper'>
+                    <div className='add-inventory-input-wrapper'>
+                        <CategoriesOptionSelect />
+                    </div>
+                    <div className='add-inventory-input-wrapper'>
+                        <SubcategoryOptionSelect />
+                    </div>
+                    <div className='add-inventory-input-wrapper'>
+                        <ItemsOptionsSelects />
+                    </div>
+                </div>
 
-                <aside className="sessions-date">
-                    <label> Expiration Date: </label>
-                    <div className="events-filter-date-range-wrap">
+                <div className='add-inventory-row-wrapper'>
+                    <div className='add-inventory-input-wrapper'>
+                        <label> Quantity: </label>
                         <input 
-                            className="events-filter-date sessions" 
+                            className='text-input number-input'
+                            type="number" 
+                            name='quantity' 
+                            onChange={handleInventoryChange}
+                            value={quantity}
+                            label='Quantity'
+                        />
+                    </div>
+                    <div className='add-inventory-input-wrapper'>
+                        <label > Size: </label>
+                        <input 
+                            className='text-input number-input' 
+                            type="number" 
+                            name='size' 
+                            onChange={handleInventoryChange}
+                            value={size}
+                            label='size'
+                        />
+                    </div>
+                    <div className='add-inventory-input-wrapper'>
+                        <select name='volumeType' className='option-select' onChange={handleInventoryChange} >
+                            <option value="" defaultValue> - Select Measurement Type - </option>
+                            <option value="oz" defaultValue> Ounces </option>
+                            <option value="lb" defaultValue> Pounds </option>
+                            <option value="qt" defaultValue> Quarts </option>
+                            <option value="gal" defaultValue> Gallons </option>
+                            <option value="gr" defaultValue> Grams </option>
+                            <option value="kg" defaultValue> Kilograms </option>
+                            <option value="ml" defaultValue> Milliliters </option>
+                            <option value="l" defaultValue> Liters </option>
+                            <option value="pt" defaultValue> Pints </option>
+                            <option value="ct" defaultValue> Count </option>
+                        </select>
+                    </div>
+                </div>
+                <div className='add-inventory-row-wrapper'>
+                    <div className='add-inventory-input-wrapper'>
+                        <label> Expiration Date: </label>
+                        <input 
+                        className='text-input '
                             type="date" 
                             min={today} 
                             name='expirationDate' 
@@ -32,46 +79,8 @@ const AddInventoryItem = ({ addToPersonalInventory, handleInventoryChange, expir
                             label='Expiration Date'
                         />
                     </div>
-                </aside>
-
-                <aside className="quantity">
-                    <label> Quantity: </label>
-                        <input 
-                            // className="events-filter-date sessions" 
-                            type="number" 
-                            name='quantity' 
-                            onChange={handleInventoryChange}
-                            value={quantity}
-                            label='Quantity'
-                        />
-                </aside>
-
-                <aside className="size">
-                    <label> Size: </label>
-                        <input 
-                            // className="events-filter-date sessions" 
-                            type="number" 
-                            name='size' 
-                            onChange={handleInventoryChange}
-                            value={size}
-                            label='size'
-                        />
-                </aside>
-
-                <select name='volumeType' onChange={handleInventoryChange} >
-                    <option value="" defaultValue> - Select Measurement Type - </option>
-                    <option value="oz" defaultValue> Ounces </option>
-                    <option value="lb" defaultValue> Pounds </option>
-                    <option value="qt" defaultValue> Quarts </option>
-                    <option value="gal" defaultValue> Gallons </option>
-                    <option value="gr" defaultValue> Grams </option>
-                    <option value="kg" defaultValue> Kilograms </option>
-                    <option value="ml" defaultValue> Milliliters </option>
-                    <option value="l" defaultValue> Liters </option>
-                    <option value="pt" defaultValue> Pints </option>
-                </select>
-
-                <button className='default-button'> Add To Inventory </button>
+                    <button className='default-button'> Add To Inventory </button>
+                </div>
             </form>
             { itemAddedToUserList && <span> Added </span> }
             { itemAddedToUserList === false && <span> Try Again </span> }

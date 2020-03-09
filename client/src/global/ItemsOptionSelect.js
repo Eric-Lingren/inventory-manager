@@ -1,4 +1,5 @@
 import React from 'react';
+import '../App.css'
 import { withInventory } from '../context/InventoryProvider'
 
 
@@ -11,8 +12,8 @@ const ItemsOptionSelect = ({ inventoryItems, handleInventoryChange }) => {
     })
     
     return (
-        <select name='selectedItemId' onChange={handleInventoryChange} required={true} >
-                <option value="" defaultValue> - Select Subcategory Before Item - </option>
+        <select name='selectedItemId' className='option-select' onChange={handleInventoryChange} required={true} >
+                <option value="" defaultValue> - Select Item - </option>
                 {itemOptions}
         </select>
     );

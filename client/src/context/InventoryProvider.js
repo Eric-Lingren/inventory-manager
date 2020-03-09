@@ -3,7 +3,6 @@ import axios from 'axios'
 // import validator from 'validator'
 import sanitizeData from '../HelperFunctions/SanitizeData'
 import decode from 'jwt-decode';
-import { CP1251_BULGARIAN_CI } from 'mysql2/lib/constants/charsets';
 
 
 const baseURL = 'api/inventory'
@@ -34,7 +33,12 @@ class InventoryProvider extends Component {
             itemAddedToUserList: null,
             quantity: 1,
             size: '',
-            volumeType: ''
+            volumeType: '',
+            userLists : [ ],
+            masterList: { name: 'Master Inventory', id: '' },
+            selectedUserList: { name: 'Master Inventory' },
+            createListName: '',
+            createdListSuccess: null
         }
     }
 
@@ -42,6 +46,10 @@ class InventoryProvider extends Component {
     handleInventoryChange = (e) => {
         const {name, value } = e.target
         this.setState({ [name]: sanitizeData(value) })
+    }
+
+    handleSetSelectedList = ( selectedList ) => {
+        this.setState({ selectedUserList: selectedList })
     }
 
 
@@ -208,6 +216,34 @@ class InventoryProvider extends Component {
         .catch(err => err)
     }
 
+    getLists = () => {
+        let decodedJwt;
+        let token = localStorage.getItem("inventoryManagement")
+        if(token) decodedJwt = decode(token)
+        authAxios.get(`api/list?userId=${decodedJwt.user.id}`)
+        .then(res => {
+            this.setState({ userLists: [this.state.masterList, ...res.data] })
+        })
+        .catch(err => err)
+    }
+
+    createList = (e) => {
+        e.preventDefault()
+        let decodedJwt;
+        let token = localStorage.getItem("inventoryManagement")
+        if(token) decodedJwt = decode(token)
+
+        const newList = { name: this.state.createListName, userId: decodedJwt.user.id }
+        authAxios.post(`api/list`, newList)
+        .then(res => {
+            this.setState({createdListSuccess: true})
+            this.getLists()
+        })
+        .catch(err => {
+            this.setState({createdListSuccess: false})
+        })
+    }
+
 
     render(){
         return (
@@ -215,6 +251,7 @@ class InventoryProvider extends Component {
                 value={{
                     ...this.state,
                     handleInventoryChange: this.handleInventoryChange,
+                    handleSetSelectedList: this.handleSetSelectedList,
                     handleGetCategories: this.handleGetCategories,
                     handleGetSubcategories: this.handleGetSubcategories,
                     handleGetItems: this.handleGetItems,
@@ -224,6 +261,8 @@ class InventoryProvider extends Component {
                     handleDeleteUserInventoryItem: this.handleDeleteUserInventoryItem,
                     markItemUsed: this.markItemUsed,
                     markItemAdded: this.markItemAdded,
+                    getLists: this.getLists,
+                    createList: this.createList,
                 }}>
                 { this.props.children }
             </InventoryContext.Provider>

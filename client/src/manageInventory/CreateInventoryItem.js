@@ -10,24 +10,36 @@ const CreateInventoryItem = ({ handleInventoryChange, itemName, handleSaveNewIte
 
     
     return (
-        <div >
-            <h3> Create New Custom Inventory Item </h3>
+        <div className='add-inventory-container'>
+        <div className='create-inventory-wrapper'>
+            <h3 className='create-inventory-header'> Create Custom Item </h3>
             <form onSubmit={handleSaveNewItem}>
-                <CategoriesOptionSelect />
-                <SubcategoryOptionSelect />
-                <label> Name </label>
-                <input 
-                    type='text'
-                    name='itemName'
-                    required={true}
-                    value={itemName}
-                    onChange={handleInventoryChange}
-                />
-                <button className='default-button'> Add To Options </button>
+            <div className='add-inventory-row-wrapper'>
+                <div className='create-inventory-input-wrapper'>
+                    <CategoriesOptionSelect />
+                </div>
+                <div className='create-inventory-input-wrapper'>
+                    <SubcategoryOptionSelect />
+                </div>
+            </div>
+            <div className='add-inventory-row-wrapper'>
+                <div className='add-inventory-input-wrapper'>
+                    <label> Name: </label>
+                    <input 
+                        className='text-input add-name'
+                        type='text'
+                        name='itemName'
+                        required={true}
+                        value={itemName}
+                        onChange={handleInventoryChange}
+                    />
+                </div>
+                    <button className='default-button'> Create </button>
+                </div>
             </form>
             {itemAddedSuccessfully === true && <span> Success </span> }
             {itemAddedSuccessfully === false && <span> Try Again </span> }
-            
+        </div>
         </div>
     );
 }

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import '../App.css'
 import { withInventory } from '../context/InventoryProvider'
 
 
@@ -16,8 +17,8 @@ const SubcategoriesOptionSelect = ({ inventorySubcategories, handleInventoryChan
 
     
     return (
-        <select name='selectedSubcategoryId' onChange={handleInventoryChange} required={true} >
-                <option value="" defaultValue> - Select Category Before Subcategory - </option>
+        <select name='selectedSubcategoryId' className='option-select' onChange={handleInventoryChange} required={true} >
+                <option value="" defaultValue> - Select Subcategory - </option>
                 {subcategoryOptions}
         </select>
     );
