@@ -5,6 +5,7 @@ import { withInventory } from '../context/InventoryProvider'
 import CategoriesOptionSelect from '../global/CategoriesOptionSelect'
 import SubcategoryOptionSelect from '../global/SubcategoriesOptionSelect'
 import ItemsOptionsSelects from '../global/ItemsOptionSelect'
+import ListsOptionSelect from '../global/ListsOptionSelect'
 
 const AddInventoryItem = ({ addToPersonalInventory, handleInventoryChange, expirationDate, quantity, size, volumeType, itemAddedToUserList}) => {
 
@@ -68,9 +69,9 @@ const AddInventoryItem = ({ addToPersonalInventory, handleInventoryChange, expir
                 </div>
                 <div className='add-inventory-row-wrapper'>
                     <div className='add-inventory-input-wrapper'>
-                        <label> Expiration Date: </label>
+                        <label> Expires: </label>
                         <input 
-                        className='text-input '
+                            className='text-input date-input'
                             type="date" 
                             min={today} 
                             name='expirationDate' 
@@ -79,7 +80,8 @@ const AddInventoryItem = ({ addToPersonalInventory, handleInventoryChange, expir
                             label='Expiration Date'
                         />
                     </div>
-                    <button className='default-button'> Add To Inventory </button>
+                    <ListsOptionSelect />
+                    <button className='default-button'> Add </button>
                 </div>
             </form>
             { itemAddedToUserList && <span> Added </span> }

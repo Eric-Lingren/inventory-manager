@@ -27,6 +27,7 @@ class InventoryProvider extends Component {
             selectedCategoryId: '',
             selectedSubcategoryId: '',
             selectedItemId: '',
+            selectedListId: '',
             itemName: '',
             itemAddedSuccessfully: null,
             expirationDate: '',
@@ -38,7 +39,7 @@ class InventoryProvider extends Component {
             masterList: { name: 'Master Inventory', id: '' },
             selectedUserList: { name: 'Master Inventory' },
             createListName: '',
-            createdListSuccess: null
+            createdListSuccess: null,
         }
     }
 
@@ -118,6 +119,7 @@ class InventoryProvider extends Component {
             subcategoryId: this.state.selectedSubcategoryId,
             itemId: this.state.selectedItemId,
             userId: decodedJwt.user.id,
+            listId: this.state.selectedListId,
             expirationDate: expires,
             quantity: this.state.quantity,
             size: this.state.size,
@@ -134,12 +136,18 @@ class InventoryProvider extends Component {
         })
     }
 
-    getUserInventory = () => {
+    getUserInventory = (listId) => {
         let token = localStorage.getItem("inventoryManagement")
         let decodedJwt = decode(token)
         let userId = decodedJwt.user.id
- 
-        authAxios.get(`${baseURL}/items/user-items?userId=${userId}`)
+        let query;
+        if(!listId){
+            query = `?userId=${userId}`
+        } else{
+            query = `?userId=${userId}&&listId=${listId}`
+        }
+
+        authAxios.get(`${baseURL}/items/user-items${query}`)
         .then(res => {
             this.setState({ userInventoryItems: res.data })
         })

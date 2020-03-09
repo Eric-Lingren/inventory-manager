@@ -12,8 +12,8 @@ const UserInventoryHome = ({ getUserFromToken, user, getUserInventory, userInven
     }, [ getUserFromToken ])
 
     useEffect(() => {
-        getUserInventory(user.id)
-    }, [ getUserInventory, user ])
+        getUserInventory()
+    }, [ getUserInventory ])
 
     
 

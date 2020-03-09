@@ -1,5 +1,5 @@
 body {
-  background-color: gray;
+  /* background-color: gray; */
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   margin: 0;
 }
@@ -71,10 +71,9 @@ body {
   text-decoration: none;
   padding-bottom: 3px;
 }
-p{
+p {
   margin: 10px;
 }
-
 .text-input {
   -webkit-appearance: none;
   border: 0;
@@ -86,7 +85,9 @@ p{
   border-radius: 0;
   color: #223254;
 }
-
+.date-input{
+  width: 145px;
+}
 .option-select{
   height: 30px;
   border-radius: 0;

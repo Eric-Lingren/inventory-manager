@@ -17,6 +17,9 @@ module.exports = (sequelize, Sequelize) => {
     userId: {
       type: Sequelize.UUID,
     },
+    listId: {
+      type: Sequelize.UUID,
+    },
     expirationDate: {
       type: Sequelize.DATE,
     },

@@ -7,18 +7,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretSquareDown, faFolderPlus, faFolderMinus } from '@fortawesome/free-solid-svg-icons'
 
 
-const UserInventoryHome = ({ getLists, selectedUserList, userLists, handleSetSelectedList }) => {
+const UserInventoryHome = ({ getLists, selectedUserList, userLists, handleSetSelectedList, getUserInventory }) => {
+
     const [isShowingList, setIsShowingList] = useState(false)
     const [isShowingCreateList, setIsShowingCreateList] = useState(false)
 
     useEffect(() => {
         getLists()
-        console.log('mounted')
     }, [ getLists ])
 
     const selectList = (selectedList) => {
         setIsShowingList(!isShowingList)
         handleSetSelectedList(selectedList)
+        getUserInventory(selectedList.id)
     }
 
     const mappedLists = userLists.map( (list, i) => {
@@ -27,7 +28,7 @@ const UserInventoryHome = ({ getLists, selectedUserList, userLists, handleSetSel
 
 
     return (
-        <div >
+        <div>
             <div className='inventory-header'>
                 <h2 className='inventory-h2'> { selectedUserList.name } </h2>
                 <FontAwesomeIcon icon={faCaretSquareDown} className='button-caret-down' onClick={() => setIsShowingList(!isShowingList)} />
@@ -41,14 +42,10 @@ const UserInventoryHome = ({ getLists, selectedUserList, userLists, handleSetSel
                 </div>
             }
             </div>
-
-            {
-                isShowingCreateList && <CreateNewList />
-            }
-            
+            { isShowingCreateList && <CreateNewList /> }
             <UserInventoryList />
         </div>
-    );
+    )
 }
 
 export default withInventory(UserInventoryHome)
