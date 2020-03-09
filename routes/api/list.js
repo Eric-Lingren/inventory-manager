@@ -28,7 +28,7 @@ listRouter.get("/", checkForToken, (req, res, next) => {
         if(!isEmpty(req.query)){
             db.List.findAll({
                 where :  req.query ,
-                // order:[ ['name', 'ASC'] ]
+                order:[ ['name', 'ASC'] ]
             })
             .then(items => {
                 res.status(200).send(items)

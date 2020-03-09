@@ -23,7 +23,7 @@ const Header = ({ getUserFromToken, user, logOut }) => {
                 <div className='header-links-wrapper'>
                     <div className='header-left-container'>
                         <NavLink className='link' activeClassName="selected-link" to='/dashboard'> Dashboard </NavLink>
-                        <NavLink className='link' activeClassName="selected-link" to='/manage-inventory'> Manage My Inventory </NavLink>
+                        <NavLink className='link' activeClassName="selected-link" to='/manage-inventory'> Manage Inventory </NavLink>
                     </div>
                     <div className='header-right-container'>
                         <span className='user-name'> Welcome, {user.name}</span>

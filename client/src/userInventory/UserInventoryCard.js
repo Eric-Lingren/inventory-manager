@@ -18,8 +18,8 @@ const UserInventoryCard = ({ id, category, subcategory, name, itemQuantity, item
             <p> {subcategory} </p>
             <p> {name} </p>
             <p> {expires} </p>
-            <p> {itemSize} {itemVolumeType} </p>
             <p> {itemQuantity} </p>
+            <p> {itemSize} {itemVolumeType} </p>
             <button className='button-delete' onClick={ () => handleDeleteUserInventoryItem(id) } > 
                 <FontAwesomeIcon icon={faTrash} />
             </button>

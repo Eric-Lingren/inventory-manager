@@ -252,6 +252,91 @@ class InventoryProvider extends Component {
         })
     }
 
+    sortByItemName = (order) => {
+        const items = this.state.userInventoryItems
+        if(order.asc){
+            items.sort(function(a, b) {
+                let textA = a.Item.name.toUpperCase();
+                let textB = b.Item.name.toUpperCase();
+                return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            })
+        } else {
+            items.sort(function(a, b) {
+                let textA = a.Item.name.toUpperCase();
+                let textB = b.Item.name.toUpperCase();
+                return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
+            })
+        }
+    }
+
+    sortBySubcategoryName = (order) => {
+        const items = this.state.userInventoryItems
+        if(order.asc){
+            items.sort(function(a, b) {
+                let textA = a.Item.Subcategory.name.toUpperCase();
+                let textB = b.Item.Subcategory.name.toUpperCase();
+                return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            })
+        } else {
+            items.sort(function(a, b) {
+                let textA = a.Item.Subcategory.name.toUpperCase();
+                let textB = b.Item.Subcategory.name.toUpperCase();
+                return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
+            })
+        }
+    }
+
+    sortByCategoryName = (order) => {
+        const items = this.state.userInventoryItems
+        if(order.asc){
+            items.sort(function(a, b) {
+                let textA = a.Item.Subcategory.Category.name.toUpperCase();
+                let textB = b.Item.Subcategory.Category.name.toUpperCase();
+                return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            })
+        } else {
+            items.sort(function(a, b) {
+                let textA = a.Item.Subcategory.Category.name.toUpperCase();
+                let textB = b.Item.Subcategory.Category.name.toUpperCase();
+                return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
+            })
+        }
+    }
+
+    sortByExpiration = (order) => {
+        const items = this.state.userInventoryItems
+        if(order.asc){
+            items.sort(function(a, b) {
+                let textA = a.expirationDate
+                let textB = b.expirationDate
+                return new Date(textB) - new Date(textA);
+            })
+        } else {
+            items.sort(function(a, b) {
+                let textA = a.expirationDate
+                let textB = b.expirationDate
+                return new Date(textA) - new Date(textB)
+            })
+        }
+    }
+
+    sortByQuantity = (order) => {
+        const items = this.state.userInventoryItems
+        if(order.asc){
+            items.sort(function(a, b) {
+                let textA = a.quantity
+                let textB = b.quantity
+                return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            })
+        } else {
+            items.sort(function(a, b) {
+                let textA = a.quantity
+                let textB = b.quantity
+                return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
+            })
+        }
+    }
+
 
     render(){
         return (
@@ -271,6 +356,11 @@ class InventoryProvider extends Component {
                     markItemAdded: this.markItemAdded,
                     getLists: this.getLists,
                     createList: this.createList,
+                    sortByCategoryName: this.sortByCategoryName,
+                    sortBySubcategoryName: this.sortBySubcategoryName,
+                    sortByItemName: this.sortByItemName,
+                    sortByExpiration: this.sortByExpiration,
+                    sortByQuantity: this.sortByQuantity
                 }}>
                 { this.props.children }
             </InventoryContext.Provider>
