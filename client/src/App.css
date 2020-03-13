@@ -97,3 +97,29 @@ option{
   padding: 20px;
   font-size: 40px;
 }
+
+
+
+@media(max-width : 450px) {
+  .button-delete{
+    margin: 0px;
+    height: 30px;
+    width: 50px;
+    font-size: 18px;
+    border-radius: 3px;
+  }
+  .button-minus{
+    margin: 0px;
+    height: 30px;
+    width: 50px;
+    font-size: 18px;
+    border-radius: 3px;
+  }
+  .button-plus{
+    margin: 0px;
+    height: 30px;
+    width: 50px;
+    font-size: 18px;
+    border-radius: 3px;
+  }
+}

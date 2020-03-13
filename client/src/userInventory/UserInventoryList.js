@@ -90,10 +90,10 @@ const UserInventoryHome = ({ getUserFromToken, getUserInventory, userInventoryIt
                     <h4 className='inventory-header'> Quantity </h4>
                     <FontAwesomeIcon icon={faSort} className='sort-icon' onClick={toggleSortItemQuantity} />
                 </div>
-                <div className='inventory-list-header-container'>
+                <div className='inventory-list-header-container size-header'>
                     <h4 className='inventory-header'> Size </h4>
                 </div>
-                <h4 className='inventory-header'> Actions </h4>
+                <h4 className='inventory-header action-header'> Actions </h4>
             </div>
             {mappedUserItems}
         </div>
