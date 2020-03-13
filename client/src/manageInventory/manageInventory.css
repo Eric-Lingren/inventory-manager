@@ -46,3 +46,18 @@
 .add-name{
     width: 150px;
 }
+
+@media(max-width : 450px) {
+    .input-container-wrapper {
+        flex-direction: column;
+    }
+    .create-inventory-wrapper{
+        width: 90vw;
+    }
+    .add-inventory-wrapper{
+        width: 90vw;
+    }
+    .add-inventory-row-wrapper{
+        flex-direction: column;
+    }
+}

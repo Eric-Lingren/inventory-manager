@@ -1,6 +1,6 @@
 .user-inventory-list-table-heading{
     display: grid;
-    grid-template-columns: .3fr .3fr 1fr .5fr .25fr .25fr .3fr  ;
+    grid-template-columns: .3fr .6fr .8fr .5fr .25fr .25fr .3fr  ;
     border-bottom: 2px solid black;
     margin-bottom: 10px;
 }
@@ -9,11 +9,22 @@
 }
 .user-inventory-item-card{
     display: grid;
-    grid-template-columns: .3fr .3fr 1fr .5fr .25fr .25fr .1fr .1fr .1fr ;
+    grid-template-columns: 5.5fr 3fr 1fr;
     box-shadow: -5px 10px 21px #00000018;
-    background-color: #F2F2F2;
     margin: 5px;
     height: 40px;
+}
+.card-container{
+    display: flex;
+    flex-direction: row;
+}
+.card-row-1{
+    display: grid;
+    grid-template-columns: 1fr 2fr 3fr;
+}
+.card-row-2{
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr ;
 }
 .inventory-header{
     display: flex;
@@ -45,7 +56,6 @@
 .lists-item{
     background-color: #E4E4E4;
     font-size: 20px;
-    /* font-weight: bold; */
     margin: 0;
     cursor: pointer;
     padding: 2px 2px 2px 10px;
@@ -74,4 +84,73 @@
     margin-top: 7px;
     cursor: pointer;
     margin-left: 5px;
+}
+.row-main-text{
+    font-weight: bold;
+    font-size: 18px;
+}
+.span-label{
+    display: none
+}
+
+@media(max-width : 450px) {
+    .user-inventory-list-table-heading{
+        display: flex;
+        justify-content: space-evenly;
+    }
+    .inventory-header{
+        font-size: 12px;
+    }
+    .sort-icon{
+        margin-left: 1px;
+        font-size: 12px;
+    }
+    .inventory-header{
+        margin-right: 1px;
+    }
+    .action-header{
+        display: none;
+    }
+    .size-header{
+        display: none;
+    }
+    .lists-dropdown{
+        width: 70vw;
+        margin-left: 10%;
+    }
+    .user-inventory-item-card{
+        height: 130px;
+        display: flex;
+        flex-direction: column;
+        margin: 10px;
+    }
+    .card-container{
+        display: flex;
+        flex-direction: column;
+        width: 98vw;
+    }
+    .card-row-1 {
+        display: flex;
+        height: 25px;
+        justify-content: space-evenly;
+        margin-top: 8px;
+        margin-bottom: 5px;
+    }
+    .card-row-2 {
+        display: flex;
+        height: 25px;
+        justify-content: space-evenly;
+        margin: 0px;
+    }
+    .buttons-row {
+        margin-top: 25px;
+        display: flex;
+        justify-content: space-evenly;
+    }
+    p{
+        margin: 0;
+    }
+    .span-label{
+        display: block;
+    }
 }

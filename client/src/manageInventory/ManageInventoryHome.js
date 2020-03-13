@@ -1,6 +1,5 @@
 import React from 'react';
 import './manageInventory.css'
-// import { Link } from 'react-router-dom';
 import CreateInventoryItem from './CreateInventoryItem'
 import AddInventoryItem from './AddInventoryItem'
 import UserInventoryHome from '../userInventory/UserInventoryHome'
