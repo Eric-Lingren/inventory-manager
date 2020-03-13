@@ -81,7 +81,7 @@ app.use('/api/list', require("./routes/api/list"))
 //  SENDING BUILD FILE
     //  Server sends a compiled build file to users on web browsers
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "./client/build/index.html"));
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
     
