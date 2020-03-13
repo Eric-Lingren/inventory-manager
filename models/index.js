@@ -24,14 +24,14 @@ console.log(config)
 // )
 
 const sequelize = new Sequelize(
-    config.database,
-    config.username,
-    config.password,
-    {
-      host: config.host,
-      dialect: "mysql",
-      logging: false
-    }
+    // config.database,
+    // config.username,
+    // config.password,
+    // {
+    //   host: config.host,
+    //   dialect: "mysql",
+    //   logging: false
+    // }
   )
 
 const db = {};
