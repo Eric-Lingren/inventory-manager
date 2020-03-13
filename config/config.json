@@ -9,10 +9,10 @@
     "logging": false
   },
   "production": {
-    "username": "root",
-    "password": "root",
-    "database": "inventory-management",
-    "host": "127.0.0.1",
+    "username": "b5d86d123827fd",
+    "password": "9f842eeb",
+    "database": "heroku_a3a196ca10aebb0",
+    "host": "us-cdbr-iron-east-04.cleardb.net",
     "dialect": "mysql",
     "logging": false
   }
