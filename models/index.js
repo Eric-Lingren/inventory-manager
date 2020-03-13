@@ -5,6 +5,23 @@ const Sequelize = require("sequelize")
 const env = process.env.NODE_ENV
 const config = require(path.join(__dirname, "..", "config", "config.json"))[env]
 
+// let database;
+// let username;
+// let password;
+// let host;
+
+// if(env = 'development' ){
+//   database = 
+//   username = 
+//   password = 
+//   host = 
+// } else(
+//   database = 
+//   username = 
+//   password = 
+//   host = 
+// )
+
 const sequelize = new Sequelize(
     config.database,
     config.username,
