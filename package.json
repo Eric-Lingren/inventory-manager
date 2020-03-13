@@ -29,5 +29,8 @@
   "bugs": {
     "url": "https://github.com/Eric-Lingren/inventory-manager/issues"
   },
-  "homepage": "https://github.com/Eric-Lingren/inventory-manager#readme"
+  "homepage": "https://github.com/Eric-Lingren/inventory-manager#readme",
+  "engines": {
+    "node": "12.16.1"
+  }
 }
