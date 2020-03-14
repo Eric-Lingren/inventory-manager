@@ -33,3 +33,22 @@
 .logout-button{
     border: 1px solid white;
 }
+
+.alpha-header-container{
+    height: 30px;
+    background-color: #9C0000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.alpha-text{
+    color: #fff;
+}
+
+
+@media(max-width : 450px) {
+    .alpha-header-container{
+        height: 50px;
+    }
+  }

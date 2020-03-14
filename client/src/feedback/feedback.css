@@ -1,0 +1,30 @@
+.feedback-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .submit-feedback-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60vw;
+  }
+  textarea{
+      margin: 20px 0 20px 0;
+      border: 1px solid black;
+  }
+  .feedback-button{
+      width: 200px;
+  }
+  
+
+  @media(max-width : 450px) {
+    .submit-feedback-form{
+        width: 100vw;
+    }
+    textarea{
+        width: 90vw;
+    }
+  }

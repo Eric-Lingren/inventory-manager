@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './header.css'
 import '../../App.css'
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { withAuth } from '../../context/AuthProvider'
 
 
@@ -32,6 +32,12 @@ const Header = ({ getUserFromToken, user, logOut }) => {
                     </div>
                 </div>
             }
+            <Link to='feedback'>
+                <div className='alpha-header-container'>
+                    <p className='alpha-text'> This product is in alpha development.  Please click here to submit feedback. </p>
+                </div>
+            </Link>
+           
         </div>
     );
 }

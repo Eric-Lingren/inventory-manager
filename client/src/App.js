@@ -8,6 +8,7 @@ import Register from './portal/Register'
 import AdminPortalHome from './portal/adminPortal/AdminPortalHome'
 import ProtectedRoute from './shared/ProtectedRoute'
 import Dashboard from './Dashboard'
+import Feedback from './feedback/Feedback'
 // import AddInventoryHome from './addInventory/AddInventoryHome'
 import ManageInventoryHome from './manageInventory/ManageInventoryHome'
 
@@ -21,6 +22,7 @@ const App = () => {
         <Route exact path='/' component={Home} />
         <Route path='/login' component={Login} />
         <Route path='/register' component={Register} />
+        <Route path='/feedback' component={Feedback} />
         <ProtectedRoute path='/dashboard' component={Dashboard} redirectTo={"/login"} />
         {/* <ProtectedRoute path='/add-inventory' component={AddInventoryHome} redirectTo={"/login"} /> */}
         <ProtectedRoute path='/manage-inventory' component={ManageInventoryHome} redirectTo={"/login"} />

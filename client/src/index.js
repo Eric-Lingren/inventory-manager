@@ -6,14 +6,17 @@ import App from './App';
 import AuthProvider from './context/AuthProvider'
 import AdminProvider from './context/AdminProvider'
 import InventoryProvider from './context/InventoryProvider'
+import FeedbackProvider from './context/FeedbackProvider'
 
 ReactDOM.render(
     <AuthProvider>
         <AdminProvider>
             <InventoryProvider>
-                <Router history={createBrowserHistory()}>
-                    <App />
-                </Router>
+                <FeedbackProvider>
+                    <Router history={createBrowserHistory()}>
+                        <App />
+                    </Router>
+                </FeedbackProvider>
             </InventoryProvider>
         </AdminProvider>
     </AuthProvider>
