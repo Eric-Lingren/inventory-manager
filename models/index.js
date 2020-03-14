@@ -30,6 +30,7 @@ db.UserItems = require('./UserItem.js')(sequelize, Sequelize)
 db.ItemsFinished = require('./ItemsFinished.js')(sequelize, Sequelize) 
 db.ItemsAdded = require('./ItemsAdded.js')(sequelize, Sequelize) 
 db.List = require('./List.js')(sequelize, Sequelize) 
+db.Feedback = require('./Feedback.js')(sequelize, Sequelize) 
 
 // Relations
 db.ItemsFinished.belongsTo(db.Items, { foreignKey: "itemId", targetKey: "id" } );
