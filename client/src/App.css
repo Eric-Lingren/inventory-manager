@@ -26,6 +26,17 @@ body {
   margin: 4px;
   height: 30px;
   width: 30px;
+  cursor: pointer;
+}
+.button-edit{
+  background-color: #E6B700;
+  color: #fff;
+  font-size: 15px;
+  border: none;
+  margin: 4px;
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
 }
 .button-minus{
   background-color: #4DBDEB;
@@ -35,6 +46,7 @@ body {
   margin: 4px;
   height: 30px;
   width: 30px;
+  cursor: pointer;
 }
 .button-plus{
   background-color: #36C467;
@@ -44,6 +56,7 @@ body {
   margin: 4px;
   height: 30px;
   width: 30px;
+  cursor: pointer;
 }
 .button-caret-down{
   color: #0424D9;
@@ -99,8 +112,46 @@ option{
 }
 
 
+.modalStyle {
+  display: flex;
+  justify-content: center; 
+}
+
+.edit-user-modal {
+  width: 25%;
+  border: none;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #2E5597;
+  color: white; 
+}
+
+.edit-user-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #00000030;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  backdrop-filter: blur(3px); 
+}
+
+
 @media(max-width : 450px) {
   .button-delete{
+    margin: 0px;
+    height: 30px;
+    width: 50px;
+    font-size: 18px;
+    border-radius: 3px;
+  }
+  .button-edit{
     margin: 0px;
     height: 30px;
     width: 50px;

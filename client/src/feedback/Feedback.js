@@ -11,11 +11,8 @@ const Feedback = ({ handleSubmitFeedback, handleFeedbackChange, feedbackInput, i
 
     return (
         <div className='feedback-wrapper'>
-            <h3> Submit Feedback </h3>
+            <h3> Suggestions or Improvements? </h3>
             <form className='submit-feedback-form' onSubmit={handleSubmitFeedback}>
-                <label>
-                    Suggestions or Improvements?
-                </label>
                 <textarea 
                     name='feedbackInput'
                     value={feedbackInput}

@@ -40,6 +40,8 @@ class InventoryProvider extends Component {
             selectedUserList: { name: 'Master Inventory' },
             createListName: '',
             createdListSuccess: null,
+            isEditingInventoryCard: false,
+            editingItem: {}
         }
     }
 
@@ -162,6 +164,15 @@ class InventoryProvider extends Component {
             this.getUserInventory()
         })
         .catch(err => err)
+    }
+
+
+    handleEditUserInventoryItem = (id) => {
+        // authAxios.delete(`${baseURL}/items/user-items/${id}`)
+        // .then(res => {
+        //     this.getUserInventory()
+        // })
+        // .catch(err => err)
     }
 
 
@@ -337,6 +348,10 @@ class InventoryProvider extends Component {
         }
     }
 
+    handleToggleEditItemModal = (item) => {
+        this.setState({ isEditingInventoryCard: !this.state.isEditingInventoryCard, editingItem: item})
+    }
+
 
     render(){
         return (
@@ -360,7 +375,8 @@ class InventoryProvider extends Component {
                     sortBySubcategoryName: this.sortBySubcategoryName,
                     sortByItemName: this.sortByItemName,
                     sortByExpiration: this.sortByExpiration,
-                    sortByQuantity: this.sortByQuantity
+                    sortByQuantity: this.sortByQuantity,
+                    handleToggleEditItemModal: this.handleToggleEditItemModal
                 }}>
                 { this.props.children }
             </InventoryContext.Provider>

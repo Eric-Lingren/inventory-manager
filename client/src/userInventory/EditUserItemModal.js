@@ -1,42 +1,51 @@
-import React from 'react';
-import './manageInventory.css'
+import React, { useEffect, useState } from 'react';
+import Modal from 'react-modal'
+import './userInventory.css'
 import '../App.css'
+import '../modal.css'
 import { withInventory } from '../context/InventoryProvider'
-import CategoriesOptionSelect from '../global/CategoriesOptionSelect'
-import SubcategoryOptionSelect from '../global/SubcategoriesOptionSelect'
-import ItemsOptionsSelects from '../global/ItemsOptionSelect'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import ListsOptionSelect from '../global/ListsOptionSelect'
 
-const AddInventoryItem = ({ addToPersonalInventory, handleInventoryChange, expirationDate, quantity, size, volumeType, itemAddedToUserList}) => {
+
+const EditUserItemModal= ({ isEditingInventoryCard, handleToggleEditItemModal, editingItem }) => {
+    let editingExpires;
+    // useEffect(() => {
+        if(editingItem.expirationDate) editingExpires = editingItem.expirationDate.slice(0,10)
+    // }, [ ])
 
     const today = new Date()
-    
-    return (
-        <div className='add-inventory-container'>
-        <div className='add-inventory-wrapper'>
-            <h3 className='add-inventory-header'> Add To Inventory </h3>
-            <form onSubmit={addToPersonalInventory}>
-                <div className='add-inventory-row-wrapper'>
-                    <div className='add-inventory-input-wrapper'>
-                        <CategoriesOptionSelect />
-                    </div>
-                    <div className='add-inventory-input-wrapper'>
-                        <SubcategoryOptionSelect />
-                    </div>
-                    <div className='add-inventory-input-wrapper'>
-                        <ItemsOptionsSelects />
-                    </div>
-                </div>
+    // let editingExpires = editingItem.expirationDate.slice(0,10)
 
-                <div className='add-inventory-row-wrapper'>
+    // console.log(editingItem)
+    // console.log(editingExpires)
+	return (
+        <Modal
+            isOpen={isEditingInventoryCard}
+            contentLabel='Edit Item'
+            modalStyle='modalStyle'
+            className='main-modal'
+            overlayClassName='main-modal-overlay'
+            ariaHideApp={false}
+
+        >
+            
+            <div className='main-modal-body'>
+                <div className='close-icon-wrapper' onClick={() => handleToggleEditItemModal({})}>
+                    <FontAwesomeIcon icon={faTimesCircle} className='close-icon'  />
+                </div>
+                <h3>Editing List Item:  </h3>
+                <form onSubmit={null}>
+
                     <div className='add-inventory-input-wrapper'>
                         <label> Quantity: </label>
                         <input 
                             className='text-input number-input'
                             type="number" 
                             name='quantity' 
-                            onChange={handleInventoryChange}
-                            value={quantity}
+                            onChange={null}
+                            value={editingItem.quantity}
                             label='Quantity'
                         />
                     </div>
@@ -46,13 +55,13 @@ const AddInventoryItem = ({ addToPersonalInventory, handleInventoryChange, expir
                             className='text-input edit-size' 
                             type="number" 
                             name='size' 
-                            onChange={handleInventoryChange}
-                            value={size}
+                            onChange={null}
+                            value={editingItem.size}
                             label='size'
                         />
                     </div>
                     <div className='add-inventory-input-wrapper'>
-                        <select name='volumeType' className='option-select' onChange={handleInventoryChange} >
+                        <select name='volumeType' className='option-select' onChange={null} >
                             <option value="" defaultValue> - Select Measurement Type - </option>
                             <option value="oz" defaultValue> Ounces </option>
                             <option value="lb" defaultValue> Pounds </option>
@@ -66,8 +75,7 @@ const AddInventoryItem = ({ addToPersonalInventory, handleInventoryChange, expir
                             <option value="ct" defaultValue> Count </option>
                         </select>
                     </div>
-                </div>
-                <div className='add-inventory-row-wrapper'>
+                    
                     <div className='add-inventory-input-wrapper'>
                         <label> Expires: </label>
                         <input 
@@ -75,20 +83,18 @@ const AddInventoryItem = ({ addToPersonalInventory, handleInventoryChange, expir
                             type="date" 
                             min={today} 
                             name='expirationDate' 
-                            onChange={handleInventoryChange}
-                            value={expirationDate}
+                            onChange={null}
+                            value={editingExpires}
                             label='Expiration Date'
                         />
                     </div>
                     <ListsOptionSelect />
-                    <button className='default-button'> Add </button>
-                </div>
+                    <button className='default-button'> Save Edits </button>
+
             </form>
-            { itemAddedToUserList && <span> Added </span> }
-            { itemAddedToUserList === false && <span> Try Again </span> }
-        </div>
-        </div>
-    );
+            </div>
+        </Modal>
+	)
 }
 
-export default withInventory(AddInventoryItem)
+export default withInventory(EditUserItemModal)
