@@ -1,5 +1,5 @@
 body {
-  background-color: gray;
+  /* background-color: gray; */
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   margin: 0;
 }
@@ -103,8 +103,9 @@ p {
 }
 .option-select{
   height: 30px;
-  border-radius: 0;
-  width: 180px;
+  border-radius: 5px;
+  width: 142px;
+  border: 1px solid black;
 }
 option{
   padding: 20px;
@@ -171,5 +172,8 @@ option{
     width: 50px;
     font-size: 18px;
     border-radius: 3px;
+  }
+  .option-select{
+    width: 172px;
   }
 }

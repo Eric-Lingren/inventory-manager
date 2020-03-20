@@ -3,7 +3,7 @@ import '../App.css'
 import { withInventory } from '../context/InventoryProvider'
 
 
-const ListsOptionSelect = ({ getLists, userLists, handleInventoryChange }) => {
+const ListsOptionSelect = ({ getLists, userLists, handleInventoryChange, isEditing, handleEditingItem }) => {
 
     useEffect(() => {
         getLists()
@@ -15,9 +15,14 @@ const ListsOptionSelect = ({ getLists, userLists, handleInventoryChange }) => {
         )
     })
 
+    const handleChange = (e) => {
+        handleInventoryChange(e)
+        if(isEditing) handleEditingItem(e)
+    }
+
     
     return (
-        <select name='selectedListId' className='option-select' onChange={handleInventoryChange} >
+        <select name='selectedListId' className='option-select' onChange={(e) => handleChange(e)} >
                 <option value="" defaultValue> - Select List - </option>
                 {listOptions}
         </select>

@@ -285,9 +285,9 @@ inventoryRouter.put("/items/user-items/:id", checkForToken, (req, res) => {
                 if(updatedUserItem[0] === 0){
                     return res.status(500).send({msg: "User item was unable to be updated." })
                 }
-                return res.status(200).send({msg: "User item has been successfully updated." })
+                return res.status(200).send({msg: "Item has been successfully updated." })
             })
-            .catch( err => res.status(500).send({ msg: "Something broke while updating the user item." }) )
+            .catch( err => res.status(500).send({ msg: "Something broke while updating. Please try again." }) )
         }
     })
 })

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Modal from 'react-modal'
 import './userInventory.css'
 import '../App.css'
@@ -9,59 +9,62 @@ import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import ListsOptionSelect from '../global/ListsOptionSelect'
 
 
-const EditUserItemModal= ({ isEditingInventoryCard, handleToggleEditItemModal, editingItem }) => {
-    let editingExpires;
-    // useEffect(() => {
-        if(editingItem.expirationDate) editingExpires = editingItem.expirationDate.slice(0,10)
-    // }, [ ])
+const EditUserItemModal= ({ isShowingModal, toggleModal, handleEditingItem, item, editingItem, handleEditUserInventoryItem, updateMessage, clearMesages }) => {
+    
 
+    let editingExpire;
+    if(item.expirationDate) editingExpire = item.expirationDate.slice(0,10)
     const today = new Date()
-    // let editingExpires = editingItem.expirationDate.slice(0,10)
 
-    // console.log(editingItem)
-    // console.log(editingExpires)
+    const close = () => {
+        toggleModal()
+        clearMesages()
+    }
+
+    
 	return (
         <Modal
-            isOpen={isEditingInventoryCard}
+            isOpen={isShowingModal}
             contentLabel='Edit Item'
             modalStyle='modalStyle'
             className='main-modal'
             overlayClassName='main-modal-overlay'
             ariaHideApp={false}
-
         >
-            
             <div className='main-modal-body'>
-                <div className='close-icon-wrapper' onClick={() => handleToggleEditItemModal({})}>
+
+                <div className='close-icon-wrapper' onClick={close}>
                     <FontAwesomeIcon icon={faTimesCircle} className='close-icon'  />
                 </div>
-                <h3>Editing List Item:  </h3>
-                <form onSubmit={null}>
 
-                    <div className='add-inventory-input-wrapper'>
+                <h3>Editing: {item.Item.name} </h3>
+
+                <form onSubmit={handleEditUserInventoryItem}>
+                    <div className='edit-inventory-input-wrapper'>
                         <label> Quantity: </label>
                         <input 
-                            className='text-input number-input'
+                            className='text-input number-input edit-input'
                             type="number" 
                             name='quantity' 
-                            onChange={null}
+                            onChange={handleEditingItem}
                             value={editingItem.quantity}
                             label='Quantity'
                         />
                     </div>
-                    <div className='add-inventory-input-wrapper'>
+                    <div className='edit-inventory-input-wrapper'>
                         <label > Size: </label>
                         <input 
                             className='text-input edit-size' 
                             type="number" 
                             name='size' 
-                            onChange={null}
+                            onChange={handleEditingItem}
                             value={editingItem.size}
                             label='size'
                         />
                     </div>
-                    <div className='add-inventory-input-wrapper'>
-                        <select name='volumeType' className='option-select' onChange={null} >
+                    <div className='edit-inventory-input-wrapper'>
+                        <label > Measurement: </label>
+                        <select name='volumeType' className='option-select' value={editingItem.volumeType} onChange={handleEditingItem} >
                             <option value="" defaultValue> - Select Measurement Type - </option>
                             <option value="oz" defaultValue> Ounces </option>
                             <option value="lb" defaultValue> Pounds </option>
@@ -75,23 +78,25 @@ const EditUserItemModal= ({ isEditingInventoryCard, handleToggleEditItemModal, e
                             <option value="ct" defaultValue> Count </option>
                         </select>
                     </div>
-                    
-                    <div className='add-inventory-input-wrapper'>
+                    <div className='edit-inventory-input-wrapper'>
                         <label> Expires: </label>
                         <input 
-                            className='text-input date-input'
+                            className='text-input date-input '
                             type="date" 
                             min={today} 
                             name='expirationDate' 
-                            onChange={null}
-                            value={editingExpires}
+                            onChange={handleEditingItem}
+                            value={editingExpire}
                             label='Expiration Date'
                         />
                     </div>
-                    <ListsOptionSelect />
-                    <button className='default-button'> Save Edits </button>
-
-            </form>
+                    <div className='edit-inventory-input-wrapper'>
+                        <label> List: </label>
+                        <ListsOptionSelect isEditing={true}/>
+                    </div>
+                    <button className='default-button'> Save Changes </button>
+                    {updateMessage.length > 1 && <span> {updateMessage} </span>}
+                </form>
             </div>
         </Modal>
 	)

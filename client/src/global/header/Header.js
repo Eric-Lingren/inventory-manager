@@ -34,7 +34,7 @@ const Header = ({ getUserFromToken, user, logOut }) => {
             }
             <Link to='feedback'>
                 <div className='alpha-header-container'>
-                    <p className='alpha-text'> This product is in alpha development.  Please click here to submit feedback. </p>
+                    <p className='alpha-text'> This product is in beta testing.  Please click here to submit feedback. </p>
                 </div>
             </Link>
            
