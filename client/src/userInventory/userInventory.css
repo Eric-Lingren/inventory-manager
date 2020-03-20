@@ -94,6 +94,7 @@
 }
 .edit-size{
     width: 35px;
+    height: 18px;
 }
 
 @media(max-width : 450px) {
@@ -155,5 +156,8 @@
     }
     .span-label{
         display: block;
+    }
+    .edit-size{
+        width: 160px;
     }
 }

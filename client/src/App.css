@@ -16,6 +16,7 @@ body {
   background-color: #008CBA;
   padding: 5px 15px 5px 15px;
   cursor: pointer;
+  height: 30px;
   
 }
 .button-delete{
@@ -95,7 +96,8 @@ p {
   height: 20px;
   font-size: 14px;
   font-weight: 500;
-  border-radius: 0;
+  border: 1px solid black;
+  border-radius: 5px;
   color: #223254;
 }
 .date-input{
@@ -111,7 +113,6 @@ option{
   padding: 20px;
   font-size: 40px;
 }
-
 
 .modalStyle {
   display: flex;
@@ -175,5 +176,8 @@ option{
   }
   .option-select{
     width: 172px;
+  }
+  .date-input{
+    width: 160px;
   }
 }

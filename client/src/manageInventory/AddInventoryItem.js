@@ -1,6 +1,7 @@
 import React from 'react';
 import './manageInventory.css'
 import '../App.css'
+import { Link } from 'react-router-dom';
 import { withInventory } from '../context/InventoryProvider'
 import CategoriesOptionSelect from '../global/CategoriesOptionSelect'
 import SubcategoryOptionSelect from '../global/SubcategoriesOptionSelect'
@@ -14,7 +15,7 @@ const AddInventoryItem = ({ addToPersonalInventory, handleInventoryChange, expir
     return (
         <div className='add-inventory-container'>
         <div className='add-inventory-wrapper'>
-            <h3 className='add-inventory-header'> Add To Inventory </h3>
+            <h3 className='add-inventory-header'> Add Item: </h3>
             <form onSubmit={addToPersonalInventory}>
                 <div className='add-inventory-row-wrapper'>
                     <div className='add-inventory-input-wrapper'>
@@ -26,10 +27,19 @@ const AddInventoryItem = ({ addToPersonalInventory, handleInventoryChange, expir
                     <div className='add-inventory-input-wrapper'>
                         <ItemsOptionsSelects />
                     </div>
+                    <div className='link-wrapper'>
+                        <p className='navigate-to-create-text'>
+                            Don't see the item you need?
+                        </p>
+                        <Link to='create-item'>
+                            <p className='navigate-to-create-link'>
+                                Click here to create a new one
+                            </p>
+                        </Link>
+                    </div>
                 </div>
-
-                <div className='add-inventory-row-wrapper'>
-                    <div className='add-inventory-input-wrapper'>
+                <div className='add-inventory-row-wrapper-bottom'>
+                    <div className='add-inventory-input-wrapper bottom-inputs-wrapper'>
                         <label> Quantity: </label>
                         <input 
                             className='text-input number-input'
@@ -40,7 +50,7 @@ const AddInventoryItem = ({ addToPersonalInventory, handleInventoryChange, expir
                             label='Quantity'
                         />
                     </div>
-                    <div className='add-inventory-input-wrapper'>
+                    <div className='add-inventory-input-wrapper bottom-inputs-wrapper'>
                         <label > Size: </label>
                         <input 
                             className='text-input edit-size' 
@@ -51,9 +61,10 @@ const AddInventoryItem = ({ addToPersonalInventory, handleInventoryChange, expir
                             label='size'
                         />
                     </div>
-                    <div className='add-inventory-input-wrapper'>
+                    <div className='add-inventory-input-wrapper bottom-inputs-wrapper'>
+                        <label> Measurement: </label>
                         <select name='volumeType' className='option-select' onChange={handleInventoryChange} >
-                            <option value="" defaultValue> - Select Measurement Type - </option>
+                            <option value="" defaultValue> - Select Measurement - </option>
                             <option value="oz" defaultValue> Ounces </option>
                             <option value="lb" defaultValue> Pounds </option>
                             <option value="qt" defaultValue> Quarts </option>
@@ -66,9 +77,8 @@ const AddInventoryItem = ({ addToPersonalInventory, handleInventoryChange, expir
                             <option value="ct" defaultValue> Count </option>
                         </select>
                     </div>
-                </div>
-                <div className='add-inventory-row-wrapper'>
-                    <div className='add-inventory-input-wrapper'>
+                
+                    <div className='add-inventory-input-wrapper bottom-inputs-wrapper'>
                         <label> Expires: </label>
                         <input 
                             className='text-input date-input'
@@ -80,7 +90,10 @@ const AddInventoryItem = ({ addToPersonalInventory, handleInventoryChange, expir
                             label='Expiration Date'
                         />
                     </div>
-                    <ListsOptionSelect />
+                    <div className='add-inventory-input-wrapper bottom-inputs-wrapper'>
+                        <label> List: </label>
+                        <ListsOptionSelect />
+                    </div>
                     <button className='default-button'> Add </button>
                 </div>
             </form>
