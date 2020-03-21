@@ -3,7 +3,7 @@ import '../App.css'
 import { withInventory } from '../context/InventoryProvider'
 
 
-const ItemsOptionSelect = ({ inventoryItems, handleInventoryChange }) => {
+const ItemsOptionSelect = ({ inventoryItems, handleInventoryChange, selectedCategoryId, selectedSubcategoryId }) => {
 
     const itemOptions = inventoryItems.map( (item , i) => {
         return(
@@ -13,8 +13,12 @@ const ItemsOptionSelect = ({ inventoryItems, handleInventoryChange }) => {
     
     return (
         <select name='selectedItemId' className='option-select' onChange={handleInventoryChange} required={true} >
-                <option value="" defaultValue> - Select Item - </option>
+            <option value="" defaultValue> - Select Item - </option>
+            { selectedCategoryId && selectedSubcategoryId &&
+                <>
                 {itemOptions}
+                </>
+            }
         </select>
     );
 }

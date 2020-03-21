@@ -72,6 +72,7 @@ const db = require("./models");
     //  Below are open routes anyone can access 
     //  These may have nested jwt authentication within the routes to access specific data, but most do not
 app.use('/auth', require("./routes/auth.js"))
+app.use('/feedback', require("./routes/feedback.js"))
     //  Protected Routes
 app.use("/api", expressJwt({secret: keys.secretOrKey}))
 app.use('/api/admin', require("./routes/api/admin"))

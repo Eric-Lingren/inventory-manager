@@ -1,0 +1,133 @@
+.close-icon-wrapper {
+  display: flex;
+  width: 112%;
+  justify-content: flex-end; 
+}
+  
+.close-icon {
+  margin-top: 4%;
+  cursor: pointer; 
+}
+  
+.modalStyle {
+  display: flex;
+  justify-content: center; 
+}
+  
+.main-modal {
+  display: flex;
+  justify-content: center;
+  width: 45%;
+  background-color: white;
+  border: 1px solid black;
+  color: black;
+  height: 430px;
+  max-height: 80vh; 
+}
+
+.main-modal-body {
+  width: 75%;
+  margin-bottom: 5px; 
+}
+.main-modal input {
+  width: 130px; 
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.main-modal h3 {
+  text-align: center;
+  margin-top: 0px;
+  margin-bottom: 20px; 
+}
+
+.main-modal form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  max-height: 63vh;
+  overflow-y: auto;
+  overflow-x: visible; 
+}
+
+.main-modal button{
+  margin-bottom: 20px;
+}
+
+.main-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #00000030;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  backdrop-filter: blur(3px); 
+}
+
+.edit-inventory-input-wrapper{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  padding: 10px;
+  width: 70%;
+}
+
+
+@media (max-width: 1200px) {
+  .edit-user-modal {
+    width: 75%; 
+  } 
+  .main-modal{
+    width: 75%;
+  }
+}
+  
+@media (max-width: 800px) {
+    .snapshot-email-modal, .snapshot-emailChips {
+      width: 90%; } 
+}
+  
+@media (max-width: 650px) {
+  .main-modal {
+    width: 70%;
+    margin-top: 20px; 
+  }
+  .main-modal input, .main-modal label {
+    width: 100%; 
+  }
+  .main-modal form {
+    max-height: 63vh;
+    overflow-x: auto; 
+  }
+  .main-modal form div {
+    flex-direction: column;
+    width: 100%; 
+  }
+}
+  
+@media (max-width: 450px) {
+  .main-modal {
+    width: 90%; 
+    height: 500px;
+  } 
+  .main-modal input, .main-modal label {
+    width: 100%; 
+    margin: 3px 0 3px 0;
+    width: 160px;
+  }
+  .edit-inventory-input-wrapper{
+    padding: 2px;
+    width: 70%;
+  }
+  .main-modal button {
+    margin-top: 20px;
+  }
+}
+  

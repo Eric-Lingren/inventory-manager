@@ -8,27 +8,40 @@ import Register from './portal/Register'
 import AdminPortalHome from './portal/adminPortal/AdminPortalHome'
 import ProtectedRoute from './shared/ProtectedRoute'
 import Dashboard from './Dashboard'
-// import AddInventoryHome from './addInventory/AddInventoryHome'
+import Feedback from './feedback/Feedback'
 import ManageInventoryHome from './manageInventory/ManageInventoryHome'
+import CreateInventoryItem from './manageInventory/CreateInventoryItem'
+import { withAuth } from './context/AuthProvider'
+import LogRocket from 'logrocket';
 
-const App = () => {
+const setLogrocketIdentifiers = (user) => {
+  LogRocket.identify(user.id, {
+    name: user.name,
+    email: user.email,
+    id: user.id
+  })
+}
+
+
+const App = ({ user }) => {
+
+  { user.id && setLogrocketIdentifiers(user) }
 
   return (
     <div className="App">
-<Header />
+      <Header />
       <Switch>
-        
         <Route exact path='/' component={Home} />
         <Route path='/login' component={Login} />
         <Route path='/register' component={Register} />
+        <Route path='/feedback' component={Feedback} />
         <ProtectedRoute path='/dashboard' component={Dashboard} redirectTo={"/login"} />
-        {/* <ProtectedRoute path='/add-inventory' component={AddInventoryHome} redirectTo={"/login"} /> */}
         <ProtectedRoute path='/manage-inventory' component={ManageInventoryHome} redirectTo={"/login"} />
+        <ProtectedRoute path='/create-item' component={CreateInventoryItem} redirectTo={"/login"} />
         <ProtectedRoute path='/admin-portal' component={AdminPortalHome} redirectTo={"/"} />
       </Switch>
-
     </div>
-  );
+  )
 }
 
-export default App;
+export default withAuth(App)

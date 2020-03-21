@@ -6,14 +6,28 @@ import App from './App';
 import AuthProvider from './context/AuthProvider'
 import AdminProvider from './context/AdminProvider'
 import InventoryProvider from './context/InventoryProvider'
+import FeedbackProvider from './context/FeedbackProvider'
+import LogRocket from 'logrocket';
+import { logrocketId, nodeEnvironment } from './config/Config'
+import { initGoogleAnalytics, pageView } from './shared/Tracking'
+
+
+if(nodeEnvironment === 'production'){
+    LogRocket.init(logrocketId)
+    initGoogleAnalytics()
+    pageView()
+}
+
 
 ReactDOM.render(
     <AuthProvider>
         <AdminProvider>
             <InventoryProvider>
-                <Router history={createBrowserHistory()}>
-                    <App />
-                </Router>
+                <FeedbackProvider>
+                    <Router history={createBrowserHistory()}>
+                        <App />
+                    </Router>
+                </FeedbackProvider>
             </InventoryProvider>
         </AdminProvider>
     </AuthProvider>

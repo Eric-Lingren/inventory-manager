@@ -4,7 +4,7 @@ import { withInventory } from '../context/InventoryProvider'
 import UserInventoryList from './UserInventoryList'
 import CreateNewList from './CreateNewList'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretSquareDown, faFolderPlus, faFolderMinus } from '@fortawesome/free-solid-svg-icons'
+import { faCaretSquareDown, faCaretSquareUp, faFolderPlus, faFolderMinus } from '@fortawesome/free-solid-svg-icons'
 
 
 const UserInventoryHome = ({ getLists, selectedUserList, userLists, handleSetSelectedList, getUserInventory }) => {
@@ -31,8 +31,8 @@ const UserInventoryHome = ({ getLists, selectedUserList, userLists, handleSetSel
         <div>
             <div className='inventory-header'>
                 <h2 className='inventory-h2'> { selectedUserList.name } </h2>
-                <FontAwesomeIcon icon={faCaretSquareDown} className='button-caret-down' onClick={() => setIsShowingList(!isShowingList)} />
-                <FontAwesomeIcon icon={ isShowingCreateList ? faFolderMinus: faFolderPlus} className='button-create-list' onClick={() => setIsShowingCreateList(!isShowingCreateList)} />
+                <FontAwesomeIcon icon={ !isShowingList ? faCaretSquareDown : faCaretSquareUp } className='button-caret-down' onClick={() => setIsShowingList(!isShowingList)} />
+                <FontAwesomeIcon icon={ isShowingCreateList ? faFolderMinus : faFolderPlus } className='button-create-list' onClick={() => setIsShowingCreateList(!isShowingCreateList)} />
             </div>
             <div className='lists-dropdown-container'>
             {

@@ -1,17 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './userInventory.css'
 import '../App.css'
 import moment from 'moment'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faEdit, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { withInventory } from '../context/InventoryProvider'
+import EditUserItemModal from './EditUserItemModal'
 
-const UserInventoryCard = ({ id, category, subcategory, name, itemQuantity, itemSize, itemVolumeType, itemExpiration, handleDeleteUserInventoryItem, markItemUsed, item, markItemAdded }) => {
+const UserInventoryCard = ({ id, category, subcategory, name, itemQuantity, itemSize, itemVolumeType, itemExpiration, handleDeleteUserInventoryItem, handleSetEditingItem, markItemUsed, item, markItemAdded }) => {
+
+    const [isShowingModal, setIsShowingModal] = useState(false)
+
+    const toggleModal = () => {
+        handleSetEditingItem(item)
+        setIsShowingModal(!isShowingModal)
+    }
 
     let expires;
-    expires === 'Invalid date' ? expires = 'None Selected' : expires = moment(itemExpiration).format('MMM Do YYYY')
+    itemExpiration === null ? expires = 'None Selected' : expires = moment(itemExpiration).format('MMM Do YYYY')
 
-    
+
     return (
         <div className='user-inventory-item-card'>
             <div className='card-row-1'>
@@ -25,7 +33,10 @@ const UserInventoryCard = ({ id, category, subcategory, name, itemQuantity, item
                 <div className='quantity-container'> <span className='span-label'>Size: </span> <p> {itemSize} {itemVolumeType} </p> </div>
             </div>
             <div className='card-row buttons-row'>
-                <button className='button-delete' onClick={ () => handleDeleteUserInventoryItem(id) } > 
+                <button className='button-edit' onClick={() => toggleModal()} > 
+                    <FontAwesomeIcon icon={faEdit} />
+                </button>
+                    <button className='button-delete' onClick={ () => handleDeleteUserInventoryItem(id) } > 
                     <FontAwesomeIcon icon={faTrash} />
                 </button>
                 <button className='button-minus' onClick={ () => markItemUsed(id, item) }> 
@@ -35,6 +46,7 @@ const UserInventoryCard = ({ id, category, subcategory, name, itemQuantity, item
                 <FontAwesomeIcon icon={faPlus} />
                 </button>
             </div>
+            <EditUserItemModal isShowingModal={isShowingModal} toggleModal={toggleModal} item={item} />
         </div>
     )
 }

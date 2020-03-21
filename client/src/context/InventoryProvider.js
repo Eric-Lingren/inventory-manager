@@ -40,14 +40,24 @@ class InventoryProvider extends Component {
             selectedUserList: { name: 'Master Inventory' },
             createListName: '',
             createdListSuccess: null,
+            editingItem: {},
+            updateMessage: ''
         }
     }
 
-    //  State data handler for form input
+
     handleInventoryChange = (e) => {
         const {name, value } = e.target
         this.setState({ [name]: sanitizeData(value) })
     }
+
+
+    handleEditingItem = (e) => {
+        let {name , value} = e.target
+        if(name === 'selectedListId') name = 'listId'
+        this.setState(prevState => ({ editingItem: { ...prevState.editingItem, [name]: value } }))
+    }
+
 
     handleSetSelectedList = ( selectedList ) => {
         this.setState({ selectedUserList: selectedList })
@@ -162,6 +172,21 @@ class InventoryProvider extends Component {
             this.getUserInventory()
         })
         .catch(err => err)
+    }
+
+
+    handleEditUserInventoryItem = (e) => {
+        e.preventDefault()
+
+        const id = this.state.editingItem.id
+        const editedItem = this.state.editingItem
+
+        authAxios.put(`${baseURL}/items/user-items/${id}`, editedItem)
+        .then(res => {
+            this.setState({updateMessage : res.data.msg})
+            this.getUserInventory()
+        })
+        .catch(err => this.setState({ updateMessage: "Something broke while updating. Please try again." }))
     }
 
 
@@ -337,6 +362,14 @@ class InventoryProvider extends Component {
         }
     }
 
+    handleSetEditingItem = (item) => {
+        this.setState({ editingItem: item})
+    }
+
+    clearMesages = () => {
+        this.setState({updateMessage : ''})
+    }
+
 
     render(){
         return (
@@ -344,6 +377,7 @@ class InventoryProvider extends Component {
                 value={{
                     ...this.state,
                     handleInventoryChange: this.handleInventoryChange,
+                    handleEditingItem: this.handleEditingItem,
                     handleSetSelectedList: this.handleSetSelectedList,
                     handleGetCategories: this.handleGetCategories,
                     handleGetSubcategories: this.handleGetSubcategories,
@@ -360,7 +394,10 @@ class InventoryProvider extends Component {
                     sortBySubcategoryName: this.sortBySubcategoryName,
                     sortByItemName: this.sortByItemName,
                     sortByExpiration: this.sortByExpiration,
-                    sortByQuantity: this.sortByQuantity
+                    sortByQuantity: this.sortByQuantity,
+                    handleSetEditingItem: this.handleSetEditingItem,
+                    handleEditUserInventoryItem: this.handleEditUserInventoryItem,
+                    clearMesages: this.clearMesages
                 }}>
                 { this.props.children }
             </InventoryContext.Provider>
