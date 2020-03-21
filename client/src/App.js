@@ -10,15 +10,27 @@ import ProtectedRoute from './shared/ProtectedRoute'
 import Dashboard from './Dashboard'
 import Feedback from './feedback/Feedback'
 import ManageInventoryHome from './manageInventory/ManageInventoryHome'
-import CreateInventoryItem from './manageInventory/CreateInventoryItem';
+import CreateInventoryItem from './manageInventory/CreateInventoryItem'
+import { withAuth } from './context/AuthProvider'
+import LogRocket from 'logrocket';
 
-const App = () => {
+const setLogrocketIdentifiers = (user) => {
+  LogRocket.identify(user.id, {
+    name: user.name,
+    email: user.email,
+    id: user.id
+  })
+}
+
+
+const App = ({ user }) => {
+
+  { user.id && setLogrocketIdentifiers(user) }
 
   return (
     <div className="App">
-<Header />
+      <Header />
       <Switch>
-        
         <Route exact path='/' component={Home} />
         <Route path='/login' component={Login} />
         <Route path='/register' component={Register} />
@@ -28,9 +40,8 @@ const App = () => {
         <ProtectedRoute path='/create-item' component={CreateInventoryItem} redirectTo={"/login"} />
         <ProtectedRoute path='/admin-portal' component={AdminPortalHome} redirectTo={"/"} />
       </Switch>
-
     </div>
-  );
+  )
 }
 
-export default App;
+export default withAuth(App)
