@@ -367,7 +367,11 @@ class InventoryProvider extends Component {
     }
 
     clearMesages = () => {
-        this.setState({updateMessage : ''})
+        this.setState({updateMessage : '', createdListSuccess: null , createListName: '' })
+    }
+
+    clearSelectedOptions = () => {
+        this.setState({ selectedCategoryId: '', selectedSubcategoryId: '', selectedItemId: '', selectedListId: '' })
     }
 
 
@@ -397,7 +401,8 @@ class InventoryProvider extends Component {
                     sortByQuantity: this.sortByQuantity,
                     handleSetEditingItem: this.handleSetEditingItem,
                     handleEditUserInventoryItem: this.handleEditUserInventoryItem,
-                    clearMesages: this.clearMesages
+                    clearMesages: this.clearMesages,
+                    clearSelectedOptions: this.clearSelectedOptions
                 }}>
                 { this.props.children }
             </InventoryContext.Provider>

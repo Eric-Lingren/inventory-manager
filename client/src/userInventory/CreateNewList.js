@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../App.css'
 import { withInventory } from '../context/InventoryProvider'
 
 
-const CreateNewList= ({ handleInventoryChange, createListName, createList, createdListSuccess }) => {
+const CreateNewList= ({ handleInventoryChange, createListName, createList, createdListSuccess, clearMesages }) => {
    
+    useEffect( () => {
+        return () => clearMesages() 
+    }, [ clearMesages ])
 
     return (
         <div className='new-list-wrapper'>

@@ -38,7 +38,7 @@ const App = ({ user }) => {
         <ProtectedRoute path='/dashboard' component={Dashboard} redirectTo={"/login"} />
         <ProtectedRoute path='/manage-inventory' component={ManageInventoryHome} redirectTo={"/login"} />
         <ProtectedRoute path='/create-item' component={CreateInventoryItem} redirectTo={"/login"} />
-        <ProtectedRoute path='/admin-portal' component={AdminPortalHome} redirectTo={"/"} />
+        <ProtectedRoute path='/admin-portal' component={AdminPortalHome} redirectTo={"/manage-inventory"} />
       </Switch>
     </div>
   )
