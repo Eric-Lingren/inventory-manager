@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretSquareDown, faCaretSquareUp, faFolderPlus, faFolderMinus } from '@fortawesome/free-solid-svg-icons'
 
 
-const UserInventoryHome = ({ getLists, selectedUserList, userLists, handleSetSelectedList, getUserInventory }) => {
+const UserInventoryHome = ({ getLists, selectedUserList, userLists, handleSetSelectedList, getUserInventory, clearMesages }) => {
 
     const [isShowingList, setIsShowingList] = useState(false)
     const [isShowingCreateList, setIsShowingCreateList] = useState(false)
@@ -20,6 +20,7 @@ const UserInventoryHome = ({ getLists, selectedUserList, userLists, handleSetSel
         setIsShowingList(!isShowingList)
         handleSetSelectedList(selectedList)
         getUserInventory(selectedList.id)
+        if(!isShowingCreateList) clearMesages()
     }
 
     const mappedLists = userLists.map( (list, i) => {

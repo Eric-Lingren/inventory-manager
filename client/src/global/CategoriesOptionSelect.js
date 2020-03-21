@@ -3,15 +3,22 @@ import '../App.css'
 import { withInventory } from '../context/InventoryProvider'
 
 
-const CategoriesOptionSelect = ({ handleGetCategories, inventoryCategories, handleInventoryChange, selectedCategoryId, handleGetSubcategories }) => {
+const CategoriesOptionSelect = ({ handleGetCategories, inventoryCategories, handleInventoryChange, selectedCategoryId, handleGetSubcategories, clearSelectedOptions }) => {
 
     useEffect(() => {
         handleGetCategories()
     }, [ handleGetCategories ])
 
+    
+    useEffect(() => {
+        return () => clearSelectedOptions()
+    }, [ clearSelectedOptions ])
+
+
     useEffect(() => {
         handleGetSubcategories(selectedCategoryId)
     }, [ handleGetSubcategories, selectedCategoryId ])
+
 
     const categoryOptions = inventoryCategories.map( (category , i) => {
         return(

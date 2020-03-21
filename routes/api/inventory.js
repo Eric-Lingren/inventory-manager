@@ -31,6 +31,7 @@ inventoryRouter.get("/categories", checkForToken, (req, res, next) => {
                 //     as: 'userData',
                 //     attributes:['firstName', 'lastName', 'email', 'id', 'hasFacilitator']
                 // }],
+                order:[ ['name', 'ASC'] ]
             })
             .then(categories => {
                 if (isEmpty(categories)) {
@@ -73,7 +74,9 @@ inventoryRouter.get("/subcategories", checkForToken, (req, res, next) => {
     jwt.verify(req.token, keys.secretOrKey, (err) => {
         if(err) res.sendStatus(403)
         if(isEmpty(req.query)){
-            db.Subcategories.findAll()
+            db.Subcategories.findAll({
+                order:[ ['name', 'ASC'] ]
+            })
             .then(subcategories => {
                 if (isEmpty(subcategories)) {
                     return res.status(400).send({ msg: "There are no subcategories." })
@@ -118,6 +121,7 @@ inventoryRouter.get("/items", checkForToken, (req, res, next) => {
             //         as: 'category',
             //         attributes:['name']
             //     }],
+                order:[ ['name', 'ASC'] ]
             })
             .then(items => {
                 if (isEmpty(items)) {
