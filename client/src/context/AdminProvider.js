@@ -67,6 +67,15 @@ class AdminProvider extends Component {
         .catch(err => err)
     }
 
+    handleEditCategory = (categoryName, id) => {
+        let editedCategory = { name: categoryName }
+
+        authAxios.put(`${baseURL}/category/${id}`, editedCategory)
+        .then(res => { })
+        .catch( err => err )
+
+    }
+
 
     handleAddNewSubcategory = (e) => {
         e.preventDefault()
@@ -146,6 +155,7 @@ class AdminProvider extends Component {
                     handleSetEditingObject: this.handleSetEditingObject,
                     handleEditSubcategory: this.handleEditSubcategory,
                     handleEditingObject: this.handleEditingObject,
+                    handleEditCategory: this.handleEditCategory,
                     
                 }}>
                 { this.props.children }

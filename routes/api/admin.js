@@ -111,5 +111,25 @@ adminRouter.put("/subcategory/:id", checkForToken, (req, res) => {
     })
 })
 
+// @route PUT – updates one subcategory
+adminRouter.put("/category/:id", checkForToken, (req, res) => {
+    jwt.verify(req.token, keys.secretOrKey, (err) => {
+        if(err){ 
+            res.sendStatus(403)
+        } else {
+            db.Categories.update(req.body, {
+                where: { id: req.params.id }
+            })
+            .then(updatedCategory => {
+                if(updatedCategory[0] === 0){
+                    return res.status(500).send({msg: "Category was unable to be updated." })
+                }
+                return res.status(200).send({msg: "Category has been successfully updated." })
+            })
+            .catch( err => res.status(500).send({ msg: "Something broke while updating the category." }) )
+        }
+    })
+})
+
 
 module.exports = adminRouter

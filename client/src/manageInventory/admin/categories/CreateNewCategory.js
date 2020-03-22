@@ -1,11 +1,9 @@
 import React from 'react';
 import '../../../App.css'
-import { Link } from 'react-router-dom';
 import { withAdmin } from '../../../context/AdminProvider'
 
 
 const CreateNewCategory = ({ handleAddNewCategory, addCategoryName, handleAdminChange, categoryCreatedSuccessfully }) => {
-
 
     
     return (
@@ -13,7 +11,7 @@ const CreateNewCategory = ({ handleAddNewCategory, addCategoryName, handleAdminC
             <form onSubmit={handleAddNewCategory}>
                 <div className='add-inventory-row-wrapper'>
                     <div className='add-inventory-input-wrapper'>
-                        <label> Category Name: </label>
+                        <label> New Category: </label>
                         <input
                             className='text-input add-name'
                             type='text'
