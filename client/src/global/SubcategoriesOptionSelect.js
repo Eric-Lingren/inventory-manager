@@ -3,11 +3,21 @@ import '../App.css'
 import { withInventory } from '../context/InventoryProvider'
 
 
-const SubcategoriesOptionSelect = ({ inventorySubcategories, handleInventoryChange, handleGetItems, selectedCategoryId, selectedSubcategoryId }) => {
+const SubcategoriesOptionSelect = ({ inventorySubcategories, handleInventoryChange, handleGetItems, selectedCategoryId, selectedSubcategoryId, isEditingItem, getSubategoryIdCallback }) => {
 
     useEffect(() => {
         handleGetItems(selectedSubcategoryId)
     }, [ handleGetItems, selectedSubcategoryId ])
+
+
+    const handleChange = (e) => {
+        if(isEditingItem){
+            getSubategoryIdCallback(e.target.value)
+        }else{
+            handleInventoryChange(e)
+        } 
+    }
+
 
     const subcategoryOptions = inventorySubcategories.map( (subcategory , i) => {
         return(
@@ -17,8 +27,8 @@ const SubcategoriesOptionSelect = ({ inventorySubcategories, handleInventoryChan
 
     
     return (
-        <select name='selectedSubcategoryId' className='option-select' onChange={handleInventoryChange} required={true} >
-            <option value="" defaultValue> - Select Subcategory - </option>
+        <select  name='selectedSubcategoryId' className='option-select' onChange={(e) => handleChange(e)} required={true} >
+            <option >- Select Subcategory -</option>
             { selectedCategoryId && 
                 <>
                 {subcategoryOptions}

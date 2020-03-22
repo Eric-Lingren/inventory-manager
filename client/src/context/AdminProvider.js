@@ -129,21 +129,6 @@ class AdminProvider extends Component {
     }
 
 
-    handleEditItem = () => {
-
-        // console.log('hit edit item')
-
-        const newCategory = this.state.categoryId
-
-        let updatedItem = this.state.editingObject
-
-        if(newCategory) console.log(newCategory)
-
-
-        console.log(updatedItem)
-    }
-
-
     handleDeleteSubcategory = (id) => {
         authAxios.delete(`${baseURL}/subcategory/${id}`)
         .then(res => {
@@ -172,7 +157,6 @@ class AdminProvider extends Component {
                     handleEditSubcategory: this.handleEditSubcategory,
                     handleEditingObject: this.handleEditingObject,
                     handleEditCategory: this.handleEditCategory,
-                    handleEditItem: this.handleEditItem,
                     
                 }}>
                 { this.props.children }
