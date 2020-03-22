@@ -94,6 +94,7 @@ class InventoryProvider extends Component {
         .catch(err => err)
     }
 
+    
     handleGetItems = ( selectedSubcategoryId) => {
         let url = `${baseURL}/items`
         if(selectedSubcategoryId) url = `${baseURL}/items?subcategoryId=${selectedSubcategoryId}`
@@ -116,10 +117,12 @@ class InventoryProvider extends Component {
                             name: this.state.itemName,
                             userId: decodedJwt.user.id
                         }
+                        console.log(newItem)
 
         authAxios.post(`${baseURL}/items`, newItem)
         .then(res => {
             this.setState({ itemAddedSuccessfully: true })
+            this.handleGetItems()
         })
         .catch(err => {
             this.setState({ itemAddedSuccessfully: false })
@@ -179,6 +182,15 @@ class InventoryProvider extends Component {
         })
         .catch(err => {
         })
+    }
+
+
+    handleDeleteItem = (id) => {
+        authAxios.delete(`${baseURL}/items/${id}`)
+        .then(res => {
+            this.handleGetItems()
+        })
+        .catch(err => err)
     }
 
 
@@ -446,7 +458,8 @@ class InventoryProvider extends Component {
                     clearSelectedOptions: this.clearSelectedOptions,
                     clearOptionSelects: this.clearOptionSelects,
                     handleEditList: this.handleEditList,
-                    handleDeleteList: this.handleDeleteList
+                    handleDeleteList: this.handleDeleteList,
+                    handleDeleteItem: this.handleDeleteItem
                 }}>
                 { this.props.children }
             </InventoryContext.Provider>

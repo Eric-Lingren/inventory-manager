@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import '../../../App.css'
 import { withInventory } from '../../../context/InventoryProvider'
 import CategoriesOptionSelect from '../../../global/CategoriesOptionSelect'
@@ -9,11 +8,8 @@ import SubcategoryOptionSelect from '../../../global/SubcategoriesOptionSelect'
 const CreateInventoryItem = ({ handleInventoryChange, itemName, handleSaveNewItem, itemAddedSuccessfully }) => {
 
 
-    
     return (
-        <div className='add-inventory-container'>
-        <div className='create-inventory-wrapper'>
-            <h3 className='create-inventory-header'> Create New Item </h3>
+        <div>
             <form onSubmit={handleSaveNewItem}>
             <div className='create-inventory-input-wrapper'>
                 <div className='add-inventory-row-wrapper'>
@@ -42,12 +38,6 @@ const CreateInventoryItem = ({ handleInventoryChange, itemName, handleSaveNewIte
             </form>
             {itemAddedSuccessfully === true && <span> Success </span> }
             {itemAddedSuccessfully === false && <span> Try Again </span> }
-            <Link to='manage-inventory'>
-                <span className='navigate-to-create-link'>
-                    Back To Inventory
-                </span>
-            </Link>
-        </div>
         </div>
     );
 }
