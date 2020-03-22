@@ -413,5 +413,26 @@ inventoryRouter.get("/items/user-items-added", checkForToken, (req, res, next) =
 })
 
 
+// @route PUT – updates one item
+inventoryRouter.put("/items/:id", checkForToken, (req, res) => {
+    jwt.verify(req.token, keys.secretOrKey, (err) => {
+        if(err){
+            res.sendStatus(403)
+        } else {
+            db.Items.update(req.body, {
+                where: { id: req.params.id }
+            })
+            .then(updatedItem => {
+                if(updatedItem[0] === 0){
+                    return res.status(500).send({msg: "Item was unable to be updated." })
+                }
+                return res.status(200).send({msg: "Item has been successfully updated." })
+            })
+            .catch( err => res.status(500).send({ msg: "Something broke while updating. Please try again." }) )
+        }
+    })
+})
+
+
 
 module.exports = inventoryRouter

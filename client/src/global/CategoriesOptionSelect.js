@@ -4,7 +4,7 @@ import { withInventory } from '../context/InventoryProvider'
 import { withAdmin } from '../context/AdminProvider'
 
 
-const CategoriesOptionSelect = ({ handleGetCategories, inventoryCategories, handleInventoryChange, handleAdminChange, handleSetSelectedCategory, selectedCategoryId, handleGetSubcategories, clearSelectedOptions, clearOptionSelects, isEditingSubcategory, callbackCategoryId }) => {
+const CategoriesOptionSelect = ({ handleGetCategories, inventoryCategories, handleInventoryChange, handleSetSelectedCategory, selectedCategoryId, handleGetSubcategories, clearSelectedOptions, clearOptionSelects, isEditingSubcategory, isEditingItem, clearSelectedSubcategoryId }) => {
 
     useEffect(() => {
         handleGetCategories()
@@ -27,8 +27,11 @@ const CategoriesOptionSelect = ({ handleGetCategories, inventoryCategories, hand
 
 
     const handleChange = (e) => {
+        clearSelectedSubcategoryId()
         if(isEditingSubcategory){
             handleSetSelectedCategory(e.target.value)
+        }else if(isEditingItem){
+            handleInventoryChange(e)
         }else{
             handleInventoryChange(e)
         } 
@@ -45,7 +48,7 @@ const CategoriesOptionSelect = ({ handleGetCategories, inventoryCategories, hand
     
     return (
         <select name='selectedCategoryId' className='option-select' onChange={(e) => handleChange(e)} required={true} >
-                <option value="" defaultValue> - Select Category - </option>
+                <option value={selectedCategoryId}>- Select Category -</option>
                 {categoryOptions}
         </select>
     );

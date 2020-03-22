@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-modal'
 import '../../../App.css'
 import '../../../modal.css'
@@ -10,14 +10,28 @@ import CategoriesOptionSelect from '../../../global/CategoriesOptionSelect'
 import SubategoriesOptionSelect from '../../../global/SubcategoriesOptionSelect'
 
 
-const EditSubcategoryModal= ({ isShowingItemModal, isShowingSubcategoryModal, toggleEditItemModal, handleEditingObject, item, editingObject, handleEditItem, itemUpdated, handleGetItems }) => {
+const EditSubcategoryModal= ({ isShowingItemModal, toggleEditItemModal, handleEditingObject, item, editingObject, handleEditItem, itemUpdated, handleGetItems, itemUpdatedSuccessfully }) => {
+
+    const [ itemSubcategoryIdEdit, setItemSubcategoryIdEdit ] = useState(null)
 
     const close = () => {
         toggleEditItemModal()
         handleGetItems()
     }
 
+    const getSubategoryIdCallback = (id) => {
+        setItemSubcategoryIdEdit(id)
+    }
 
+    const saveItemUpdates = (e) => {
+        e.preventDefault()
+        let newEdits = editingObject
+        if(itemSubcategoryIdEdit) newEdits.subcategoryId = itemSubcategoryIdEdit
+        delete newEdits.Subcategory
+        handleEditItem(newEdits)
+    }
+
+    
 	return (
         <Modal
             isOpen={isShowingItemModal}
@@ -51,18 +65,18 @@ const EditSubcategoryModal= ({ isShowingItemModal, isShowingSubcategoryModal, to
 
                     <div className='edit-inventory-input-wrapper'>
                         <label> Category: </label>
-                        <CategoriesOptionSelect isEditingSubcategory={true} />
+                        <CategoriesOptionSelect isEditingItem={true}  />
                     </div>
 
                     <div className='edit-inventory-input-wrapper'>
                         <label> Subcategory: </label>
-                        <SubategoriesOptionSelect isEditingItem={true} />
+                        <SubategoriesOptionSelect isEditingItem={true} getSubategoryIdCallback={getSubategoryIdCallback} />
                     </div>
 
-                    <button className='default-button' onClick={handleEditItem}> Save Changes </button>
+                    <button className='default-button' onClick={saveItemUpdates}> Save Changes </button>
 
-                    {itemUpdated && <span> Successfully Updated </span>}
-                    {itemUpdated === false && <span> Something didn't work.  Pleas try again. </span>}
+                    {itemUpdatedSuccessfully && <span> Successfully Updated </span>}
+                    {itemUpdatedSuccessfully === false && <span> Something didn't work.  Please try again. </span>}
                 </form>
             </div>
         </Modal>

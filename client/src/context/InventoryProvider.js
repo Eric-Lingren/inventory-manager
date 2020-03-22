@@ -30,6 +30,7 @@ class InventoryProvider extends Component {
             selectedListId: '',
             itemName: '',
             itemAddedSuccessfully: null,
+            itemUpdatedSuccessfully: null,
             expirationDate: '',
             itemAddedToUserList: null,
             quantity: 1,
@@ -117,7 +118,6 @@ class InventoryProvider extends Component {
                             name: this.state.itemName,
                             userId: decodedJwt.user.id
                         }
-                        console.log(newItem)
 
         authAxios.post(`${baseURL}/items`, newItem)
         .then(res => {
@@ -411,12 +411,28 @@ class InventoryProvider extends Component {
         }
     }
 
+    handleEditItem = (newEdits) => {
+        const id = newEdits.id
+
+        authAxios.put(`${baseURL}/items/${id}`, newEdits )
+        .then(res => {
+            this.setState({ itemUpdatedSuccessfully: true })
+            this.handleGetItems()
+            setTimeout(this.clearMesages, 4000)
+        })
+        .catch(err => {
+            this.setState({ itemUpdatedSuccessfully: false })
+            setTimeout(this.clearMesages, 4000)
+        })
+    }
+
+
     handleSetEditingItem = (item) => {
         this.setState({ editingItem: item})
     }
 
     clearMesages = () => {
-        this.setState({updateMessage : '', createdListSuccess: null , createListName: '', itemAddedToUserList: null })
+        this.setState({updateMessage : '', createdListSuccess: null , createListName: '', itemAddedToUserList: null, itemUpdatedSuccessfully: null })
     }
 
     clearSelectedOptions = () => {
@@ -424,7 +440,11 @@ class InventoryProvider extends Component {
     }
 
     clearOptionSelects = () => {
-        this.setState({ inventoryCategories: [], inventoryItems: [] })
+        this.setState({  inventoryItems: [] })
+    }
+
+    clearSelectedSubcategoryId = () => {
+        this.setState({ selectedSubcategoryId : ''})
     }
 
 
@@ -459,7 +479,9 @@ class InventoryProvider extends Component {
                     clearOptionSelects: this.clearOptionSelects,
                     handleEditList: this.handleEditList,
                     handleDeleteList: this.handleDeleteList,
-                    handleDeleteItem: this.handleDeleteItem
+                    handleDeleteItem: this.handleDeleteItem,
+                    clearSelectedSubcategoryId: this.clearSelectedSubcategoryId,
+                    handleEditItem: this.handleEditItem,
                 }}>
                 { this.props.children }
             </InventoryContext.Provider>
