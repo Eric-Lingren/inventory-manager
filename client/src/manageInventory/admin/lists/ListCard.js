@@ -22,7 +22,8 @@ const ListCard = ({ name, id, handleEditList, handleDeleteList, getLists }) => {
     }
 
     return (
-        <div className='admin-card-category'>
+        <div className='list-card-wrapper'>
+            <div className='list-card-text-wrapper'>
             { !isEditing ?
                 <p> List: <span className='name'> {name} </span>  </p>
                 :
@@ -35,7 +36,8 @@ const ListCard = ({ name, id, handleEditList, handleDeleteList, getLists }) => {
                     />
                 </p>
             }
-            <div>
+            </div>
+            <div className='button-wrapper'>
                 { !isEditing ?
                     <button className='button-edit' onClick={() => setIsEditing(true)} > 
                         <FontAwesomeIcon icon={faEdit} />

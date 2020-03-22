@@ -17,10 +17,12 @@ const SubcategoryCard = ({ name, category, id,  subcategory, handleDeleteSubcate
     }
 
     return (
-        <div className='admin-card'>
-            <p> Subcategory: <span className='name'> {name} </span> </p>
-            <p> In Category: <span className='name'> {category} </span>  </p>
-            <div>
+        <div className='admin-card-item'>
+            <div className='subcategory-card-text-wrapper'>
+                <p className='p'> Subcategory: <span className='name'> {name} </span> </p>
+                <p className='p'> In Category: <span className='name'> {category} </span>  </p>
+            </div>
+            <div className='button-wrapper'>
                 <button className='button-edit' onClick={toggleEditSubcategoryModal} > 
                     <FontAwesomeIcon icon={faEdit} />
                 </button>

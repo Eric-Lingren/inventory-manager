@@ -19,10 +19,12 @@ const ItemCard = ({ name,  id, item, category, subcategory, handleDeleteItem, ha
 
     return (
         <div className='admin-card-item'>
-            <p> Item: <span className='name'> {name} </span> </p>
-            <p> Subcategory: <span className='name'> {subcategory} </span>  </p>
-            <p> Category: <span className='name'> {category} </span>  </p>
-            <div>
+            <div className='item-card-text-wrapper'>
+                <p className='p'> Item: <span className='name'> {name} </span> </p>
+                <p className='p'> Subcategory: <span className='name'> {subcategory} </span>  </p>
+                <p className='p'> Category: <span className='name'> {category} </span>  </p>
+            </div>
+            <div className='button-wrapper'>
                 <button className='button-edit' onClick={toggleEditItemModal} > 
                     <FontAwesomeIcon icon={faEdit} />
                 </button>
