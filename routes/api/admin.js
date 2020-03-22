@@ -91,26 +91,25 @@ adminRouter.delete("/subcategory/:id", checkForToken, (req, res) => {
     })
 })
 
-// // @route PUT – updates one facilitator
-// adminRouter.put("/:id", checkForToken, (req, res) => {
-//     jwt.verify(req.token, keys.secretOrKey, (err) => {
-//         if(err){
-//             // ERROR: Could not connect to the protected route
-//             res.sendStatus(403)
-//         } else {
-//             db.Facilitators.update(req.body, {
-//                 where: { id: req.params.id }
-//             })
-//             .then(updatedFacilitator => {
-//                 if(updatedFacilitator[0] === 0){
-//                     return res.status(500).send({msg: "Facilitator was unable to be updated." })
-//                 }
-//                 return res.status(200).send({msg: "Facilitator has been successfully updated." })
-//             })
-//             .catch( err => res.status(500).send({ msg: "Something broke while updating the bug report." }) )
-//         }
-//     })
-// })
+// @route PUT – updates one subcategory
+adminRouter.put("/subcategory/:id", checkForToken, (req, res) => {
+    jwt.verify(req.token, keys.secretOrKey, (err) => {
+        if(err){ 
+            res.sendStatus(403)
+        } else {
+            db.Subcategories.update(req.body, {
+                where: { id: req.params.id }
+            })
+            .then(updatedSubcategory => {
+                if(updatedSubcategory[0] === 0){
+                    return res.status(500).send({msg: "Subcategory was unable to be updated." })
+                }
+                return res.status(200).send({msg: "Subcategory has been successfully updated." })
+            })
+            .catch( err => res.status(500).send({ msg: "Something broke while updating the subcategory." }) )
+        }
+    })
+})
 
 
 module.exports = adminRouter

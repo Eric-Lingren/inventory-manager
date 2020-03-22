@@ -151,9 +151,11 @@ class InventoryProvider extends Component {
         .then(res => {
             this.setState({ itemAddedToUserList: true, inventoryCategories: [], selectedCategoryId: '', selectedSubcategoryId: '', selectedItemId: '' }, () => this.handleGetCategories() )
             this.getUserInventory()
+            setTimeout(this.clearMesages, 4000)
         })
         .catch(err => {
             this.setState({ itemAddedToUserList: false })
+            setTimeout(this.clearMesages, 4000)
         })
     }
 
@@ -380,7 +382,7 @@ class InventoryProvider extends Component {
     }
 
     clearMesages = () => {
-        this.setState({updateMessage : '', createdListSuccess: null , createListName: '' })
+        this.setState({updateMessage : '', createdListSuccess: null , createListName: '', itemAddedToUserList: null })
     }
 
     clearSelectedOptions = () => {
@@ -388,7 +390,7 @@ class InventoryProvider extends Component {
     }
 
     clearOptionSelects = () => {
-        this.setState({ inventoryCategories: [], inventorySubcategories: [], inventoryItems: [] })
+        this.setState({ inventoryCategories: [], inventoryItems: [] })
     }
 
 
