@@ -5,11 +5,15 @@ import { withAdmin } from '../../../context/AdminProvider'
 import CategoryCard from './CategoryCard'
 
 
-const CategoriesList = ({ handleGetCategories, inventoryCategories, updatedAdmin }) => {
+const CategoriesList = ({ handleGetCategories, inventoryCategories, updatedAdmin, clearOptionSelects }) => {
 
     useEffect(() => {
         handleGetCategories()
     }, [ handleGetCategories, updatedAdmin ])
+
+    useEffect(() => {
+        return () => clearOptionSelects()
+    }, [ clearOptionSelects ])
 
 
     const mappedCategories = inventoryCategories.map( ( card, i ) => {

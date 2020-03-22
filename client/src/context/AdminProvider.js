@@ -19,10 +19,12 @@ class AdminProvider extends Component {
         this.state = {
             addCategoryName: '',
             addSubcategoryName: '',
-            categoryId: '',
+            // categoryId: '',
+            selectedCategoryId: '',
             updatedAdmin: false,
             status: '',
             categoryCreatedSuccessfully: null,
+            subcategoryCreatedSuccessfully: null,
         }
     }
 
@@ -43,9 +45,11 @@ class AdminProvider extends Component {
         authAxios.post(`${baseURL}/category`, newCategory)
         .then(res => {
             this.setState({ updatedAdmin: !this.state.updatedAdmin, addCategoryName: '', categoryCreatedSuccessfully: true })
+            setTimeout(this.handleSetMessageTimeout, 4000)
         })
         .catch(err => {
             this.setState({ categoryCreatedSuccessfully: false })
+            setTimeout(this.handleSetMessageTimeout, 4000)
         })
     }
 
@@ -62,17 +66,22 @@ class AdminProvider extends Component {
     handleAddNewSubcategory = (e) => {
         e.preventDefault()
 
+        console.log(this.state.selectedCategoryId)
         let token = localStorage.getItem("inventoryManagement")
         let decodedJwt = decode(token)
         let userId = decodedJwt.user.id
-        const newSubcategory = { name: this.state.addSubcategoryName, userId: userId, categoryId: this.state.categoryId }
+        const newSubcategory = { name: this.state.addSubcategoryName, userId: userId, categoryId: this.state.selectedCategoryId }
+        
+console.log(newSubcategory)
 
         authAxios.post(`${baseURL}/subcategory`, newSubcategory)
         .then(res => {
-            this.setState({ updatedAdmin: !this.state.updatedAdmin, addSubcategoryName: '', status: '' })
+            this.setState({ updatedAdmin: !this.state.updatedAdmin, addSubcategoryName: '', subcategoryCreatedSuccessfully: true })
+            setTimeout(this.handleSetMessageTimeout, 4000)
         })
         .catch(err => {
-            this.setState({ status: 'That subcategory already exists.' })
+            this.setState({ subcategoryCreatedSuccessfully: false })
+            setTimeout(this.handleSetMessageTimeout, 4000)
         })
     }
 
@@ -85,8 +94,12 @@ class AdminProvider extends Component {
         .catch(err => err)
     }
 
-    render(){
+    handleSetMessageTimeout = () => {
+        this.setState({ categoryCreatedSuccessfully: null, subcategoryCreatedSuccessfully: null })
+    }
 
+
+    render(){
         return (
             <AdminContext.Provider 
                 value={{

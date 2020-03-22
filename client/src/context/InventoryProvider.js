@@ -85,7 +85,8 @@ class InventoryProvider extends Component {
         const userId = decodedJwt.user.id
 
         let url = `${baseURL}/subcategories?userId=${userId}`
-        if(selectedCategoryId) url = `${baseURL}&categoryId=${selectedCategoryId}`
+        if(selectedCategoryId) url = `${url}&categoryId=${selectedCategoryId}`
+
         authAxios.get(`${url}`)
         .then(res => {
             this.setState({ inventorySubcategories: res.data})
@@ -148,13 +149,15 @@ class InventoryProvider extends Component {
 
         authAxios.post(`${baseURL}/items/user-items`, myItem)
         .then(res => {
-            this.setState({ itemAddedToUserList: true })
+            this.setState({ itemAddedToUserList: true, inventoryCategories: [], selectedCategoryId: '', selectedSubcategoryId: '', selectedItemId: '' }, () => this.handleGetCategories() )
             this.getUserInventory()
         })
         .catch(err => {
             this.setState({ itemAddedToUserList: false })
         })
     }
+
+    
 
     getUserInventory = (listId) => {
         let token = localStorage.getItem("inventoryManagement")
@@ -384,6 +387,10 @@ class InventoryProvider extends Component {
         this.setState({ selectedCategoryId: '', selectedSubcategoryId: '', selectedItemId: '', selectedListId: '' })
     }
 
+    clearOptionSelects = () => {
+        this.setState({ inventoryCategories: [], inventorySubcategories: [], inventoryItems: [] })
+    }
+
 
     render(){
         return (
@@ -412,7 +419,8 @@ class InventoryProvider extends Component {
                     handleSetEditingItem: this.handleSetEditingItem,
                     handleEditUserInventoryItem: this.handleEditUserInventoryItem,
                     clearMesages: this.clearMesages,
-                    clearSelectedOptions: this.clearSelectedOptions
+                    clearSelectedOptions: this.clearSelectedOptions,
+                    clearOptionSelects: this.clearOptionSelects,
                 }}>
                 { this.props.children }
             </InventoryContext.Provider>

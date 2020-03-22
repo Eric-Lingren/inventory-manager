@@ -28,7 +28,7 @@ const CreateNewCategory = ({ handleAddNewCategory, addCategoryName, handleAdminC
                     <button className='default-button create-button'> Create </button>
                 </div>
             </form>
-            {categoryCreatedSuccessfully === true && <span> Success </span> }
+            {categoryCreatedSuccessfully === true && <span> Successfully created new Category </span> }
             {categoryCreatedSuccessfully === false && <span> Try Again.  Something broke or that category already exists. </span> }
             <Link to='manage-inventory'>
                 <span className='navigate-to-create-link'>

@@ -80,6 +80,10 @@ inventoryRouter.get("/subcategories", checkForToken, (req, res, next) => {
         } else {
             db.Subcategories.findAll({
                 where :  req.query , 
+                include: [{
+                    model: db.Categories,
+                    attributes:['name']
+                }],
                 order:[ ['name', 'ASC'] ]
             })
             .then(categories => {

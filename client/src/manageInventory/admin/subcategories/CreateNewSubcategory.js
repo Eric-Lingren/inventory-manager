@@ -1,21 +1,23 @@
 import React from 'react';
 import '../../../App.css'
+
+import '../admin.css'
 import { Link } from 'react-router-dom';
 import { withAdmin } from '../../../context/AdminProvider'
+import CategoriesOptionSelect from '../../../global/CategoriesOptionSelect'
 
 
-const CreateNewCategory = ({ handleAddNewSubcategory, addSubcategoryName, categoryOptions, handleAdminChange, categoryCreatedSuccessfully }) => {
+const CreateNewCategory = ({ toggleListView, handleAddNewSubcategory, addSubcategoryName, handleAdminChange, subcategoryCreatedSuccessfully, isShowingSubcategories }) => {
 
 
     
     return (
-        <div className='add-inventory-container'>
-        <div className='create-inventory-wrapper'>
-        <h3 className='create-inventory-header'> Create New Subcategory </h3>
+        <div>
+        
             <form onSubmit={handleAddNewSubcategory}>
                 <div className='add-inventory-row-wrapper'>
                     <div className='add-inventory-input-wrapper'>
-                        <label> Subcategory Name: </label>
+                        <label> New Subcategory: </label>
                         <input
                             className='text-input add-name'
                             type='text'
@@ -25,22 +27,24 @@ const CreateNewCategory = ({ handleAddNewSubcategory, addSubcategoryName, catego
                             onChange={handleAdminChange}
                         />
                         <span> in </span>
-                        <select name='categoryId' onChange={handleAdminChange} required={true} >
-                            <option value="" defaultValue> - Select Category - </option>
-                            {categoryOptions}
-                        </select>
+                        <CategoriesOptionSelect />
                     </div>
                     <button className='default-button create-button'> Create </button>
                 </div>
             </form>
-            {categoryCreatedSuccessfully === true && <span> Success </span> }
-            {categoryCreatedSuccessfully === false && <span> Try Again.  Something broke or that category already exists. </span> }
-            <Link to='manage-inventory'>
-                <span className='navigate-to-create-link'>
-                    Back To Inventory
+            {subcategoryCreatedSuccessfully === true && <span> Successfully created new Subcategory </span> }
+            {subcategoryCreatedSuccessfully === false && <span> Try Again.  Something broke or that category already exists. </span> }
+            
+            <div className='admin-link-wrapper'>
+                <span className='navigate-to-create-link' onClick={toggleListView}>
+                    { isShowingSubcategories ? 'Hide Subcategories' : 'Manage Subcategories' }
                 </span>
-            </Link>
-        </div>
+                <Link to='manage-inventory' className='link'>
+                    <span className='navigate-to-create-link'>
+                        Back To Inventory
+                    </span>
+                </Link>
+            </div>
         </div>
     );
 }

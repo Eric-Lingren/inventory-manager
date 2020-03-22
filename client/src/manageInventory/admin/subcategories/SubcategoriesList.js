@@ -5,19 +5,26 @@ import { withAdmin } from '../../../context/AdminProvider'
 import SubcategoryCard from './SubcategoryCard'
 
 
-const SubcategoriesList = ({ handleGetSubcategories, inventorySubcategories, updatedAdmin }) => {
+const SubcategoriesList = ({ handleGetSubcategories, inventorySubcategories, updatedAdmin, clearOptionSelects }) => {
 
     useEffect(() => {
         handleGetSubcategories()
     }, [ handleGetSubcategories, updatedAdmin ])
 
+    useEffect(() => {
+        return () => clearOptionSelects()
+    }, [ clearOptionSelects ])
 
-    const mappedSubcategories = inventorySubcategories.map( ( card, i ) => {
+
+    const mappedSubcategories = inventorySubcategories.map( ( subcategory , i ) => {
+        console.log(subcategory)
         return (
             <SubcategoryCard 
-                name={card.name}
+                name={subcategory.name}
                 key={i}
-                id={card.id}
+                id={subcategory.id}
+                categoryId={subcategory.categoryId}
+                // category={subcategory.Category.name}
             />
         )
     })
