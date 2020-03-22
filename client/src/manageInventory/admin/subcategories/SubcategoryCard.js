@@ -21,9 +21,7 @@ const SubcategoryCard = ({ name, category, id,  subcategory, handleDeleteSubcate
             <p> Subcategory: <span className='name'> {name} </span> </p>
             <p> In Category: <span className='name'> {category} </span>  </p>
             <div>
-                <button className='button-edit' 
-                onClick={toggleEditSubcategoryModal}
-                 > 
+                <button className='button-edit' onClick={toggleEditSubcategoryModal} > 
                     <FontAwesomeIcon icon={faEdit} />
                 </button>
                 <button className='button-delete' onClick={ () => handleDeleteSubcategory(id) } > 

@@ -1,19 +1,16 @@
 import React from 'react';
 import '../../../App.css'
-
 import '../admin.css'
-
 import { withAdmin } from '../../../context/AdminProvider'
 import CategoriesOptionSelect from '../../../global/CategoriesOptionSelect'
 
 
-const CreateNewCategory = ({ toggleListView, handleAddNewSubcategory, addSubcategoryName, handleAdminChange, subcategoryCreatedSuccessfully, isShowingSubcategories }) => {
+const CreateNewCategory = ({ handleAddNewSubcategory, addSubcategoryName, handleAdminChange, subcategoryCreatedSuccessfully }) => {
 
 
     
     return (
         <div>
-        
             <form onSubmit={handleAddNewSubcategory}>
                 <div className='add-inventory-row-wrapper'>
                     <div className='add-inventory-input-wrapper'>

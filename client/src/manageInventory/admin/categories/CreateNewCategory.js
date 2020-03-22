@@ -9,9 +9,7 @@ const CreateNewCategory = ({ handleAddNewCategory, addCategoryName, handleAdminC
 
     
     return (
-        <div className='add-inventory-container'>
-        <div className='create-inventory-wrapper'>
-        <h3 className='create-inventory-header'> Create New Category </h3>
+        <div >
             <form onSubmit={handleAddNewCategory}>
                 <div className='add-inventory-row-wrapper'>
                     <div className='add-inventory-input-wrapper'>
@@ -30,12 +28,6 @@ const CreateNewCategory = ({ handleAddNewCategory, addCategoryName, handleAdminC
             </form>
             {categoryCreatedSuccessfully === true && <span> Successfully created new Category </span> }
             {categoryCreatedSuccessfully === false && <span> Try Again.  Something broke or that category already exists. </span> }
-            <Link to='manage-inventory'>
-                <span className='navigate-to-create-link'>
-                    Back To Inventory
-                </span>
-            </Link>
-        </div>
         </div>
     );
 }

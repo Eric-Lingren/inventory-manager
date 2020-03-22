@@ -4,6 +4,7 @@ import { withInventory } from '../../context/InventoryProvider'
 import CreateNewCategory from './categories/CreateNewCategory'
 import CategoryList from './categories/CategoriesList'
 import CreateNewInventoryItem from './items/CreateNewInventoryItem'
+import CategoriesAdmin from './categories/CategoriesAdmin'
 import SubcategoriesAdmin from './subcategories/SubcategoriesAdmin'
 
 
@@ -17,9 +18,10 @@ const AdminPortalHome = ({ handleAdminChange, addCategoryName, addSubcategoryNam
 
             <CreateNewInventoryItem />
 
-            <CreateNewCategory />
-            <CategoryList />
+            {/* <CreateNewCategory />
+            <CategoryList /> */}
 
+            <CategoriesAdmin  />
             <SubcategoriesAdmin inventoryCategories={inventoryCategories} />
             
             
