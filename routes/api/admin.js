@@ -28,20 +28,10 @@ adminRouter.post("/category", checkForToken, (req, res) => {
             res.sendStatus(403);
         } else {
             if(!isEmpty(req.body)){
-                db.Categories.findAll({ where: { name : req.body.name} })
-                .then(category => {
-                    if (isEmpty(category)) {
-                        let newCategory = sanitizeData(req.body)
-                        db.Categories.create(newCategory)
-                        .then(category => res.status(201).send(category) )
-                        .catch( err => res.status(500).send({ msg: err}) )
-                    } else {
-                        return res.status(400).send(err)
-                    }
-                })
-                .catch( err => {
-                    return res.status(500).send(err)
-                })
+                let newCategory = sanitizeData(req.body)
+                db.Categories.create(newCategory)
+                .then(category => res.status(201).send(category) )
+                .catch( err => res.status(500).send({ msg: 'Try Again'}) )
             }
         }
     })
@@ -54,20 +44,10 @@ adminRouter.post("/subcategory", checkForToken, (req, res) => {
             res.sendStatus(403);
         } else {
             if(!isEmpty(req.body)){
-                db.Subcategories.findAll({ where: { name : req.body.name} })
-                .then(subcategory => {
-                    if (isEmpty(subcategory)) {
-                        let newSubcategory = sanitizeData(req.body)
-                        db.Subcategories.create(newSubcategory)
-                        .then(subcategory => res.status(201).send(subcategory) )
-                        .catch( err => res.status(500).send({ msg: err}) )
-                    } else {
-                        return res.status(400).send(err)
-                    }
-                })
-                .catch( err => {
-                    return res.status(500).send(err)
-                })
+                let newSubcategory = sanitizeData(req.body)
+                db.Subcategories.create(newSubcategory)
+                .then(subcategory => res.status(201).send(subcategory) )
+                .catch( err => res.status(500).send({ msg: err}) )
             }
         }
     })

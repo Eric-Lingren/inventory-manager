@@ -5,12 +5,12 @@ import Home from './global/Home'
 import Header from './global//header/Header'
 import Login from './portal/Login'
 import Register from './portal/Register'
-import AdminPortalHome from './portal/adminPortal/AdminPortalHome'
+import AdminPortalHome from './manageInventory/admin/AdminPortalHome'
 import ProtectedRoute from './shared/ProtectedRoute'
 import Dashboard from './Dashboard'
 import Feedback from './feedback/Feedback'
 import ManageInventoryHome from './manageInventory/ManageInventoryHome'
-import CreateInventoryItem from './manageInventory/CreateInventoryItem'
+// import CreateInventoryItem from './manageInventory/admin/items/CreateInventoryItem'
 import { withAuth } from './context/AuthProvider'
 import LogRocket from 'logrocket';
 
@@ -37,7 +37,7 @@ const App = ({ user }) => {
         <Route path='/feedback' component={Feedback} />
         <ProtectedRoute path='/dashboard' component={Dashboard} redirectTo={"/login"} />
         <ProtectedRoute path='/manage-inventory' component={ManageInventoryHome} redirectTo={"/login"} />
-        <ProtectedRoute path='/create-item' component={CreateInventoryItem} redirectTo={"/login"} />
+        {/* <ProtectedRoute path='/create-item' component={CreateInventoryItem} redirectTo={"/login"} /> */}
         <ProtectedRoute path='/admin-portal' component={AdminPortalHome} redirectTo={"/manage-inventory"} />
       </Switch>
     </div>

@@ -65,7 +65,12 @@ class InventoryProvider extends Component {
 
 
     handleGetCategories = () => {
-        authAxios.get(`${baseURL}/categories`)
+        let decodedJwt;
+        let token = localStorage.getItem("inventoryManagement")
+        if(token) decodedJwt = decode(token)
+        const userId = decodedJwt.user.id
+
+        authAxios.get(`${baseURL}/categories?userId=${userId}`)
         .then(res => {
             this.setState({ inventoryCategories: res.data})
         })
@@ -74,8 +79,13 @@ class InventoryProvider extends Component {
 
 
     handleGetSubcategories = (selectedCategoryId) => {
-        let url = `${baseURL}/subcategories`
-        if(selectedCategoryId) url = `${baseURL}/subcategories?categoryId=${selectedCategoryId}`
+        let decodedJwt;
+        let token = localStorage.getItem("inventoryManagement")
+        if(token) decodedJwt = decode(token)
+        const userId = decodedJwt.user.id
+
+        let url = `${baseURL}/subcategories?userId=${userId}`
+        if(selectedCategoryId) url = `${baseURL}&categoryId=${selectedCategoryId}`
         authAxios.get(`${url}`)
         .then(res => {
             this.setState({ inventorySubcategories: res.data})

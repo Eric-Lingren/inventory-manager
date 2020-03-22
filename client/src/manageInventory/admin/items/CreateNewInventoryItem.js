@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../App.css'
-import { withInventory } from '../context/InventoryProvider'
-import CategoriesOptionSelect from '../global/CategoriesOptionSelect'
-import SubcategoryOptionSelect from '../global/SubcategoriesOptionSelect'
+import '../../../App.css'
+import { withInventory } from '../../../context/InventoryProvider'
+import CategoriesOptionSelect from '../../../global/CategoriesOptionSelect'
+import SubcategoryOptionSelect from '../../../global/SubcategoriesOptionSelect'
 
 
 const CreateInventoryItem = ({ handleInventoryChange, itemName, handleSaveNewItem, itemAddedSuccessfully }) => {
@@ -13,7 +13,7 @@ const CreateInventoryItem = ({ handleInventoryChange, itemName, handleSaveNewIte
     return (
         <div className='add-inventory-container'>
         <div className='create-inventory-wrapper'>
-            <h3 className='create-inventory-header'> Create Custom Item </h3>
+            <h3 className='create-inventory-header'> Create New Item </h3>
             <form onSubmit={handleSaveNewItem}>
             <div className='create-inventory-input-wrapper'>
                 <div className='add-inventory-row-wrapper'>

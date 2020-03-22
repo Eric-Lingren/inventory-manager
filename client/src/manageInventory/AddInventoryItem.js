@@ -29,11 +29,11 @@ const AddInventoryItem = ({ addToPersonalInventory, handleInventoryChange, expir
                     </div>
                     <div className='link-wrapper'>
                         <p className='navigate-to-create-text'>
-                            Don't see the item you need?
+                            Don't see what you need?
                         </p>
-                        <Link to='create-item'>
+                        <Link to='admin-portal'>
                             <p className='navigate-to-create-link'>
-                                Click here to create a new one
+                                Create Custom Options Here
                             </p>
                         </Link>
                     </div>
