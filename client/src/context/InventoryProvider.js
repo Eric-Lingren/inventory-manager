@@ -126,6 +126,7 @@ class InventoryProvider extends Component {
         })
     }
 
+    
     addToPersonalInventory = (e) => {
         e.preventDefault()
 

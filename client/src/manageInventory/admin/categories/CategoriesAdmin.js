@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { withInventory } from '../../../context/InventoryProvider'
 import CreateNewCategory from './CreateNewCategory'
 import CategoryList from './CategoriesList'
 
 
-const CategoriesAdmin = () => {
+
+const CategoriesAdmin = ({ handleGetCategories }) => {
 
     const[ isShowingList, setIsShowingList ] = useState(false)
 
     const toggleListView = () => {
         setIsShowingList(!isShowingList)
+        handleGetCategories()
     }
 
     
@@ -37,4 +40,4 @@ const CategoriesAdmin = () => {
     );
 }
 
-export default CategoriesAdmin
+export default withInventory(CategoriesAdmin)
