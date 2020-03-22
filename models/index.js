@@ -33,15 +33,15 @@ db.List = require('./List.js')(sequelize, Sequelize)
 db.Feedback = require('./Feedback.js')(sequelize, Sequelize) 
 
 // Relations
-db.ItemsFinished.belongsTo(db.Items, { foreignKey: "itemId", targetKey: "id" } );
-db.Items.hasMany(db.ItemsFinished, { foreignKey: "itemId", targetKey: "id" } );
-db.ItemsAdded.belongsTo(db.Items, { foreignKey: "itemId", targetKey: "id" } );
-db.Items.hasMany(db.ItemsAdded, { foreignKey: "itemId", targetKey: "id" } );
-db.UserItems.belongsTo(db.Items, { foreignKey: "itemId", targetKey: "id" } );
-db.Items.hasMany(db.UserItems, { foreignKey: "itemId", targetKey: "id" } );
-db.Items.belongsTo(db.Subcategories, { foreignKey: "subcategoryId", targetKey: "id" } );
-db.Subcategories.hasMany(db.Items, { foreignKey: "id", foreignKey: "subcategoryId" } );
-db.Subcategories.belongsTo(db.Categories, { foreignKey: "categoryId", foerignKey: "id" } );
+db.ItemsFinished.belongsTo(db.Items, { foreignKey: "itemId", targetKey: "id", onDelete: "cascade" } );
+db.Items.hasMany(db.ItemsFinished, { foreignKey: "itemId", targetKey: "id", onDelete: "cascade" } );
+db.ItemsAdded.belongsTo(db.Items, { foreignKey: "itemId", targetKey: "id", onDelete: "cascade" } );
+db.Items.hasMany(db.ItemsAdded, { foreignKey: "itemId", targetKey: "id", onDelete: "cascade" } );
+db.UserItems.belongsTo(db.Items, { foreignKey: "itemId", targetKey: "id", onDelete: "cascade" } );
+db.Items.hasMany(db.UserItems, { foreignKey: "itemId", targetKey: "id", onDelete: "cascade" } );
+db.Items.belongsTo(db.Subcategories, { foreignKey: "subcategoryId", targetKey: "id", onDelete: "cascade" } );
+db.Subcategories.hasMany(db.Items, { foreignKey: "id", foreignKey: "subcategoryId", onDelete: "cascade" } );
+db.Subcategories.belongsTo(db.Categories, { foreignKey: "categoryId", foerignKey: "id", onDelete: "cascade" } );
 // db.Categories.hasMany(db.Subcategories, { foreignKey: "id", foreignKey: "subcategoryId" } );
 
 

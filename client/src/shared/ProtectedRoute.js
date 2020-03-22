@@ -12,16 +12,14 @@ class ProtectedRoute extends Component {
         const Component = this.props.component
         let isTokenExpired = false;
         let decodedJwt = null;
-        let canAccessComponent = false
+        // let canAccessComponent = false
 
 
-        const checkAccessRights = (user) => {
-            if(!user.isAdmin && path === '/admin-portal'){
-                canAccessComponent = false
-            } else {
-                canAccessComponent = true
-            }
-        }
+        // const checkAccessRights = (user) => {
+        //     if(user && path === '/admin-portal'){
+        //         canAccessComponent = true
+        //     }
+        // }
 
 
         if(this.props.token) {
@@ -29,9 +27,10 @@ class ProtectedRoute extends Component {
             if(decodedJwt.exp < Date.now() / 1000) {
                 this.props.logOut();
                 isTokenExpired = true;
-            } else {
-                checkAccessRights(decodedJwt.user)
-            }
+            } 
+            // else {
+            //     checkAccessRights(decodedJwt.user)
+            // }
         }
         else {
             decodedJwt = null;
@@ -39,7 +38,7 @@ class ProtectedRoute extends Component {
 
 
         return (
-            token && !isTokenExpired && canAccessComponent ?
+            token && !isTokenExpired ?
             (
                 <Route
                     path={path}

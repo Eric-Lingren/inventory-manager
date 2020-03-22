@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import '../App.css'
 import { withInventory } from '../context/InventoryProvider'
+import { withAdmin } from '../context/AdminProvider'
 
 
-const CategoriesOptionSelect = ({ handleGetCategories, inventoryCategories, handleInventoryChange, selectedCategoryId, handleGetSubcategories, clearSelectedOptions }) => {
+const CategoriesOptionSelect = ({ handleGetCategories, inventoryCategories, handleInventoryChange, handleAdminChange, selectedCategoryId, handleGetSubcategories, clearSelectedOptions, clearOptionSelects }) => {
 
     useEffect(() => {
         handleGetCategories()
@@ -14,10 +15,20 @@ const CategoriesOptionSelect = ({ handleGetCategories, inventoryCategories, hand
         return () => clearSelectedOptions()
     }, [ clearSelectedOptions ])
 
+    useEffect(() => {
+        return () => clearOptionSelects()
+    }, [ clearOptionSelects ])
+
 
     useEffect(() => {
         handleGetSubcategories(selectedCategoryId)
     }, [ handleGetSubcategories, selectedCategoryId ])
+
+    const handleChange = (e) => {
+        handleInventoryChange(e)
+        handleAdminChange(e)
+    }
+    
 
 
     const categoryOptions = inventoryCategories.map( (category , i) => {
@@ -28,11 +39,11 @@ const CategoriesOptionSelect = ({ handleGetCategories, inventoryCategories, hand
 
     
     return (
-        <select name='selectedCategoryId' className='option-select' onChange={handleInventoryChange} required={true} >
+        <select name='selectedCategoryId' className='option-select' onChange={(e) => handleChange(e)} required={true} >
                 <option value="" defaultValue> - Select Category - </option>
                 {categoryOptions}
         </select>
     );
 }
 
-export default withInventory(CategoriesOptionSelect)
+export default withInventory(withAdmin(CategoriesOptionSelect))

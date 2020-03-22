@@ -26,11 +26,6 @@ inventoryRouter.get("/categories", checkForToken, (req, res, next) => {
         if(err) res.sendStatus(403)
         if(isEmpty(req.query)){
             db.Categories.findAll({
-                // include: [{
-                //     model: db.Users,
-                //     as: 'userData',
-                //     attributes:['firstName', 'lastName', 'email', 'id', 'hasFacilitator']
-                // }],
                 order:[ ['name', 'ASC'] ]
             })
             .then(categories => {
@@ -44,27 +39,22 @@ inventoryRouter.get("/categories", checkForToken, (req, res, next) => {
                 return res.status(500).send({ msg: "Something broke while getting categories." })
             })
         }
-        // else {
-        //     let parsedQuery = changeStringToFalsy(req.query)
-
-        //     db.Facilitators.findAll({
-        //         where :  parsedQuery , 
-        //         include: [{
-        //             model: db.Users,
-        //             as: 'userData',
-        //             attributes:['firstName', 'lastName', 'email', 'id', 'hasFacilitator']
-        //         }],
-        //         order:[ ['FirstName', 'ASC'] ]
-        //     })
-        //     .then(facilitators => {
-        //         res.status(200).send(facilitators)
-        //     })
-        //     .catch( err => {
-        //         console.log('Route Hit Error');
-        //         next(err)
-        //         res.status(500).send(err)
-        //     })
-        // }
+        else {
+            db.Categories.findAll({
+                where: req.query,
+                order:[ ['name', 'ASC'] ]
+            })
+            .then(categories => {
+                if (isEmpty(categories)) {
+                    return res.status(400).send({ msg: "There are no categories." })
+                } else {
+                    return res.status(200).send(categories)
+                }
+            })
+            .catch( err => {
+                return res.status(500).send({ msg: "Something broke while getting categories." })
+            })
+        }
     })
 })
 
@@ -90,11 +80,10 @@ inventoryRouter.get("/subcategories", checkForToken, (req, res, next) => {
         } else {
             db.Subcategories.findAll({
                 where :  req.query , 
-                // include: [{
-                //     model: db.Users,
-                //     as: 'userData',
-                //     attributes:['firstName', 'lastName', 'email', 'id', 'hasFacilitator']
-                // }],
+                include: [{
+                    model: db.Categories,
+                    attributes:['name']
+                }],
                 order:[ ['name', 'ASC'] ]
             })
             .then(categories => {

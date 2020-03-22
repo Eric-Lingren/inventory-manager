@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-// import validator from 'validator'
+import decode from 'jwt-decode';
 import sanitizeData from '../HelperFunctions/SanitizeData'
 
 const baseURL = 'api/admin'
@@ -19,9 +19,12 @@ class AdminProvider extends Component {
         this.state = {
             addCategoryName: '',
             addSubcategoryName: '',
-            categoryId: '',
+            // categoryId: '',
+            selectedCategoryId: '',
             updatedAdmin: false,
-            status: ''
+            status: '',
+            categoryCreatedSuccessfully: null,
+            subcategoryCreatedSuccessfully: null,
         }
     }
 
@@ -33,13 +36,20 @@ class AdminProvider extends Component {
 
     handleAddNewCategory = (e) => {
         e.preventDefault()
-        const newCategory = { name: this.state.addCategoryName }
+
+        let token = localStorage.getItem("inventoryManagement")
+        let decodedJwt = decode(token)
+        let userId = decodedJwt.user.id
+        const newCategory = { name: this.state.addCategoryName, userId: userId }
+
         authAxios.post(`${baseURL}/category`, newCategory)
         .then(res => {
-            this.setState({ updatedAdmin: !this.state.updatedAdmin, addCategoryName: '', status: '' })
+            this.setState({ updatedAdmin: !this.state.updatedAdmin, addCategoryName: '', categoryCreatedSuccessfully: true })
+            setTimeout(this.handleSetMessageTimeout, 4000)
         })
         .catch(err => {
-            this.setState({ status: 'That category already exists.' })
+            this.setState({ categoryCreatedSuccessfully: false })
+            setTimeout(this.handleSetMessageTimeout, 4000)
         })
     }
 
@@ -55,13 +65,23 @@ class AdminProvider extends Component {
 
     handleAddNewSubcategory = (e) => {
         e.preventDefault()
-        const newSubcategory = { name: this.state.addSubcategoryName, categoryId: this.state.categoryId }
+
+        console.log(this.state.selectedCategoryId)
+        let token = localStorage.getItem("inventoryManagement")
+        let decodedJwt = decode(token)
+        let userId = decodedJwt.user.id
+        const newSubcategory = { name: this.state.addSubcategoryName, userId: userId, categoryId: this.state.selectedCategoryId }
+        
+console.log(newSubcategory)
+
         authAxios.post(`${baseURL}/subcategory`, newSubcategory)
         .then(res => {
-            this.setState({ updatedAdmin: !this.state.updatedAdmin, addSubcategoryName: '', status: '' })
+            this.setState({ updatedAdmin: !this.state.updatedAdmin, addSubcategoryName: '', subcategoryCreatedSuccessfully: true })
+            setTimeout(this.handleSetMessageTimeout, 4000)
         })
         .catch(err => {
-            this.setState({ status: 'That subcategory already exists.' })
+            this.setState({ subcategoryCreatedSuccessfully: false })
+            setTimeout(this.handleSetMessageTimeout, 4000)
         })
     }
 
@@ -74,8 +94,12 @@ class AdminProvider extends Component {
         .catch(err => err)
     }
 
-    render(){
+    handleSetMessageTimeout = () => {
+        this.setState({ categoryCreatedSuccessfully: null, subcategoryCreatedSuccessfully: null })
+    }
 
+
+    render(){
         return (
             <AdminContext.Provider 
                 value={{
