@@ -105,11 +105,14 @@ inventoryRouter.get("/items", checkForToken, (req, res, next) => {
         if(err) res.sendStatus(403)
         if(isEmpty(req.query)){
             db.Items.findAll({
-            //     include: [{
-            //         model: db.Categories,
-            //         as: 'category',
-            //         attributes:['name']
-            //     }],
+                include: [ {
+                    model: db.Subcategories,
+                    attributes:['name' ],
+                    include: [ {
+                        model: db.Categories,
+                        attributes:['name', 'id' ]
+                    }],
+                }],
                 order:[ ['name', 'ASC'] ]
             })
             .then(items => {
@@ -123,13 +126,14 @@ inventoryRouter.get("/items", checkForToken, (req, res, next) => {
                 return res.status(500).send({ msg: "Something broke while getting items." })
             })
         } else {
+            console.log('here')
             db.Items.findAll({
                 where :  req.query , 
-                // include: [{
-                //     model: db.Users,
-                //     as: 'userData',
-                //     attributes:['firstName', 'lastName', 'email', 'id', 'hasFacilitator']
-                // }],
+            //     include: [{
+            //         model: db.Categories,
+            // //         as: 'category',
+            //         attributes:['name']
+            //     }],
                 order:[ ['name', 'ASC'] ]
             })
             .then(items => {
@@ -147,6 +151,7 @@ inventoryRouter.get("/items", checkForToken, (req, res, next) => {
 
 // @route   POST – Adds a new item
 inventoryRouter.post("/items", checkForToken, (req, res) => {
+    console.log('hit')
     jwt.verify(req.token, keys.secretOrKey, (err, authorizedUser) => {
         if(err){
             res.sendStatus(403);
@@ -157,6 +162,26 @@ inventoryRouter.post("/items", checkForToken, (req, res) => {
                 .then(item => res.status(201).send(item) )
                 .catch( err => res.status(500).send({ msg: err}) )
             }
+        }
+    })
+})
+
+
+// @route   DELETE - Deletes an Item
+inventoryRouter.delete("/items/:id", checkForToken, (req, res) => {
+    jwt.verify(req.token, keys.secretOrKey, (err) => {
+        if(err){ 
+            res.sendStatus(403)
+        } else {
+            db.Items.destroy({where: { id: req.params.id }})
+            .then(removedItem => {
+                if (removedItem === 0) {
+                    return res.status(400).send({ msg: "Item was unable to be deleted." })
+                } else {
+                    return res.status(200).send({msg: "Item has been successfully deleted." })
+                }
+            })
+            .catch( err => err )
         }
     })
 })
