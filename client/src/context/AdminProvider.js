@@ -131,7 +131,7 @@ class AdminProvider extends Component {
 
     handleEditItem = () => {
 
-        console.log('hit edit item')
+        // console.log('hit edit item')
 
         const newCategory = this.state.categoryId
 
@@ -158,7 +158,6 @@ class AdminProvider extends Component {
 
 
     render(){
-        console.log(this.state.editingObject)
         return (
             <AdminContext.Provider 
                 value={{
