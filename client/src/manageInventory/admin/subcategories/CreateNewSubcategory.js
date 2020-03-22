@@ -8,7 +8,6 @@ import CategoriesOptionSelect from '../../../global/CategoriesOptionSelect'
 const CreateNewCategory = ({ handleAddNewSubcategory, addSubcategoryName, handleAdminChange, subcategoryCreatedSuccessfully }) => {
 
 
-    
     return (
         <div>
             <form onSubmit={handleAddNewSubcategory}>
@@ -24,7 +23,7 @@ const CreateNewCategory = ({ handleAddNewSubcategory, addSubcategoryName, handle
                             onChange={handleAdminChange}
                         />
                         <span> in </span>
-                        <CategoriesOptionSelect />
+                        <CategoriesOptionSelect isEditingSubcategory={true} />
                     </div>
                     <button className='default-button create-button'> Create </button>
                 </div>

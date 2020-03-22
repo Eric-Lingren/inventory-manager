@@ -80,11 +80,10 @@ class AdminProvider extends Component {
     handleAddNewSubcategory = (e) => {
         e.preventDefault()
 
-        console.log(this.state.selectedCategoryId)
         let token = localStorage.getItem("inventoryManagement")
         let decodedJwt = decode(token)
         let userId = decodedJwt.user.id
-        const newSubcategory = { name: this.state.addSubcategoryName, userId: userId, categoryId: this.state.selectedCategoryId }
+        const newSubcategory = { name: this.state.addSubcategoryName, userId: userId, categoryId: this.state.categoryId }
 
         authAxios.post(`${baseURL}/subcategory`, newSubcategory)
         .then(res => {
