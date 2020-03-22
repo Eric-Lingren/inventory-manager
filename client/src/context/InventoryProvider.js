@@ -265,6 +265,7 @@ class InventoryProvider extends Component {
         .catch(err => err)
     }
 
+
     getLists = () => {
         let decodedJwt;
         let token = localStorage.getItem("inventoryManagement")
@@ -276,7 +277,9 @@ class InventoryProvider extends Component {
         .catch(err => err)
     }
 
+
     createList = (e) => {
+        console.log('hit')
         e.preventDefault()
         let decodedJwt;
         let token = localStorage.getItem("inventoryManagement")
@@ -292,6 +295,24 @@ class InventoryProvider extends Component {
             this.setState({createdListSuccess: false})
         })
     }
+
+    handleDeleteList = (id) => {
+        authAxios.delete(`api/list/${id}`)
+        .then(res => {
+            this.getLists()
+        })
+        .catch( err => err )
+    }
+
+
+    handleEditList = (listName, id) => {
+        let editedList = { name: listName }
+
+        authAxios.put(`api/list/${id}`, editedList)
+        .then(res => { this.getLists() })
+        .catch( err => err )
+    }
+
 
     sortByItemName = (order) => {
         const items = this.state.userInventoryItems
@@ -424,6 +445,8 @@ class InventoryProvider extends Component {
                     clearMesages: this.clearMesages,
                     clearSelectedOptions: this.clearSelectedOptions,
                     clearOptionSelects: this.clearOptionSelects,
+                    handleEditList: this.handleEditList,
+                    handleDeleteList: this.handleDeleteList
                 }}>
                 { this.props.children }
             </InventoryContext.Provider>

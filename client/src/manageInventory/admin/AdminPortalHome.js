@@ -4,6 +4,7 @@ import { withInventory } from '../../context/InventoryProvider'
 import CreateNewInventoryItem from './items/CreateNewInventoryItem'
 import CategoriesAdmin from './categories/CategoriesAdmin'
 import SubcategoriesAdmin from './subcategories/SubcategoriesAdmin'
+import ListsAdmin from './lists/ListsAdmin'
 
 
 const AdminPortalHome = ({ inventoryCategories }) => {
@@ -14,9 +15,10 @@ const AdminPortalHome = ({ inventoryCategories }) => {
         <div >
             <h2> Admin Portal </h2>
 
+            <CreateNewInventoryItem />
             <CategoriesAdmin  />
             <SubcategoriesAdmin inventoryCategories={inventoryCategories} />
-            <CreateNewInventoryItem />
+            <ListsAdmin />
             
         </div>
     );

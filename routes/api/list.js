@@ -65,7 +65,7 @@ listRouter.delete("/:id", checkForToken, (req, res) => {
         if(err){
             res.sendStatus(403)
         } else {
-            db.Lists.destroy({where: { id: req.params.id }})
+            db.List.destroy({where: { id: req.params.id }})
             .then(removedList => {
                 if (removedList === 0) {
                     return res.status(400).send({ msg: "List was unable to be deleted." })
@@ -85,7 +85,8 @@ listRouter.put("/:id", checkForToken, (req, res) => {
         if(err){
             res.sendStatus(403)
         } else {
-            db.Lists.update(req.body, {
+            console.log(req.body)
+            db.List.update(req.body, {
                 where: { id: req.params.id }
             })
             .then(updatedList => {
