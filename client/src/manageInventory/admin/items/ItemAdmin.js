@@ -22,7 +22,7 @@ const ItemAdmin = () => {
                 
                 <div className='admin-link-wrapper'>
                     <span className='navigate-to-create-link' onClick={toggleListView}>
-                        { isShowingList ? 'Hide Subcategories' : 'Manage Subcategories' }
+                        { isShowingList ? 'Hide Items' : 'Manage Items' }
                     </span>
                     <Link to='manage-inventory' className='link'>
                         <span className='navigate-to-create-link'>

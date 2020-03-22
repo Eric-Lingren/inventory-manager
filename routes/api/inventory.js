@@ -126,7 +126,6 @@ inventoryRouter.get("/items", checkForToken, (req, res, next) => {
                 return res.status(500).send({ msg: "Something broke while getting items." })
             })
         } else {
-            console.log('here')
             db.Items.findAll({
                 where :  req.query , 
             //     include: [{

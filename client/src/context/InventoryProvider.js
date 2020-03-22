@@ -94,6 +94,7 @@ class InventoryProvider extends Component {
         .catch(err => err)
     }
 
+    
     handleGetItems = ( selectedSubcategoryId) => {
         let url = `${baseURL}/items`
         if(selectedSubcategoryId) url = `${baseURL}/items?subcategoryId=${selectedSubcategoryId}`

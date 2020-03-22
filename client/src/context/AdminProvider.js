@@ -20,6 +20,7 @@ class AdminProvider extends Component {
             addCategoryName: '',
             addSubcategoryName: '',
             categoryId: '',
+            subcategoryId: '',
             updatedAdmin: false,
             status: '',
             categoryCreatedSuccessfully: null,
@@ -66,6 +67,7 @@ class AdminProvider extends Component {
         })
         .catch(err => err)
     }
+
 
     handleEditCategory = (categoryName, id) => {
         let editedCategory = { name: categoryName }
@@ -127,6 +129,21 @@ class AdminProvider extends Component {
     }
 
 
+    handleEditItem = () => {
+
+        console.log('hit edit item')
+
+        const newCategory = this.state.categoryId
+
+        let updatedItem = this.state.editingObject
+
+        if(newCategory) console.log(newCategory)
+
+
+        console.log(updatedItem)
+    }
+
+
     handleDeleteSubcategory = (id) => {
         authAxios.delete(`${baseURL}/subcategory/${id}`)
         .then(res => {
@@ -141,6 +158,7 @@ class AdminProvider extends Component {
 
 
     render(){
+        console.log(this.state.editingObject)
         return (
             <AdminContext.Provider 
                 value={{
@@ -155,6 +173,7 @@ class AdminProvider extends Component {
                     handleEditSubcategory: this.handleEditSubcategory,
                     handleEditingObject: this.handleEditingObject,
                     handleEditCategory: this.handleEditCategory,
+                    handleEditItem: this.handleEditItem,
                     
                 }}>
                 { this.props.children }

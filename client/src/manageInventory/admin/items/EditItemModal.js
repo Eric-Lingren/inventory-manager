@@ -7,19 +7,20 @@ import { withAdmin } from '../../../context/AdminProvider'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import CategoriesOptionSelect from '../../../global/CategoriesOptionSelect'
+import SubategoriesOptionSelect from '../../../global/SubcategoriesOptionSelect'
 
 
-const EditSubcategoryModal= ({ isShowingSubcategoryModal, toggleEditSubcategoryModal, handleEditingObject, subcategory, item, editingObject, handleEditSubcategory, itemUpdated, handleGetSubcategories }) => {
+const EditSubcategoryModal= ({ isShowingItemModal, isShowingSubcategoryModal, toggleEditItemModal, handleEditingObject, item, editingObject, handleEditItem, itemUpdated, handleGetItems }) => {
 
     const close = () => {
-        toggleEditSubcategoryModal()
-        handleGetSubcategories()
+        toggleEditItemModal()
+        handleGetItems()
     }
 
 
 	return (
         <Modal
-            isOpen={isShowingSubcategoryModal}
+            isOpen={isShowingItemModal}
             contentLabel='Edit Item'
             modalStyle='modalStyle'
             className='main-modal'
@@ -32,28 +33,33 @@ const EditSubcategoryModal= ({ isShowingSubcategoryModal, toggleEditSubcategoryM
                     <FontAwesomeIcon icon={faTimesCircle} className='close-icon'  />
                 </div>
 
-                <h3>Editing Subcategory: {subcategory.name} </h3>
+                <h3>Editing Item: {item.name} </h3>
 
                 <form >
 
                     <div className='edit-inventory-input-wrapper'>
-                        <label> Subcategory Name: </label>
-                        <input 
-                            className='text-input number-input edit-input'
-                            type="text" 
-                            name='name' 
-                            onChange={handleEditingObject}
-                            value={editingObject.name}
-                            label='Quantity'
-                        />
+                            <label> Item Name: </label>
+                            <input 
+                                className='text-input number-input edit-input'
+                                type="text" 
+                                name='name' 
+                                onChange={handleEditingObject}
+                                value={editingObject.name}
+                                label='Quantity'
+                            />
                     </div>
 
                     <div className='edit-inventory-input-wrapper'>
-                        <label> In Category: </label>
+                        <label> Category: </label>
                         <CategoriesOptionSelect isEditingSubcategory={true} />
                     </div>
 
-                    <button className='default-button' onClick={handleEditSubcategory}> Save Changes </button>
+                    <div className='edit-inventory-input-wrapper'>
+                        <label> Subcategory: </label>
+                        <SubategoriesOptionSelect isEditingItem={true} />
+                    </div>
+
+                    <button className='default-button' onClick={handleEditItem}> Save Changes </button>
 
                     {itemUpdated && <span> Successfully Updated </span>}
                     {itemUpdated === false && <span> Something didn't work.  Pleas try again. </span>}
