@@ -17,14 +17,14 @@ const SubcategoriesList = ({ handleGetSubcategories, inventorySubcategories, upd
 
 
     const mappedSubcategories = inventorySubcategories.map( ( subcategory , i ) => {
-        console.log(subcategory)
         return (
             <SubcategoryCard 
                 name={subcategory.name}
                 key={i}
                 id={subcategory.id}
                 categoryId={subcategory.categoryId}
-                // category={subcategory.Category.name}
+                category={subcategory.Category.name}
+                subcategory={subcategory}
             />
         )
     })

@@ -19,12 +19,13 @@ class AdminProvider extends Component {
         this.state = {
             addCategoryName: '',
             addSubcategoryName: '',
-            // categoryId: '',
-            selectedCategoryId: '',
+            categoryId: '',
             updatedAdmin: false,
             status: '',
             categoryCreatedSuccessfully: null,
             subcategoryCreatedSuccessfully: null,
+            editingObject: {},
+            itemUpdated: null,
         }
     }
 
@@ -32,6 +33,10 @@ class AdminProvider extends Component {
     handleAdminChange = (e) => {
         const {name, value} = e.target
         this.setState({ [name]: sanitizeData(value) })
+    }
+
+    handleSetSelectedCategory = (id) => {
+        this.setState({ categoryId: id })
     }
 
     handleAddNewCategory = (e) => {
@@ -62,6 +67,15 @@ class AdminProvider extends Component {
         .catch(err => err)
     }
 
+    handleEditCategory = (categoryName, id) => {
+        let editedCategory = { name: categoryName }
+
+        authAxios.put(`${baseURL}/category/${id}`, editedCategory)
+        .then(res => { })
+        .catch( err => err )
+
+    }
+
 
     handleAddNewSubcategory = (e) => {
         e.preventDefault()
@@ -71,8 +85,6 @@ class AdminProvider extends Component {
         let decodedJwt = decode(token)
         let userId = decodedJwt.user.id
         const newSubcategory = { name: this.state.addSubcategoryName, userId: userId, categoryId: this.state.selectedCategoryId }
-        
-console.log(newSubcategory)
 
         authAxios.post(`${baseURL}/subcategory`, newSubcategory)
         .then(res => {
@@ -81,6 +93,36 @@ console.log(newSubcategory)
         })
         .catch(err => {
             this.setState({ subcategoryCreatedSuccessfully: false })
+            setTimeout(this.handleSetMessageTimeout, 4000)
+        })
+    }
+
+
+    handleSetEditingObject = (subcategory) => {
+        this.setState({ editingObject: subcategory })
+    }
+
+
+    handleEditingObject = (e) => {
+        let {name , value} = e.target
+        this.setState(prevState => ({ editingObject: { ...prevState.editingObject, [name]: value } }))
+    }
+
+
+    handleEditSubcategory = (e) => {
+        e.preventDefault()
+
+        let newCategoryId = this.state.categoryId
+        let editedSubcategory = this.state.editingObject
+        if(newCategoryId !== '') editedSubcategory.categoryId = newCategoryId
+
+        authAxios.put(`${baseURL}/subcategory/${editedSubcategory.id}`, editedSubcategory)
+        .then(res => {
+            this.setState({ itemUpdated:  true })
+            setTimeout(this.handleSetMessageTimeout, 4000)
+        })
+        .catch(err => {
+            this.setState({ itemUpdated: false })
             setTimeout(this.handleSetMessageTimeout, 4000)
         })
     }
@@ -95,7 +137,7 @@ console.log(newSubcategory)
     }
 
     handleSetMessageTimeout = () => {
-        this.setState({ categoryCreatedSuccessfully: null, subcategoryCreatedSuccessfully: null })
+        this.setState({ categoryCreatedSuccessfully: null, subcategoryCreatedSuccessfully: null, itemUpdated: null })
     }
 
 
@@ -105,10 +147,15 @@ console.log(newSubcategory)
                 value={{
                     ...this.state,
                     handleAdminChange: this.handleAdminChange,
+                    handleSetSelectedCategory: this.handleSetSelectedCategory,
                     handleAddNewCategory: this.handleAddNewCategory,
                     handleDeleteCategory: this.handleDeleteCategory,
                     handleAddNewSubcategory: this.handleAddNewSubcategory,
-                    handleDeleteSubcategory: this.handleDeleteSubcategory
+                    handleDeleteSubcategory: this.handleDeleteSubcategory,
+                    handleSetEditingObject: this.handleSetEditingObject,
+                    handleEditSubcategory: this.handleEditSubcategory,
+                    handleEditingObject: this.handleEditingObject,
+                    handleEditCategory: this.handleEditCategory,
                     
                 }}>
                 { this.props.children }

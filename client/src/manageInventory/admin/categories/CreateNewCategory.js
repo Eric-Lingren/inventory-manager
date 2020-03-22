@@ -1,21 +1,17 @@
 import React from 'react';
 import '../../../App.css'
-import { Link } from 'react-router-dom';
 import { withAdmin } from '../../../context/AdminProvider'
 
 
 const CreateNewCategory = ({ handleAddNewCategory, addCategoryName, handleAdminChange, categoryCreatedSuccessfully }) => {
 
-
     
     return (
-        <div className='add-inventory-container'>
-        <div className='create-inventory-wrapper'>
-        <h3 className='create-inventory-header'> Create New Category </h3>
+        <div >
             <form onSubmit={handleAddNewCategory}>
                 <div className='add-inventory-row-wrapper'>
                     <div className='add-inventory-input-wrapper'>
-                        <label> Category Name: </label>
+                        <label> New Category: </label>
                         <input
                             className='text-input add-name'
                             type='text'
@@ -30,12 +26,6 @@ const CreateNewCategory = ({ handleAddNewCategory, addCategoryName, handleAdminC
             </form>
             {categoryCreatedSuccessfully === true && <span> Successfully created new Category </span> }
             {categoryCreatedSuccessfully === false && <span> Try Again.  Something broke or that category already exists. </span> }
-            <Link to='manage-inventory'>
-                <span className='navigate-to-create-link'>
-                    Back To Inventory
-                </span>
-            </Link>
-        </div>
         </div>
     );
 }

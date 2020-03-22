@@ -6,3 +6,21 @@
 .link {
     text-decoration: none;
 }
+.admin-card{
+    display: grid;
+    grid-template-columns: 5fr 5fr 1.5fr;
+    box-shadow: -5px 10px 21px #00000018;
+    margin: 5px;
+    height: 40px;
+}
+.admin-card-category{
+    display: grid;
+    grid-template-columns: 2fr 1.5fr;
+    box-shadow: -5px 10px 21px #00000018;
+    margin: 5px;
+    height: 40px;
+}
+.name{
+    margin-left: 15px;
+    font-weight: bold;
+}

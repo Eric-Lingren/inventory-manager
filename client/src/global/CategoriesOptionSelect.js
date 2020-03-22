@@ -4,7 +4,7 @@ import { withInventory } from '../context/InventoryProvider'
 import { withAdmin } from '../context/AdminProvider'
 
 
-const CategoriesOptionSelect = ({ handleGetCategories, inventoryCategories, handleInventoryChange, handleAdminChange, selectedCategoryId, handleGetSubcategories, clearSelectedOptions, clearOptionSelects }) => {
+const CategoriesOptionSelect = ({ handleGetCategories, inventoryCategories, handleInventoryChange, handleAdminChange, handleSetSelectedCategory, selectedCategoryId, handleGetSubcategories, clearSelectedOptions, clearOptionSelects, isEditingSubcategory, callbackCategoryId }) => {
 
     useEffect(() => {
         handleGetCategories()
@@ -15,6 +15,7 @@ const CategoriesOptionSelect = ({ handleGetCategories, inventoryCategories, hand
         return () => clearSelectedOptions()
     }, [ clearSelectedOptions ])
 
+
     useEffect(() => {
         return () => clearOptionSelects()
     }, [ clearOptionSelects ])
@@ -24,9 +25,13 @@ const CategoriesOptionSelect = ({ handleGetCategories, inventoryCategories, hand
         handleGetSubcategories(selectedCategoryId)
     }, [ handleGetSubcategories, selectedCategoryId ])
 
+
     const handleChange = (e) => {
-        handleInventoryChange(e)
-        handleAdminChange(e)
+        if(isEditingSubcategory){
+            handleSetSelectedCategory(e.target.value)
+        }else{
+            handleInventoryChange(e)
+        } 
     }
     
 
