@@ -128,11 +128,14 @@ inventoryRouter.get("/items", checkForToken, (req, res, next) => {
         } else {
             db.Items.findAll({
                 where :  req.query , 
-            //     include: [{
-            //         model: db.Categories,
-            // //         as: 'category',
-            //         attributes:['name']
-            //     }],
+                include: [ {
+                    model: db.Subcategories,
+                    attributes:['name' ],
+                    include: [ {
+                        model: db.Categories,
+                        attributes:['name', 'id' ]
+                    }],
+                }],
                 order:[ ['name', 'ASC'] ]
             })
             .then(items => {
