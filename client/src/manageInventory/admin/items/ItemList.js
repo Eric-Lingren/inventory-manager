@@ -17,14 +17,16 @@ const ItemList = ({ handleGetItems, inventoryItems, updatedAdmin, clearOptionSel
 
 
     const mappedItems = inventoryItems.map( ( item , i ) => {
-        let subcategoryName = null
-        if(item.Subcategory.name) subcategoryName = item.Subcategory.name
+        let subcategoryName;
+        let category;
+        item.Subcategory ? subcategoryName = item.Subcategory.name : subcategoryName = ''
+        item.Subcategory ? category = item.Subcategory.Category.name : category = ''
         return (
             <ItemCard 
                 name={item.name}
                 key={i}
                 id={item.id}
-                category={item.Subcategory.Category.name}
+                category={category}
                 subcategory={subcategoryName}
                 item={item}
             />

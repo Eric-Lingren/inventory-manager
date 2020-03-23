@@ -97,8 +97,13 @@ class InventoryProvider extends Component {
 
     
     handleGetItems = ( selectedSubcategoryId) => {
-        let url = `${baseURL}/items`
-        if(selectedSubcategoryId) url = `${baseURL}/items?subcategoryId=${selectedSubcategoryId}`
+        let decodedJwt;
+        let token = localStorage.getItem("inventoryManagement")
+        if(token) decodedJwt = decode(token)
+        const userId = decodedJwt.user.id
+
+        let url = `${baseURL}/items?userId=${userId}`
+        if(selectedSubcategoryId) url = `${url}&subcategoryId=${selectedSubcategoryId}`
         authAxios.get(`${url}`)
         .then(res => {
             this.setState({ inventoryItems: res.data})
