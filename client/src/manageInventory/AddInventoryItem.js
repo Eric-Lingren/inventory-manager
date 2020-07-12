@@ -71,10 +71,16 @@ const AddInventoryItem = ({ addToPersonalInventory, handleInventoryChange, expir
                             <option value="gal" defaultValue> Gallons </option>
                             <option value="gr" defaultValue> Grams </option>
                             <option value="kg" defaultValue> Kilograms </option>
-                            <option value="ml" defaultValue> Milliliters </option>
+                            <option value="ml" defaultValue> MiliLiters </option>
                             <option value="l" defaultValue> Liters </option>
                             <option value="pt" defaultValue> Pints </option>
                             <option value="ct" defaultValue> Count </option>
+                            <option value="in" defaultValue> Inches </option>
+                            <option value="ft" defaultValue> Feet </option>
+                            <option value="yd" defaultValue> Yards </option>
+                            <option value="mm" defaultValue> MiliMeters </option>
+                            <option value="cm" defaultValue> Centimeters </option>
+                            <option value="m" defaultValue> Meters </option>
                         </select>
                     </div>
                 
