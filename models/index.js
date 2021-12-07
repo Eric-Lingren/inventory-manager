@@ -42,6 +42,11 @@ db.Items.hasMany(db.UserItems, { foreignKey: "itemId", targetKey: "id", onDelete
 db.Items.belongsTo(db.Subcategories, { foreignKey: "subcategoryId", targetKey: "id", onDelete: "cascade" } );
 db.Subcategories.hasMany(db.Items, { foreignKey: "id", foreignKey: "subcategoryId", onDelete: "cascade" } );
 db.Subcategories.belongsTo(db.Categories, { foreignKey: "categoryId", foerignKey: "id", onDelete: "cascade" } );
+
+
+
+
+
 // db.Categories.hasMany(db.Subcategories, { foreignKey: "id", foreignKey: "subcategoryId" } )
 
 
